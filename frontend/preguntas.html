@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscar Preguntas | SRVAZKEZ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    mark {
+      background-color: yellow;
+      color: black;
+    }
+    .card-body ul {
+      padding-left: 1.2rem;
+    }
+    .card-body li {
+      margin-bottom: 0.4rem;
+    }
+    .card {
+      background-color: #2c2f33 !important;
+      border: 1px solid #6c757d;
+      border-radius: 12px;
+    }
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #212529;
+      padding: 1rem;
+      z-index: 1000;
+      transition: width 0.3s;
+    }
+    .sidebar.collapsed {
+      width: 70px;
+    }
+    .sidebar h4,
+    .sidebar .nav-link span {
+      transition: opacity 0.2s;
+    }
+    .sidebar.collapsed h4,
+    .sidebar.collapsed .nav-link span {
+      opacity: 0;
+      visibility: hidden;
+      width: 0;
+      display: none;
+    }
+    .main-content {
+      margin-left: 220px;
+      padding: 2rem;
+      transition: margin-left 0.3s;
+    }
+    .main-content.shifted {
+      margin-left: 70px;
+    }
+    .nav-link i {
+      width: 20px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body class="bg-dark text-light">
+
+  <div class="sidebar text-light" id="sidebar">
+    <button class="btn btn-sm btn-outline-light w-100 mb-3" id="toggleSidebar"><i class="fas fa-bars"></i></button>
+    <h4 class="text-warning">SRVAZKEZ</h4>
+    <ul class="nav flex-column mt-4">
+      <li class="nav-item"><a href="./index.html" class="nav-link text-light"><i class="fas fa-pencil-alt"></i> <span>Simulador</span></a></li>
+      <li class="nav-item"><a href="./preguntas.html" class="nav-link text-light"><i class="fas fa-question-circle"></i> <span>Preguntas</span></a></li>
+    </ul>
+  </div>
+
+  <div class="main-content" id="mainContent">
+    <h1 class="text-center mb-4">Buscador de Preguntas</h1>
+
+    <div class="mb-4 d-flex flex-column flex-sm-row gap-3">
+      <input type="text" class="form-control" id="searchInput" placeholder="Buscar pregunta por texto...">
+      <button id="buscarBtn" class="btn btn-primary">Buscar</button>
+    </div>
+
+    <div id="resultados" class="mt-4"></div>
+    <div id="paginador" class="d-flex justify-content-center gap-2 mt-4"></div>
+  </div>
+
+  <script>
+    const API_URL = "http://localhost:8000/questions";
+    const LIMIT = 10;
+    let totalPreguntas = 0;
+    let searchTermGlobal = "";
+
+    function highlight(text, term) {
+      if (!text) return "";
+      if (!term) return text;
+      const re = new RegExp(`(${term})`, "gi");
+      return text.replace(re, '<mark>$1</mark>');
+    }
+
+    async function buscarPreguntas(skip = 0) {
+      const searchInput = document.getElementById("searchInput").value;
+      searchTermGlobal = searchInput;
+      const url = new URL(API_URL);
+      url.searchParams.append("limit", LIMIT);
+      url.searchParams.append("skip", skip);
+      if (searchInput) {
+        url.searchParams.append("search", searchInput);
+      }
+
+      const res = await fetch(url);
+      const data = await res.json();
+      totalPreguntas = data.total;
+
+      const resultadosDiv = document.getElementById("resultados");
+      resultadosDiv.innerHTML = `
+        <div class="alert alert-info text-center">
+          Total encontradas: <strong>${data.total}</strong>
+        </div>
+      `;
+
+      for (const key in data.preguntas) {
+        const q = data.preguntas[key];
+        const card = document.createElement("div");
+        card.className = "card text-light mb-3 shadow";
+        const body = document.createElement("div");
+        body.className = "card-body";
+
+        body.innerHTML = `<h5 class="card-title">${q.qid}. ${highlight(q.question, searchTermGlobal)}</h5>`;
+
+        if (q.type === "multiple_choice") {
+          body.innerHTML += `
+            ${q.options ? `
+              <p><strong>Opciones:</strong></p>
+              <ul>${q.options.map(opt => `<li>${highlight(opt, searchTermGlobal)}</li>`).join("")}</ul>` : ""}
+            ${q.answer ? `
+              <p><strong>Respuesta(s):</strong></p>
+              <ul>${q.answer.map(ans => `<li>${highlight(ans, searchTermGlobal)}</li>`).join("")}</ul>` : ""}
+          `;
+        } else if (q.type === "match") {
+          body.innerHTML += `
+            <p><strong>Emparejamiento:</strong></p>
+            <ul>
+              ${Object.entries(q.answer).map(([item, target]) =>
+                `<li><strong>${highlight(item, searchTermGlobal)}</strong> → ${highlight(target, searchTermGlobal)}</li>`).join("")}
+            </ul>
+          `;
+        }
+
+        if (q.explanation) {
+          body.innerHTML += `
+            <p><strong>Explicación:</strong></p>
+            <div class="ps-3"><em>${highlight(q.explanation, searchTermGlobal)}</em></div>
+          `;
+        }
+
+        card.appendChild(body);
+        resultadosDiv.appendChild(card);
+      }
+
+      renderPaginador(skip);
+    }
+
+    function renderPaginador(currentSkip) {
+      const pagDiv = document.getElementById("paginador");
+      pagDiv.innerHTML = "";
+      const totalPages = Math.ceil(totalPreguntas / LIMIT);
+      const currentPage = currentSkip / LIMIT;
+
+      for (let i = 0; i < totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.className = "btn btn-sm " + (i === currentPage ? "btn-light" : "btn-outline-light");
+        btn.textContent = i + 1;
+        btn.onclick = () => buscarPreguntas(i * LIMIT);
+        pagDiv.appendChild(btn);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("buscarBtn").addEventListener("click", () => buscarPreguntas(0));
+      document.getElementById("toggleSidebar").addEventListener("click", () => {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+        document.getElementById("mainContent").classList.toggle("shifted");
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
