@@ -1,0 +1,3219 @@
+[
+  {
+    "_id": {
+      "$oid": "6861f6cdcadf3b68f6f9b01e"
+    },
+    "qid": 1,
+    "question": "What assigns newly ingested event attributes to incident fields?",
+    "options": [
+      "Playbooks",
+      "Classification",
+      "Mapping",
+      "Layouts"
+    ],
+    "answer": [
+      "Mapping"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "Mapping (tambi\u00e9n conocido como 'Field Mapping') se encarga de asignar los atributos de eventos reci\u00e9n ingeridos a los campos del incidente en Cortex XSOAR. Esto ocurre despu\u00e9s de la clasificaci\u00f3n (Classification), que determina el tipo de incidente. Los mapeos permiten definir c\u00f3mo se traduce un valor recibido desde una integraci\u00f3n a un campo interno de XSOAR, como por ejemplo, mapear 'src_ip' a 'SourceIP'. Playbooks y Layouts se usan posteriormente para manejar y visualizar la informaci\u00f3n, pero no realizan la asignaci\u00f3n inicial de campos.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f6fdcadf3b68f6f9b01f"
+    },
+    "qid": 2,
+    "question": "Which three options can be defined in the layout settings? (Choose three.)",
+    "options": [
+      "Set of fields to present",
+      "Permission to view the tab based on \u2018Users\u2019",
+      "Permission to view the tab based on \u2018Roles\u2019",
+      "Delete built-in tabs including the war room",
+      "Dynamic sections"
+    ],
+    "answer": [
+      "Set of fields to present",
+      "Permission to view the tab based on \u2018Roles\u2019",
+      "Dynamic sections"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En las configuraciones del layout en Cortex XSOAR se pueden definir: 1) el conjunto de campos que se mostrar\u00e1n en cada secci\u00f3n o pesta\u00f1a del layout ('Set of fields to present'), 2) se pueden aplicar permisos de visualizaci\u00f3n basados en roles ('Permission to view the tab based on Roles'), y 3) es posible configurar secciones din\u00e1micas ('Dynamic sections') que cambian su contenido dependiendo del contexto del incidente. No se puede restringir el acceso a pesta\u00f1as seg\u00fan usuarios individuales, ni eliminar pesta\u00f1as integradas como el War Room.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f729cadf3b68f6f9b020"
+    },
+    "qid": 3,
+    "question": "You can customize most aspects of the incident layout, including which three of the following? (Choose three.)",
+    "options": [
+      "Which users have permissions to view the tabs",
+      "Which roles have permissions to view the tabs",
+      "Which dashboard settings are applied",
+      "The information and how it is displayed",
+      "Which tabs appear and in which order"
+    ],
+    "answer": [
+      "Which roles have permissions to view the tabs",
+      "The information and how it is displayed",
+      "Which tabs appear and in which order"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR puedes personalizar la mayor\u00eda de los aspectos del layout de incidentes, incluyendo: 1) los roles que tienen permiso para ver cada pesta\u00f1a ('Which roles have permissions to view the tabs'), 2) la informaci\u00f3n que se muestra y c\u00f3mo se visualiza ('The information and how it is displayed'), y 3) qu\u00e9 pesta\u00f1as aparecen y en qu\u00e9 orden ('Which tabs appear and in which order'). No puedes aplicar configuraciones de dashboard desde los layouts, ni definir permisos basados en usuarios individuales.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f750cadf3b68f6f9b021"
+    },
+    "qid": 4,
+    "question": "When mapping incoming data to incident fields, which statement is correct?",
+    "options": [
+      "Data that is not mapped is placed under labels",
+      "Only text fields are classified",
+      "Classification cannot be used if mapping is enabled",
+      "Every incoming field must be mapped"
+    ],
+    "answer": [
+      "Data that is not mapped is placed under labels"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "Cuando se mapea informaci\u00f3n entrante a los campos del incidente en Cortex XSOAR, los datos que no est\u00e1n expl\u00edcitamente mapeados no se descartan: se colocan bajo 'labels'. Esto permite conservar informaci\u00f3n adicional que puede ser \u00fatil para investigaci\u00f3n o referencia. No es necesario mapear cada campo entrante, y la clasificaci\u00f3n (classification) y el mapeo (mapping) funcionan juntos como parte del procesamiento inicial de eventos.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f7f7cadf3b68f6f9b023"
+    },
+    "qid": 5,
+    "question": "Which method accesses a field called \u2018User Mail\u2019 in a playbook?",
+    "options": [
+      "${incident.usermail}",
+      "${incident.User Mail}",
+      "${incident.UserMail}",
+      "${usermail}"
+    ],
+    "answer": [
+      "${incident.usermail}"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR, los campos de incidentes se acceden en los playbooks usando el identificador del campo. Aunque el nombre visible sea \u2018User Mail\u2019, su ID interno es 'usermail'. Por ello, la forma correcta de acceder a su valor en un playbook es usando `${incident.usermail}`. Los espacios se eliminan y se usa todo en min\u00fasculas, sin necesidad de camel case ni del nombre visible literal.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f81bcadf3b68f6f9b024"
+    },
+    "qid": 6,
+    "question": "Which field type provides an interactive and editable display of table-based data?",
+    "options": [
+      "HTML",
+      "Grid (table)",
+      "Markdown",
+      "Multi Select"
+    ],
+    "answer": [
+      "Grid (table)"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El tipo de campo 'Grid (table)' en Cortex XSOAR permite mostrar datos en formato de tabla de manera interactiva y editable. Es ideal para representar listas de objetos o registros con m\u00faltiples columnas. A diferencia del campo HTML o Markdown, que s\u00f3lo renderizan contenido est\u00e1tico (aunque con formato visual), el campo tipo 'Grid' permite que los usuarios editen directamente los valores de las celdas desde la interfaz del incidente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f836cadf3b68f6f9b025"
+    },
+    "qid": 7,
+    "question": "Which option is available in XSOAR to create the body of a Threat Intel Report?",
+    "options": [
+      "Markdown",
+      "Grid Fields",
+      "DOC format",
+      "Javascript"
+    ],
+    "answer": [
+      "Markdown"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, el cuerpo de un Threat Intel Report se redacta utilizando el formato **Markdown**. Este formato permite crear contenido con estilo enriquecido (como encabezados, listas, tablas, enlaces, etc.) de manera sencilla y compatible con el renderizador de XSOAR. Grid Fields se utilizan para datos tabulares estructurados, pero no para el contenido del cuerpo del reporte. El formato DOC no es compatible directamente para redacci\u00f3n dentro de la plataforma, y JavaScript no se usa para definir contenido en reportes.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f850cadf3b68f6f9b026"
+    },
+    "qid": 8,
+    "question": "An engineer is developing a playbook that will be run multiple times for testing purposes. What is the recommended first task to be used in the playbook?",
+    "options": [
+      "DeleteContext",
+      "GenerateTest",
+      "PrintContext",
+      "SetContext"
+    ],
+    "answer": [
+      "DeleteContext"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando se desarrolla un playbook que se ejecutar\u00e1 m\u00faltiples veces, es recomendable comenzar con la tarea **DeleteContext**. Esta tarea elimina todos los datos previos almacenados en el contexto, asegurando que los resultados de ejecuciones anteriores no afecten las pruebas actuales. Esto ayuda a mantener resultados consistentes y evitar comportamientos inesperados por datos persistentes en el contexto del incidente.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861f868cadf3b68f6f9b027"
+    },
+    "qid": 9,
+    "question": "When creating an incident layout section, it is best to place long field values within which of the following?",
+    "options": [
+      "Section headers",
+      "Rows",
+      "Canvas",
+      "Cards"
+    ],
+    "answer": [
+      "Rows"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR, al crear una secci\u00f3n del layout para un incidente, lo m\u00e1s recomendable es colocar los valores de campos largos dentro de **Rows**. Esto permite aprovechar mejor el espacio horizontal y mejora la legibilidad de campos que contienen grandes cantidades de texto, como comentarios o reportes. Otras opciones como 'Cards' o 'Section headers' no est\u00e1n dise\u00f1adas para contener contenido extenso, y 'Canvas' no es una opci\u00f3n disponible en los layouts.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f87ccadf3b68f6f9b028"
+    },
+    "qid": 10,
+    "question": "Which two advanced attributes can be applied to incident fields when editing? (Choose two.)",
+    "options": [
+      "Set a field trigger script",
+      "Associate to an incident type",
+      "Change field type",
+      "Change field name"
+    ],
+    "answer": [
+      "Set a field trigger script",
+      "Associate to an incident type"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "Al editar campos de incidentes en Cortex XSOAR, se pueden aplicar atributos avanzados como: 1) **Set a field trigger script**, lo que permite ejecutar un script autom\u00e1ticamente cuando el campo cambia, y 2) **Associate to an incident type**, para que el campo solo est\u00e9 disponible en incidentes de un tipo espec\u00edfico. Por el contrario, no es posible cambiar el tipo de campo ni el nombre del campo una vez creado; estos par\u00e1metros est\u00e1n bloqueados para mantener la integridad de los datos y referencias dentro del sistema.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f892cadf3b68f6f9b029"
+    },
+    "qid": 11,
+    "question": "What are three different loop types in a playbook? (Choose three.)",
+    "options": [
+      "Automation",
+      "Built-in",
+      "Data collection",
+      "Conditional",
+      "For-each"
+    ],
+    "answer": [
+      "Built-in",
+      "Conditional",
+      "For-each"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR existen tres tipos principales de bucles que se pueden utilizar en un playbook: 1) **Built-in**: permite ejecutar un conjunto de tareas m\u00faltiples veces mientras se cumpla una condici\u00f3n, 2) **Conditional**: eval\u00faa condiciones l\u00f3gicas y puede incluir bucles internos seg\u00fan el flujo del playbook, y 3) **For-each**: ejecuta una serie de tareas por cada elemento en una lista, repitiendo el bloque para cada entrada. 'Automation' y 'Data collection' no son tipos de bucles, sino tareas individuales o funcionalidades espec\u00edficas dentro del playbook.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861f9d82441598f366db5c7"
+    },
+    "qid": 12,
+    "question": "By default, which components does an XSOAR implementation include?",
+    "options": [
+      "XSOAR server, XSOAR engine",
+      "Application server, distributed DB server",
+      "Application server, distributed DB server, Backup server",
+      "All in one server"
+    ],
+    "answer": [
+      "All in one server"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "Por defecto, una implementaci\u00f3n est\u00e1ndar de Cortex XSOAR incluye un componente llamado **All in one server**, que contiene todos los servicios necesarios en una sola instancia: servidor de aplicaci\u00f3n, base de datos, motor de ejecuci\u00f3n y frontend. Esta arquitectura simplificada es ideal para entornos de prueba o implementaciones peque\u00f1as. En implementaciones m\u00e1s avanzadas se pueden agregar componentes distribuidos como motores (engines) o servidores de base de datos separados, pero no forman parte del despliegue por defecto.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "6861fa382441598f366db5c8"
+    },
+    "qid": 13,
+    "question": "What is the correct definition regarding integration parameters and command arguments?",
+    "options": [
+      "Parameters are global variables which means that every command can use these configurable options in order to run. Arguments are shared with other commands and must be present for each command.",
+      "Parameters are local variables which means that every command can use these configurable options in order to run. Arguments are shared with other commands and must be present for each command.",
+      "Parameters are local variables which means that every command can use these configurable options in order to run. Arguments are specific to only one command.",
+      "Parameters are global variables which means that every command can use these configurable options in order to run. Arguments are specific to only one command."
+    ],
+    "answer": [
+      "Parameters are global variables which means that every command can use these configurable options in order to run. Arguments are specific to only one command."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "In Cortex XSOAR, integration parameters are considered global variables\u2014they are defined during integration setup (such as API key, server URL, etc.) and are accessible to all commands within that integration. Command arguments, on the other hand, are input values specific to each command and must be provided when executing that command. This separation allows integrations to share connection-level settings (parameters) while keeping command-level input (arguments) distinct and contextual.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "6861fad82441598f366db5c9"
+    },
+    "qid": 14,
+    "question": "Where would an XSOAR engineer navigate to monitor/improve the system performance, and resilience for hosts in a multi-tenant environment?",
+    "options": [
+      "Settings > About > Troubleshooting, in the main host account. Each host has a System Diagnostics page.",
+      "Settings > Advanced > System Diagnostics, in the main host account. Each host has a System Diagnostics page.",
+      "Settings > Account Management > Hosts, in the main host account. Each host has a System Diagnostics page.",
+      "Settings > About > System Diagnostics, in the main host account. Each host has a System Diagnostics page."
+    ],
+    "answer": [
+      "Settings > About > System Diagnostics, in the main host account. Each host has a System Diagnostics page."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, para monitorear e incrementar el rendimiento del sistema y la resiliencia de los hosts en un entorno multi-tenant, se debe navegar a **Settings > About > System Diagnostics** desde la cuenta principal del host. Ah\u00ed, cada host dispone de una p\u00e1gina dedicada que muestra informaci\u00f3n como uso de CPU, memoria, estado de la base de datos, procesos y m\u00e1s.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "6861fc252441598f366db5ca"
+    },
+    "qid": 15,
+    "question": "When is the post-processing script executed in XSOAR?",
+    "options": [
+      "Just after the incident is created",
+      "Just after the pre-processing is executed",
+      "Just after the playbook is executed",
+      "Just after the Close Incident button is clicked"
+    ],
+    "answer": [
+      "Just after the Close Incident button is clicked"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, el **post-processing script** se ejecuta **justo despu\u00e9s de que se hace clic en el bot\u00f3n 'Close Incident'**, pero antes de que el incidente se cierre por completo. Este script se utiliza com\u00fanmente para realizar tareas finales como notificaciones, actualizaciones a sistemas externos, o limpieza de datos. No se ejecuta despu\u00e9s de la creaci\u00f3n del incidente, ni tras el pre-processing o ejecuci\u00f3n del playbook.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861fc442441598f366db5cb"
+    },
+    "qid": 16,
+    "question": "In which two locations can filters and transformers be used in XSOAR? (Choose two.)",
+    "options": [
+      "Classification and Mapping",
+      "Playbook Tasks",
+      "Evidence Fields",
+      "Incident Fields"
+    ],
+    "answer": [
+      "Classification and Mapping",
+      "Playbook Tasks"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **filters** y **transformers** se pueden aplicar en dos lugares clave: 1) **Playbook Tasks**, donde se usan para manipular, filtrar o transformar datos entre tareas usando el Data Collection o Set/Condition tasks; y 2) **Classification and Mapping**, donde ayudan a transformar datos entrantes antes de asignarlos a campos de incidentes. No se utilizan directamente en los campos de incidentes ni en los campos de evidencias.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861fccc2441598f366db5cc"
+    },
+    "qid": 17,
+    "question": "An engineer asked for a specific command in an integration but the capability does not exist. The engineer decided to edit the existing integration by copying the integration and adding the needed commands. What is the main concern when adding these commands?",
+    "options": [
+      "The commands must return a proper result to the war room for the analysts to understand",
+      "The code may not be written to XSOAR standards",
+      "The integrations are locked and cannot be edited with additional commands",
+      "The custom integration will not be maintained and updated by the XSOAR content team"
+    ],
+    "answer": [
+      "The custom integration will not be maintained and updated by the XSOAR content team"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando se copia y modifica una integraci\u00f3n existente en Cortex XSOAR para agregar comandos personalizados, el principal riesgo es que la nueva integraci\u00f3n se convierte en una **versi\u00f3n personalizada**. Esto significa que **ya no recibir\u00e1 actualizaciones, mejoras ni soporte por parte del equipo de contenido de XSOAR**. Aunque es t\u00e9cnicamente posible modificar o extender una integraci\u00f3n, hacerlo implica que el mantenimiento futuro recae completamente en el equipo que cre\u00f3 la versi\u00f3n personalizada.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861fce62441598f366db5cd"
+    },
+    "qid": 18,
+    "question": "Which two options will troubleshoot an integration\u2019s fetch incidents command? (Choose two.)",
+    "options": [
+      "In the instance settings, enable the fetch incidents parameter and wait for one minute",
+      "Create a one-task playbook with a fetch-incident command",
+      "execute !<integration_instance_name>-fetch",
+      "execute !<integration_name>-fetch"
+    ],
+    "answer": [
+      "In the instance settings, enable the fetch incidents parameter and wait for one minute",
+      "execute !<integration_instance_name>-fetch"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para solucionar problemas con el comando **fetch incidents** de una integraci\u00f3n en XSOAR, puedes: 1) **Activar el par\u00e1metro 'Fetch incidents' en la configuraci\u00f3n de la instancia** y esperar un minuto para observar si comienza la recolecci\u00f3n de incidentes autom\u00e1ticamente, y 2) **Ejecutar manualmente el comando `!<integration_instance_name>-fetch`** en el War Room para probar si la funci\u00f3n de fetch responde correctamente. No existe un comando gen\u00e9rico `!<integration_name>-fetch`, y los playbooks no se usan directamente para este tipo de prueba, ya que fetch no es un comando que se ejecute dentro de ellos.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861fd362441598f366db5ce"
+    },
+    "qid": 19,
+    "question": "What are the three ways to add/mark entries as evidence inside the Evidence Board? (Choose three.)",
+    "options": [
+      "Manually directly from the War Room with the Actions drop-down",
+      "From the Notes section (mark as entry icon)",
+      "Manually from the playbook task (mark as entry icon)",
+      "Automatically from playbook tasks when the option is selected on the Advanced tab",
+      "By running the command !MarkAsEvidence"
+    ],
+    "answer": [
+      "Manually directly from the War Room with the Actions drop-down",
+      "From the Notes section (mark as entry icon)",
+      "Automatically from playbook tasks when the option is selected on the Advanced tab"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, las entradas se pueden marcar como evidencia para el Evidence Board de tres maneras oficiales: 1) manualmente desde el War Room utilizando la opci\u00f3n 'Actions > Mark as Evidence', 2) desde la secci\u00f3n de Notes usando el \u00edcono correspondiente para marcar como evidencia, y 3) autom\u00e1ticamente desde tareas del playbook si se habilita la opci\u00f3n 'Mark as Evidence' en la pesta\u00f1a 'Advanced' de la tarea. Estas opciones garantizan que la entrada se visualice correctamente en el Evidence Board para los analistas.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861fd932441598f366db5cf"
+    },
+    "qid": 20,
+    "question": "An incident field is created having the display name as Source_IP. How can the field be accessed?",
+    "options": [
+      "${incident.sourceip}",
+      "${incident.Source_IP}",
+      "${incident.srcip}",
+      "${incident.Source IP}"
+    ],
+    "answer": [
+      "${incident.sourceip}"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, cuando se crea un campo personalizado con un nombre visible como 'Source_IP', el sistema genera autom\u00e1ticamente un **'field ID' en min\u00fasculas y sin caracteres especiales**. Este ID se usa para acceder al valor del campo dentro de playbooks, scripts y plantillas. En este caso, 'Source_IP' se convierte en `sourceip`, por lo que debe accederse como `${incident.sourceip}`. Las otras opciones son inv\u00e1lidas porque conservan may\u00fasculas, guiones bajos o usan un nombre incorrecto como 'srcip'.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861fdb12441598f366db5d0"
+    },
+    "qid": 21,
+    "question": "Which out-of-box method enables a user to send an email via the Mail Sender integration?",
+    "options": [
+      "XSOAR D2 agent",
+      "external integration command",
+      "XSOAR shared agent",
+      "common automation script"
+    ],
+    "answer": [
+      "external integration command"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para enviar correos electr\u00f3nicos utilizando la integraci\u00f3n 'Mail Sender' en Cortex XSOAR, se utiliza un **comando de integraci\u00f3n externa** (external integration command). Esta integraci\u00f3n proporciona comandos como `!send-mail` que permiten enviar correos electr\u00f3nicos configurando los par\u00e1metros desde la instancia. No se requiere un D2 agent ni un shared agent, y aunque se podr\u00edan usar scripts para automatizar este proceso, el m\u00e9todo directo y listo para usar es a trav\u00e9s del comando proporcionado por la integraci\u00f3n misma.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "6861fdce2441598f366db5d1"
+    },
+    "qid": 22,
+    "question": "What can you use to assign a layout, field, and playbook to an incoming incident?",
+    "options": [
+      "Playbook",
+      "Classification and mapping",
+      "Incident type",
+      "Pre-processing"
+    ],
+    "answer": [
+      "Incident type"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, el **Incident Type** (tipo de incidente) es el componente que define qu\u00e9 **layout**, **campos personalizados** y **playbook** se asignar\u00e1n a un incidente entrante. El tipo de incidente act\u00faa como una plantilla que organiza toda la estructura del manejo del incidente. Aunque la clasificaci\u00f3n y el mapeo ayudan a determinar el tipo de incidente, y el preprocesamiento puede aplicar l\u00f3gica antes de que se cree, es el tipo de incidente el que agrupa y aplica el layout, los campos y el playbook.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861fdf92441598f366db5d2"
+    },
+    "qid": 23,
+    "question": "Which task type will verify that an integration was enabled?",
+    "options": [
+      "Standard",
+      "Conditional",
+      "Section Header",
+      "Data Collection"
+    ],
+    "answer": [
+      "Conditional"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, las tareas de tipo **Conditional** permiten verificar si una integraci\u00f3n est\u00e1 habilitada mediante la opci\u00f3n 'Run this branch if integration is available'. Esta funci\u00f3n permite construir l\u00f3gica en el playbook que solo se ejecuta si la integraci\u00f3n est\u00e1 presente, evitando errores. Las tareas Standard ejecutan comandos, pero no verifican la disponibilidad de la integraci\u00f3n antes de hacerlo.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861fe1c2441598f366db5d3"
+    },
+    "qid": 24,
+    "question": "What is a primary use case of data collection tasks?",
+    "options": [
+      "Generating new widgets for a dashboard",
+      "Allowing multi-question surveys with or without authentication restrictions",
+      "Automating tasks such as parsing a file or enriching indicators",
+      "Determining different paths in a playbook"
+    ],
+    "answer": [
+      "Allowing multi-question surveys with or without authentication restrictions"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Las tareas de tipo **Data Collection** en Cortex XSOAR est\u00e1n dise\u00f1adas para recopilar informaci\u00f3n directamente del analista o incluso de fuentes externas mediante encuestas. Son ideales para formularios de m\u00faltiples preguntas, que pueden configurarse con o sin autenticaci\u00f3n. Esta funcionalidad se usa para obtener aprobaci\u00f3n humana, respuestas de an\u00e1lisis o contexto adicional antes de continuar con el playbook. No est\u00e1n dise\u00f1adas para automatizaci\u00f3n, dashboards ni l\u00f3gica condicional directa (aunque sus resultados pueden alimentar decisiones posteriores).",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861fe332441598f366db5d4"
+    },
+    "qid": 25,
+    "question": "Which XSOAR architecture would be recommended for Managed Security Service Providers (MSSP)?",
+    "options": [
+      "Multi-region",
+      "Dev-Prod",
+      "Multi-tenant",
+      "Distributed database"
+    ],
+    "answer": [
+      "Multi-tenant"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para los Managed Security Service Providers (MSSP), la arquitectura recomendada en Cortex XSOAR es la **Multi-tenant**. Esta arquitectura permite gestionar m\u00faltiples clientes (tenants) de forma aislada, asegurando que los datos, incidentes, integraciones y playbooks de cada cliente est\u00e9n segregados de manera segura. Esto permite escalar operaciones y brindar servicios diferenciados por cliente. Las otras opciones pueden ser \u00fatiles en otros contextos (como entornos de desarrollo-producci\u00f3n o despliegues distribuidos), pero no est\u00e1n dise\u00f1adas espec\u00edficamente para MSSP.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "6861fe5f2441598f366db5d5"
+    },
+    "qid": 26,
+    "question": "Select the correct incident life cycle on XSOAR.",
+    "options": [
+      "Planning > Incident Ingestion > Incident Creation > Mapping and Classification > Pre-processing > Playbook runs > Post-processing",
+      "Planning > Incident Ingestion > Pre-processing > Incident Creation > Mapping and Classification > Playbook runs > Post-processing",
+      "Planning > Incident Ingestion > Pre-processing > Mapping and Classification > Incident Creation > Playbook runs > Post-processing",
+      "Planning > Incident Ingestion > Mapping and Classification > Pre-processing > Incident Creation > Playbook runs > Post-processing"
+    ],
+    "answer": [
+      "Planning > Incident Ingestion > Mapping and Classification > Pre-processing > Incident Creation > Playbook runs > Post-processing"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, el ciclo de vida correcto de un incidente inicia con la fase de planificaci\u00f3n (**Planning**), seguida por la **ingesti\u00f3n del evento**. Posteriormente se realiza la **clasificaci\u00f3n y mapeo** (Mapping and Classification), lo que determina el tipo de incidente y sus campos. Luego, el sistema ejecuta el **script de preprocesamiento** antes de crear el incidente. Tras la **creaci\u00f3n del incidente**, se ejecutan los **playbooks asignados**, y finalmente, al cerrar el incidente, se ejecuta el **post-processing script**.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861fea52441598f366db5d6"
+    },
+    "qid": 27,
+    "question": "How would context data be filtered to receive only malicious indicator values with DBotScore?",
+    "options": [
+      "Get DBotScore.value where DBotScore.Score (Larger or equals) 4",
+      "Get DBotScore.value where DBotScore.Score (equals (int)) 3",
+      "Get DBotScore where DBotScore.Score (Larger than) 1",
+      "Get DBotScore where DBotScore.Score (Larger or equals) 2"
+    ],
+    "answer": [
+      "Get DBotScore.value where DBotScore.Score (equals (int)) 3"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para filtrar solo los indicadores maliciosos en el contexto de XSOAR, debes usar: **Get DBotScore.value where DBotScore.Score (equals (int)) 3**. Esto selecciona \u00fanicamente los indicadores cuya puntuaci\u00f3n de reputaci\u00f3n (`DBotScore.Score`) es igual a 3, lo que corresponde a una clasificaci\u00f3n de **Malicious** (Malicioso). La escala de reputaci\u00f3n de DBotScore es la siguiente:\n\n- 0: Unknown (Gris)\n- 1: Benign (Verde)\n- 2: Suspicious (Naranja)\n- 3: Malicious (Rojo)\n\nEste sistema te permite filtrar con precisi\u00f3n los valores que representan una amenaza confirmada.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861fed72441598f366db5d7"
+    },
+    "qid": 28,
+    "question": "Which two options are the most effective for moving content between two environments? (Choose two.)",
+    "options": [
+      "Remote repository based content sharing",
+      "UI based content import/export button",
+      "Copy the content backup from one environment file system (/var/lib/demisto/backup/content-backup-*) and move it to the other environment",
+      "Download the content items separately and upload them to the other environment"
+    ],
+    "answer": [
+      "Remote repository based content sharing",
+      "Copy the content backup from one environment file system (/var/lib/demisto/backup/content-backup-*) and move it to the other environment"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, las formas m\u00e1s efectivas para mover contenido entre entornos son: 1) el uso de **Remote Repository**, que permite sincronizar contenido de manera estructurada entre ambientes como desarrollo y producci\u00f3n; y 2) la **transferencia directa de archivos de respaldo de contenido (`content-backup-*`) desde el sistema de archivos**, ubicada t\u00edpicamente en `/var/lib/demisto/backup/`, lo cual permite restaurar una copia completa del contenido. Estos m\u00e9todos son m\u00e1s robustos y confiables que la exportaci\u00f3n manual desde la UI o la carga individual de \u00edtems.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "6861fef02441598f366db5d8"
+    },
+    "qid": 29,
+    "question": "In order to automatically run a playbook on the indicators fetched by an integration, what would an XSOAR Administrator setup?",
+    "options": [
+      "Cron job",
+      "Time triggered job",
+      "Feed triggered job",
+      "REST API job"
+    ],
+    "answer": [
+      "Feed triggered job"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para ejecutar autom\u00e1ticamente un playbook sobre los indicadores obtenidos por una integraci\u00f3n en Cortex XSOAR, un administrador debe configurar un **Feed Triggered Job**. Este tipo de job se activa autom\u00e1ticamente cuando nuevos indicadores son tra\u00eddos por un feed (como MISP, AlienVault, etc.) y permite aplicar un playbook sobre ellos. A diferencia de los jobs por cron o tiempo, este se basa directamente en la actividad del feed, lo cual es ideal para respuestas inmediatas o enriquecimiento continuo.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861ff042441598f366db5d9"
+    },
+    "qid": 30,
+    "question": "What is a feature of the outgoing mapper in Cortex XSOAR?",
+    "options": [
+      "Pre-processing rules",
+      "Classification",
+      "Indicator Extraction rules",
+      "Mirroring"
+    ],
+    "answer": [
+      "Mirroring"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Una caracter\u00edstica clave del **outgoing mapper** en Cortex XSOAR es el soporte para **mirroring**. El outgoing mapper define c\u00f3mo se transforman y env\u00edan los datos desde un incidente en XSOAR hacia una integraci\u00f3n externa, especialmente en escenarios de sincronizaci\u00f3n bidireccional (mirroring). Esto permite que cambios en XSOAR (como el cierre del incidente o actualizaci\u00f3n de campos) se reflejen autom\u00e1ticamente en el sistema conectado. Las otras opciones (pre-processing, classification y indicator extraction) est\u00e1n relacionadas con el procesamiento entrante, no con el mapper saliente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861ff172441598f366db5da"
+    },
+    "qid": 31,
+    "question": "What does the outgoing mapper support?",
+    "options": [
+      "Mirroring",
+      "Classification",
+      "Dynamic fields",
+      "Pre-processing"
+    ],
+    "answer": [
+      "Mirroring"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El **outgoing mapper** en Cortex XSOAR soporta **mirroring**, lo que permite enviar datos actualizados desde el incidente en XSOAR hacia un sistema externo de forma sincronizada. Este proceso es parte del mecanismo de bidirectional mirroring, en donde los cambios en campos espec\u00edficos de XSOAR se reflejan en la plataforma integrada. Las otras opciones \u2014Classification, Dynamic fields y Pre-processing\u2014 est\u00e1n asociadas con etapas diferentes del manejo de incidentes, como la ingesti\u00f3n o personalizaci\u00f3n, pero no con el mapeo saliente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861ff2f2441598f366db5db"
+    },
+    "qid": 32,
+    "question": "What is used to trigger playbooks automatically based on the classification of an incident?",
+    "options": [
+      "Indicator type",
+      "Incoming mapper",
+      "Incident types",
+      "Integration configuration"
+    ],
+    "answer": [
+      "Incident types"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **Incident types** son los responsables de asignar autom\u00e1ticamente un playbook a un incidente luego de que se clasifica mediante el proceso de 'Classification & Mapping'. Una vez que el incidente es clasificado, se le asigna un tipo de incidente, y este tiene definido qu\u00e9 playbook debe ejecutarse autom\u00e1ticamente. El incoming mapper transforma datos entrantes, pero no dispara playbooks directamente. Los indicator types y la configuraci\u00f3n de la integraci\u00f3n tampoco definen qu\u00e9 playbook se ejecuta tras la clasificaci\u00f3n.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861ff432441598f366db5dc"
+    },
+    "qid": 33,
+    "question": "Which development languages are supported when creating XSOAR automation scripts?",
+    "options": [
+      "C++, Python, Powershell",
+      "Ruby, C++, Python",
+      "Javascript, Powershell, C++",
+      "Python, Powershell, Javascript"
+    ],
+    "answer": [
+      "Python, Powershell, Javascript"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los lenguajes de programaci\u00f3n soportados para crear scripts de automatizaci\u00f3n son **Python**, **PowerShell** y **JavaScript**. Python es el m\u00e1s utilizado y recomendado, ya que cuenta con soporte completo de contexto, integraciones y funciones avanzadas. PowerShell es com\u00fan en entornos Windows, y JavaScript est\u00e1 disponible para tareas b\u00e1sicas. Lenguajes como C++ o Ruby no son compatibles en la plataforma.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "6861ff602441598f366db5dd"
+    },
+    "qid": 34,
+    "question": "Where are incident layouts customized?",
+    "options": [
+      "Settings > Object Setup > Incidents > Layouts",
+      "Settings > Integrations > Instance configuration",
+      "Settings > Object Setup > Indicators > Layouts",
+      "Settings > Advanced > Incident Layouts"
+    ],
+    "answer": [
+      "Settings > Object Setup > Incidents > Layouts"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los layouts de incidentes se personalizan desde el men\u00fa: **Settings > Object Setup > Incidents > Layouts**. Ah\u00ed puedes crear, editar o asignar layouts personalizados a tipos de incidentes espec\u00edficos, controlando la visualizaci\u00f3n de campos, pesta\u00f1as, secciones din\u00e1micas y m\u00e1s. Las dem\u00e1s opciones est\u00e1n relacionadas con integraciones, indicadores o configuraciones avanzadas que no gestionan directamente los layouts de incidentes.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6861ff8e2441598f366db5de"
+    },
+    "qid": 35,
+    "question": "What are two primary uses of standard tasks? (Choose two.)",
+    "options": [
+      "To highlight different paths in a playbook",
+      "To generate new widgets for a dashboard",
+      "To create an incident or escalate an existing incident",
+      "To automate tasks such as parsing a file or enriching indicators"
+    ],
+    "answer": [
+      "To create an incident or escalate an existing incident",
+      "To automate tasks such as parsing a file or enriching indicators"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, las tareas de tipo **Standard** se utilizan principalmente para: 1) **Automatizar tareas**, como analizar archivos, enriquecer indicadores, ejecutar comandos de integraciones o scripts, y 2) **Crear o escalar incidentes**, permitiendo delegar informaci\u00f3n a otro playbook o tenant. Las tareas Standard son el n\u00facleo de ejecuci\u00f3n dentro de un playbook. No se usan para resaltar caminos condicionales (eso lo hace una tarea Conditional), ni para crear widgets en dashboards.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6861ffa02441598f366db5df"
+    },
+    "qid": 36,
+    "question": "For troubleshooting, after a log bundle is created, where do the logs appear on the XSOAR server?",
+    "options": [
+      "/var/lib/demisto",
+      "/tmp/log/demisto",
+      "/usr/local/demisto",
+      "/var/log/demisto"
+    ],
+    "answer": [
+      "/var/log/demisto"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, una vez que se genera un **log bundle** para prop\u00f3sitos de troubleshooting, los archivos de log se almacenan en el servidor en la ruta **/var/log/demisto**. Este directorio contiene archivos cruciales como `server.log`, `d1.log`, `d2.log` y otros registros de actividad, errores y rendimiento del sistema. Es el punto de referencia est\u00e1ndar para revisar problemas operativos en el entorno de XSOAR.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "686200012441598f366db5e0"
+    },
+    "qid": 37,
+    "question": "Which field type should be used to hold more than 60,000 characters of unformatted text?",
+    "options": [
+      "Short Text",
+      "HTML",
+      "Long Text",
+      "Markdown"
+    ],
+    "answer": [
+      "Long Text"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El tipo de campo **Long Text** en Cortex XSOAR est\u00e1 dise\u00f1ado espec\u00edficamente para almacenar grandes vol\u00famenes de texto sin formato, superando los 60,000 caracteres. A diferencia de los campos Short Text, HTML o Markdown, el campo Long Text no aplica formato ni interpretaci\u00f3n del contenido, lo que lo hace ideal para almacenar informaci\u00f3n extensa como logs, descripciones t\u00e9cnicas largas o contenido generado autom\u00e1ticamente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862005a2441598f366db5e1"
+    },
+    "qid": 38,
+    "question": "A Cortex XSOAR Administrator is tasked with building a button for an analyst in order for the analyst to be assigned to the incident as an owner. What is the process?",
+    "options": [
+      "Edit the incident layout to add a new button that calls the AssignAnalystToIncident automation with no argument",
+      "Edit the incident layout to add a new button that calls the AssignToMeButton automation with argument assignBy={me}",
+      "Edit the incident layout to add a new button that calls the AssignAnalystToIncident automation with argument owner={me}",
+      "Edit the incident layout to add a new button that calls the AssignAnalystToIncident automation with argument assignBy=current"
+    ],
+    "answer": [
+      "Edit the incident layout to add a new button that calls the AssignAnalystToIncident automation with argument assignBy=current"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La forma correcta de permitir que un analista se asigne a s\u00ed mismo como propietario del incidente en Cortex XSOAR es **editar el layout del incidente y agregar un bot\u00f3n que ejecute el script `AssignAnalystToIncident` con el argumento `assignBy=current`**. Seg\u00fan la documentaci\u00f3n del script, disponible en la interfaz como se muestra en la imagen, este argumento indica que se debe asignar el incidente al **usuario actual que ejecuta el bot\u00f3n**. Otras opciones como `owner={me}` o `AssignToMeButton` no son v\u00e1lidas para este flujo.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686205252441598f366db5e2"
+    },
+    "qid": 39,
+    "question": "What happens if both a Classifier and Incident Type are configured in an integration instance\u2019s settings?",
+    "options": [
+      "The administrator will receive a notification that there is both a Classifier and Incident Type set for that integration instance.",
+      "The Incident Type will be ignored, and incoming incidents will be classified according to the Classifier.",
+      "The Classifier will be ignored, and incoming incidents will be classified according to the Incident Type.",
+      "Both the Classifier and Incident Type will classify incoming incidents."
+    ],
+    "answer": [
+      "The Incident Type will be ignored, and incoming incidents will be classified according to the Classifier."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, si se configura tanto un **Classifier** como un **Incident Type** en la instancia de una integraci\u00f3n, el **Incident Type ser\u00e1 ignorado**. El proceso de clasificaci\u00f3n ser\u00e1 manejado \u00fanicamente por el **Classifier**, el cual eval\u00faa los datos entrantes para determinar din\u00e1micamente el tipo de incidente y aplicar el mapeo correspondiente. Esto permite una clasificaci\u00f3n m\u00e1s flexible basada en los datos reales en lugar de forzar un tipo est\u00e1tico definido manualmente en la configuraci\u00f3n.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686205ab2441598f366db5e3"
+    },
+    "qid": 40,
+    "question": "What is the solution when testing of a custom integration reveals that the fetch interval is missing?",
+    "options": [
+      "Define the Incident Fetch Interval when running the integration\u2019s commands.",
+      "Duplicate the integration. Edit the resulting copy and add incidentFetchInterval as a parameter. Save the integration. Configure the new integration instance with the interval required.",
+      "Configure the application to send incidents on the required interval.",
+      "Duplicate the integration. Add the interval in the code. Save the integration and configure the new integration instance with the interval required."
+    ],
+    "answer": [
+      "Duplicate the integration. Edit the resulting copy and add incidentFetchInterval as a parameter. Save the integration. Configure the new integration instance with the interval required."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando una integraci\u00f3n personalizada en Cortex XSOAR no tiene definido el par\u00e1metro de intervalo de fetch (`incidentFetchInterval`), la soluci\u00f3n recomendada es **duplicar la integraci\u00f3n** y luego **editar la copia para agregar manualmente el par\u00e1metro `incidentFetchInterval`** en la secci\u00f3n de configuraci\u00f3n. Una vez guardada la nueva integraci\u00f3n, se crea una instancia donde se define el intervalo deseado para la recolecci\u00f3n de incidentes. Esto asegura que la funci\u00f3n `fetch-incidents` se ejecute con la frecuencia configurada por el administrador.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686205c32441598f366db5e4"
+    },
+    "qid": 41,
+    "question": "Which three scripting languages can an engineer use to write XSOAR automations? (Choose three.)",
+    "options": [
+      "Python",
+      "Perl",
+      "Go",
+      "JavaScript",
+      "Powershell"
+    ],
+    "answer": [
+      "Python",
+      "JavaScript",
+      "Powershell"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR, un ingeniero puede escribir automatizaciones usando tres lenguajes de scripting compatibles: **Python**, **JavaScript** y **PowerShell**. Python es el m\u00e1s utilizado por su flexibilidad y compatibilidad con el contexto de XSOAR. PowerShell es \u00fatil para entornos Windows y JavaScript se usa para scripts m\u00e1s simples o legacy. Lenguajes como **Perl** y **Go** no est\u00e1n soportados dentro del entorno de ejecuci\u00f3n de XSOAR para automatizaciones.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686205e02441598f366db5e5"
+    },
+    "qid": 42,
+    "question": "How can Cortex XSOAR administrators prevent junior analysts from viewing a senior analyst dashboard?",
+    "options": [
+      "Share the dashboard in Read and Edit mode for senior analysts.",
+      "Share the dashboard in Read & Edit mode for senior analysts and Read Only for junior analysts.",
+      "Share the dashboard in Read and Write mode for senior analysts.",
+      "Share the dashboard in Read Only mode for junior analysts and senior analysts."
+    ],
+    "answer": [
+      "Share the dashboard in Read and Edit mode for senior analysts."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para evitar que los analistas junior vean un dashboard destinado solo a analistas senior en Cortex XSOAR, el administrador debe **compartir el dashboard exclusivamente con el rol de analistas senior** en modo **Read and Edit**. Si no se otorgan permisos de visualizaci\u00f3n al rol de analistas junior, estos no podr\u00e1n acceder al dashboard. Compartirlo en modo Read Only con los junior o habilitar acceso a m\u00faltiples roles les permitir\u00eda verlo, lo cual va en contra del objetivo de restricci\u00f3n.",
+      "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "686205fd2441598f366db5e6"
+    },
+    "qid": 43,
+    "question": "Management would like to get an incident report automatically following an incident\u2019s closure. How would this be accomplished?",
+    "options": [
+      "Define a task in a playbook to generate an incident report before the closure occurs",
+      "Manually create an \u2018Incident Report\u2019",
+      "Configure post-processing using a script",
+      "Create an \u2018Incident Report\u2019 from the Reports page"
+    ],
+    "answer": [
+      "Configure post-processing using a script"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para generar autom\u00e1ticamente un informe de incidente tras el cierre en Cortex XSOAR, la forma recomendada es **configurar un script de post-processing**. Este tipo de script se ejecuta justo despu\u00e9s de que se cierra el incidente, y puede incluir l\u00f3gica para generar un reporte (PDF/HTML) y enviarlo por correo u otra v\u00eda. Las otras opciones requieren intervenci\u00f3n manual o no est\u00e1n alineadas con el momento posterior al cierre del incidente.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6862061a2441598f366db5e7"
+    },
+    "qid": 44,
+    "question": "Which command should be entered in the War Room CLI to run an automation to set the incident field \"Description\" to \"Confirmed Phishing\"?",
+    "options": [
+      "!incidentSet description=\"Confirmed Phishing\"",
+      "/incidentSet description=Confirmed Phishing",
+      "!setIncident description=\"Confirmed Phishing\"",
+      "/setIncident description=Confirmed Phishing"
+    ],
+    "answer": [
+      "!setIncident description=\"Confirmed Phishing\""
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, para establecer el valor de un campo de incidente desde el War Room mediante CLI, se utiliza el comando **`!setIncident`** seguido del nombre del campo y su valor. En este caso, para establecer el campo `description` con el texto 'Confirmed Phishing', el comando correcto es: **`!setIncident description=\"Confirmed Phishing\"`**. El prefijo `!` indica que es un comando, y los argumentos deben estar entre comillas si contienen espacios. Los otros comandos tienen sintaxis incorrecta o no existen en XSOAR.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686206d42441598f366db5e8"
+    },
+    "qid": 45,
+    "question": "What is the default landing page for a new user in XSOAR?",
+    "options": [
+      "Dashboards",
+      "Threat Intel",
+      "Settings",
+      "Marketplace"
+    ],
+    "answer": [
+      "Dashboards"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, la **p\u00e1gina de inicio predeterminada** para un nuevo usuario es **Dashboards**. Desde ah\u00ed, los usuarios pueden obtener una vista consolidada de incidentes, indicadores, m\u00e9tricas clave y widgets personalizados seg\u00fan sus permisos. Aunque es posible cambiar la p\u00e1gina de inicio posteriormente en la configuraci\u00f3n del usuario o por rol, Dashboards es la vista inicial por defecto para proporcionar una visi\u00f3n general del estado operativo.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "686206f12441598f366db5e9"
+    },
+    "qid": 46,
+    "question": "Can an automation script execute an integration command and an integration command execute an automation script?",
+    "options": [
+      "An automation script cannot execute an integration command and an integration command cannot execute an automation script",
+      "An automation script can execute an integration command and an integration command cannot execute an automation script",
+      "An automation script cannot execute an integration command and an integration command can execute an automation script",
+      "An automation script can execute an integration command and an integration command can execute an automation script"
+    ],
+    "answer": [
+      "An automation script can execute an integration command and an integration command cannot execute an automation script"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, un **script de automatizaci\u00f3n** puede ejecutar comandos de integraciones usando la funci\u00f3n `demisto.executeCommand()` en Python, lo cual permite interactuar con integraciones externas. Sin embargo, un **comando de integraci\u00f3n** no puede ejecutar scripts de automatizaci\u00f3n directamente, ya que las integraciones est\u00e1n dise\u00f1adas para conectarse con fuentes externas y no invocan l\u00f3gica interna personalizada como los scripts. Por tanto, solo los scripts pueden desencadenar comandos, no al rev\u00e9s.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686209152441598f366db5ea"
+    },
+    "qid": 47,
+    "question": "After enriching a username using Active Directory, an engineer would like to send an email to the user\u2019s manager. However, this functionality is not part of the command output. The engineer checks with raw-response=true and notices that the manager\u2019s email is returned, but not saved in the context. How can the engineer save the data so it will be accessible?",
+    "options": [
+      "Mark ignore output = true",
+      "Use extend-context",
+      "Use raw-response = save",
+      "Mark ignore input = true"
+    ],
+    "answer": [
+      "Use extend-context"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando un comando en Cortex XSOAR devuelve datos \u00fatiles en el `raw-response` pero estos no son mapeados autom\u00e1ticamente al contexto, se puede usar la opci\u00f3n **`extend-context`** para guardar manualmente los valores deseados. Esta opci\u00f3n permite extraer valores del `raw-response` y almacenarlos en una clave espec\u00edfica del contexto, haci\u00e9ndolos accesibles para tareas posteriores como el env\u00edo de correos o decisiones en el playbook. Las otras opciones no tienen relaci\u00f3n con manipulaci\u00f3n del contexto.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "686209402441598f366db5eb"
+    },
+    "qid": 48,
+    "question": "Which playbook will a job run by default?",
+    "options": [
+      "The playbook assigned to the incident type",
+      "The playbook assigned to the indicator type",
+      "The playbook assigned during pre-processing",
+      "The playbook assigned by the integration"
+    ],
+    "answer": [
+      "The playbook assigned to the incident type"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando un job en Cortex XSOAR genera incidentes (como un Scheduled Job o Feed Job), el sistema ejecuta autom\u00e1ticamente el **playbook asignado al tipo de incidente** definido en ese job. Esto asegura que cada incidente generado siga el flujo de trabajo correcto seg\u00fan su categor\u00eda. Los playbooks asociados a tipos de indicadores aplican en otros contextos como enriquecimiento individual, pero no controlan la ejecuci\u00f3n autom\u00e1tica en un job.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862095a2441598f366db5ec"
+    },
+    "qid": 49,
+    "question": "Which built-in automation/command can be used to change an incident\u2019s type?",
+    "options": [
+      "setIncident",
+      "Set",
+      "GetFieldsByIncidentType",
+      "modifyIncidentFields"
+    ],
+    "answer": [
+      "setIncident"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, el comando **`!setIncident`** es el adecuado para **modificar atributos de un incidente existente**, incluyendo el **tipo de incidente (incident.type)**. Este comando permite actualizar m\u00faltiples campos del incidente, como el owner, severity, o type, utilizando la sintaxis CLI en el War Room o desde scripts/playbooks. Las otras opciones como `Set`, `GetFieldsByIncidentType` o `modifyIncidentFields` no est\u00e1n dise\u00f1adas para modificar directamente el tipo de incidente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862097a2441598f366db5ed"
+    },
+    "qid": 50,
+    "question": "Where would you look to find a personalized view of your own incidents and tasks?",
+    "options": [
+      "Incident Summary View",
+      "My Incidents",
+      "My Threat Landscape",
+      "My Dashboard"
+    ],
+    "answer": [
+      "My Dashboard"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, la vista **'My Dashboard'** proporciona una perspectiva personalizada con widgets que muestran incidentes asignados, tareas pendientes, actividad reciente, rendimiento individual y otros datos relevantes. Es la herramienta principal para que un analista o usuario monitoree su carga de trabajo y m\u00e9tricas personales de manera visual e interactiva. A diferencia de 'My Incidents', que muestra solo una lista filtrada, el dashboard ofrece un resumen completo personalizado.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6862098f2441598f366db5ee"
+    },
+    "qid": 51,
+    "question": "Which three support types are included in the Marketplace Content Packs? (Choose three.)",
+    "options": [
+      "Customer supported",
+      "Cortex XSOAR supported",
+      "Community supported",
+      "Partner supported",
+      "Prisma Cloud supported"
+    ],
+    "answer": [
+      "Cortex XSOAR supported",
+      "Community supported",
+      "Partner supported"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En el **Cortex XSOAR Marketplace**, los paquetes de contenido (Content Packs) pueden tener distintos tipos de soporte, indicados claramente en su ficha. Los tres tipos de soporte reconocidos son: 1) **Cortex XSOAR supported** \u2013 respaldado oficialmente por Palo Alto Networks, 2) **Community supported** \u2013 mantenido por miembros de la comunidad, y 3) **Partner supported** \u2013 desarrollado y mantenido por socios tecnol\u00f3gicos. 'Customer supported' y 'Prisma Cloud supported' no son categor\u00edas v\u00e1lidas dentro del esquema oficial de soporte del Marketplace.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686209a42441598f366db5ef"
+    },
+    "qid": 52,
+    "question": "In which two options can an automation script be executed? (Choose two.)",
+    "options": [
+      "Engine",
+      "Integration",
+      "War room",
+      "Playbook"
+    ],
+    "answer": [
+      "War room",
+      "Playbook"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **scripts de automatizaci\u00f3n** pueden ejecutarse desde: 1) **Playbooks**, como tareas de tipo est\u00e1ndar que automatizan acciones, y 2) el **War Room**, donde los analistas pueden ejecutar manualmente scripts mediante comandos CLI (`!script-name`). Un **engine** es el entorno de ejecuci\u00f3n (local o remoto) pero no el punto donde se lanza el script, y una **integraci\u00f3n** ejecuta comandos externos, no scripts internos directamente.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "686209da2441598f366db5f0"
+    },
+    "qid": 53,
+    "question": "Reliability scores in XSOAR range from A through F. What do A and F stand for?",
+    "options": [
+      "F - Reliability cannot be judged, A - Completely Reliable",
+      "F - Not reliable, A - Usually Reliable",
+      "F - Not usually reliable, A - Fairly Reliable",
+      "F - Unreliable, A - Completely Reliable"
+    ],
+    "answer": [
+      "F - Reliability cannot be judged, A - Completely Reliable"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los puntajes de confiabilidad (Reliability Scores) de los indicadores est\u00e1n clasificados de **A a F**, y se utilizan para determinar qu\u00e9 tan confiable es la fuente que report\u00f3 un indicador. Seg\u00fan la imagen oficial:\n\n- **A**: Completely reliable\n- **B**: Usually reliable\n- **C**: Fairly reliable\n- **D**: Not usually reliable\n- **E**: Unreliable\n- **F**: Reliability cannot be judged\n\nPor lo tanto, la letra **A representa la m\u00e1xima confianza posible**, y **F indica que no se puede juzgar la confiabilidad de la fuente**.",
+   "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686209f02441598f366db5f1"
+    },
+    "qid": 54,
+    "question": "Which two statements accurately describe layouts? (Choose two.)",
+    "options": [
+      "Layouts override classification and mapping",
+      "New tabs can be added to the incident layout",
+      "Layouts can display incident information and custom fields",
+      "Layouts add or remove custom fields from an incident type"
+    ],
+    "answer": [
+      "New tabs can be added to the incident layout",
+      "Layouts can display incident information and custom fields"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **layouts** definen c\u00f3mo se presenta la informaci\u00f3n de los incidentes en la interfaz del analista. Dos afirmaciones correctas sobre los layouts son: 1) **Se pueden agregar nuevas pesta\u00f1as (tabs)** para organizar la informaci\u00f3n como se desee, y 2) **Pueden mostrar tanto informaci\u00f3n est\u00e1ndar del incidente como campos personalizados**. Sin embargo, los layouts **no sobreescriben la clasificaci\u00f3n ni el mapeo**, ni agregan o eliminan campos personalizados del tipo de incidente; solo controlan c\u00f3mo se visualizan.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620a4e2441598f366db5f2"
+    },
+    "qid": 55,
+    "question": "Which two functions in XSOAR are incident types used for? (Choose two.)",
+    "options": [
+      "To run dedicated playbooks for different event types",
+      "To classify events ingested from various sources into the relevant types",
+      "To classify indicators extracted in XSOAR incidents to their respective types",
+      "To facilitate role-based access to XSOAR incidents"
+    ],
+    "answer": [
+      "To run dedicated playbooks for different event types",
+      "To classify events ingested from various sources into the relevant types"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los Incident Types se utilizan para: 1) clasificar eventos entrantes en tipos relevantes para su gesti\u00f3n, y 2) asociar autom\u00e1ticamente playbooks, layouts y campos personalizados. Los indicadores extra\u00eddos dentro de un incidente se manejan por separado mediante los Indicator Types, por lo que los Incident Types no clasifican indicadores directamente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620a772441598f366db5f3"
+    },
+    "qid": 56,
+    "question": "In Cortex XSOAR multi-tenant setup, when content from a development server is pushed to the remote repository, where in the production server can the updates be found?",
+    "options": [
+      "Main Account",
+      "Tenants",
+      "Agent tools",
+      "Marketplace"
+    ],
+    "answer": [
+      "Main Account"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En una configuraci\u00f3n multi-tenant de Cortex XSOAR, cuando el contenido es enviado desde el servidor de desarrollo al repositorio remoto, las actualizaciones aparecen en la **Main Account** del servidor de producci\u00f3n. Desde ah\u00ed, los administradores pueden aplicar los cambios a los tenants seleccionados. Tal como lo indica la documentaci\u00f3n: *'In the main account, the content appears as a content update, just like any other, and you pull the content from the remote repository into your working branch.'* Esto confirma que el punto de entrada para manejar y desplegar las actualizaciones es la cuenta principal.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68620a9a2441598f366db5f4"
+    },
+    "qid": 57,
+    "question": "What are two main uses of context data? (Choose two.)",
+    "options": [
+      "Store incident information in JSON format",
+      "Store incident information in XML format",
+      "Pass data between playbook tasks",
+      "Pass data between to-do tasks"
+    ],
+    "answer": [
+      "Store incident information in JSON format",
+      "Pass data between playbook tasks"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los datos de contexto (Context Data) se utilizan principalmente para: 1) **Almacenar informaci\u00f3n del incidente en formato JSON**, lo que permite que scripts y tareas accedan a los datos estructurados f\u00e1cilmente, y 2) **Pasar datos entre tareas dentro de un playbook**, permitiendo automatizar decisiones y mantener la l\u00f3gica del flujo. No se usa XML para el contexto, ni los datos de contexto se dise\u00f1aron para transferirse entre tareas de tipo 'to-do', que son manuales y no acceden al contexto autom\u00e1ticamente.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68620ad42441598f366db5f5"
+    },
+    "qid": 58,
+    "question": "An engineer defined a dashboard which allows important metrics to be displayed. The engineer would like to make this dashboard the default dashboard. How can it be accomplished?",
+    "options": [
+      "Default Dashboard can be defined by \u2018Role\u2019",
+      "Use the server configuration key: default.dashboards",
+      "Save the dashboard as a widget and apply it to all users",
+      "Right click on the dashboard tab and \u2018Set as Default\u2019"
+    ],
+    "answer": [
+      "Use the server configuration key: default.dashboards"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para definir un dashboard como predeterminado en Cortex XSOAR, se puede utilizar la **clave de configuraci\u00f3n del servidor `default.dashboards`**, como muestra la documentaci\u00f3n oficial. Esta configuraci\u00f3n permite especificar uno o m\u00e1s IDs de dashboards separados por comas que se mostrar\u00e1n autom\u00e1ticamente a los usuarios al iniciar sesi\u00f3n. Esta es una opci\u00f3n v\u00e1lida y centralizada para administrar dashboards predeterminados en toda la organizaci\u00f3n.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "68620b4b2441598f366db5f6"
+    },
+    "qid": 59,
+    "question": "When browsing the Marketplace for new content packs, which details about each pack are you able to view?",
+    "options": [
+      "The integration\u2019s source code",
+      "A summary of each version history",
+      "A test instance for the content pack",
+      "The source code of each playbook"
+    ],
+    "answer": [
+      "A summary of each version history"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando navegas por el Marketplace de Cortex XSOAR, puedes ver informaci\u00f3n clave de cada Content Pack, incluyendo una **descripci\u00f3n general, los componentes incluidos, dependencias, autor, tipo de soporte, y un resumen de cada versi\u00f3n publicada** (changelog). Sin embargo, **no puedes ver el c\u00f3digo fuente completo de integraciones ni playbooks**, y tampoco se proporciona una instancia de prueba integrada para ejecutarlos directamente desde el Marketplace.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68620b8d2441598f366db5f7"
+    },
+    "qid": 60,
+    "question": "What will happen if a playbook debugger is left running for more than 24 hours?",
+    "options": [
+      "By default, every 24 hours, the system closes any debugger sessions that have been open for more than 180 minutes.",
+      "The session must be stopped during 180 minutes manually by administrator, user will receive notification automatically.",
+      "The session will be running till stopped manually by administrator.",
+      "By default, the system closes automatically any debugger session that have been open 180 minutes."
+    ],
+    "answer": [
+      "By default, every 24 hours, the system closes any debugger sessions that have been open for more than 180 minutes."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Seg\u00fan la gu\u00eda oficial de Cortex XSOAR, el sistema ejecuta una verificaci\u00f3n autom\u00e1tica cada 24 horas que cierra cualquier sesi\u00f3n de debugger que haya estado activa por m\u00e1s de 180 minutos (3 horas). Esto ayuda a liberar recursos del sistema y evitar que sesiones olvidadas permanezcan abiertas indefinidamente. El valor por defecto es configurable, pero esta es la pol\u00edtica base definida por el sistema.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68620c532441598f366db5f8"
+    },
+    "qid": 61,
+    "question": "When is the post-processing script executed in XSOAR?",
+    "options": [
+      "When the incident is closed",
+      "When the incident is created",
+      "After the post-processing task is executed",
+      "After the pre-processing is executed"
+    ],
+    "answer": [
+      "When the incident is closed"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El script de post-procesamiento en Cortex XSOAR se ejecuta **al momento de cerrar el incidente**. Esto ocurre justo antes de que el incidente sea marcado como cerrado. Si el script lanza un error, como indica la gu\u00eda ('If a post-processing script returns an error, the incident does not close'), entonces el cierre se detiene. No existe una 'tarea de post-processing', ya que este script es un mecanismo del sistema, no parte del playbook.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68620c932441598f366db5f9"
+    },
+    "qid": 62,
+    "question": "What are three loop types in a sub-playbook? (Choose three.)",
+    "options": [
+      "For-each",
+      "Loop automation",
+      "Conditional",
+      "Built-in",
+      "Data collection"
+    ],
+    "answer": [
+      "For-each",
+      "Loop automation",
+      "Built-in"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los tres tipos de bucles disponibles en un sub-playbook son: 1) **For-each**, que permite ejecutar un conjunto de tareas por cada elemento de una lista; 2) **Built-in loops**, que permiten repetir autom\u00e1ticamente tareas mientras se cumpla una condici\u00f3n; y 3) **Loop automation**, que usa scripts o automatizaciones personalizadas para controlar el flujo repetitivo. 'Conditional' y 'Data Collection' no son considerados tipos de bucle oficialmente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620cc82441598f366db5fa"
+    },
+    "qid": 63,
+    "question": "During the regular maintenance of XSOAR, a customer notices that there is an update available for the Active Directory content pack (current version 1.4.6) and updates the content pack to the latest version (version 1.4.11). However, after the update, the customer notices that the Active Directory Query integration is not working properly and asks that the issue be resolved. Which set of steps can help to resolve the issue?",
+    "options": [
+      "a) Navigate to Marketplace.\nb) View the installed content pack and select Active Directory content pack.\nc) Select version 1.4.6 and click on \"Revert to this version.\"",
+      "a) Navigate to Marketplace.\nb) View the installed content pack and select Active Directory content pack.\nc) Click on \"Uninstall content pack.\"\nd) Navigate to Marketplace browser and reinstall the Active Directory content pack.",
+      "a) Navigate to Settings.\nb) View the configured integrations and select Active Directory Authentication.\nc) Delete all integration instances and add all integration instances again.",
+      "a) Navigate to Settings.\nb) View the configured integrations and select Active Directory Query.\nc) Delete all integration instances and add all integration instances again."
+    ],
+    "answer": [
+      "a) Navigate to Marketplace.\nb) View the installed content pack and select Active Directory content pack.\nc) Select version 1.4.6 and click on \"Revert to this version.\""
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La forma m\u00e1s efectiva de resolver un problema causado por una actualizaci\u00f3n en un Content Pack en Cortex XSOAR es **revertir a la versi\u00f3n anterior que funcionaba correctamente**. El Marketplace permite seleccionar versiones anteriores del paquete, y hacer clic en 'Revert to this version' reinstala esa versi\u00f3n estable. Borrar o reinstalar integraciones no garantiza resolver problemas si el error est\u00e1 en el c\u00f3digo del content pack actualizado.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68620d442441598f366db5fb"
+    },
+    "qid": 64,
+    "question": "How can a script to remove usernames from an incident be run before the incident becomes active in Cortex XSOAR?",
+    "options": [
+      "Run an automation script in the Playground to remove usernames from the incident.",
+      "Create a pre-processing rule that runs an automation script to remove usernames from the incident as it comes into XSOAR.",
+      "Run an automation script on the XSOAR server to remove usernames from the incident.",
+      "Create a playbook task to remove the usernames from the incident."
+    ],
+    "answer": [
+      "Create a pre-processing rule that runs an automation script to remove usernames from the incident as it comes into XSOAR."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para ejecutar un script que elimine los nombres de usuario **antes de que el incidente se active** en Cortex XSOAR, se debe configurar una **regla de preprocesamiento (pre-processing rule)**. Estas reglas permiten ejecutar un script autom\u00e1ticamente **en el momento en que se ingiere el evento**, antes de que se cree como incidente formal. Ejecutarlo en un playbook o en el Playground ocurre despu\u00e9s de que el incidente ya fue creado, por lo tanto no cumple con la condici\u00f3n planteada en la pregunta.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68620d8d2441598f366db5fc"
+    },
+    "qid": 65,
+    "question": "In which two Cortex XSOAR functions are incident types used? (Choose two.)",
+    "options": [
+      "Classifying indicators extracted from incidents to their respective types",
+      "Facilitating role-based access to incidents",
+      "Running dedicated playbooks for different event types",
+      "Classifying events ingested from various sources into the relevant types"
+    ],
+    "answer": [
+      "Running dedicated playbooks for different event types",
+      "Classifying events ingested from various sources into the relevant types"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Los Incident Types en Cortex XSOAR se utilizan para: 1) **Ejecutar playbooks espec\u00edficos** seg\u00fan el tipo de incidente, y 2) **Clasificar eventos entrantes** de m\u00faltiples fuentes para enrutar su procesamiento adecuadamente. Aunque los Incident Types permiten configurar las reglas de extracci\u00f3n de indicadores, **la clasificaci\u00f3n del tipo de indicador (IP, hash, URL, etc.) la hace el sistema mediante los Indicator Types**, no los Incident Types.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620da92441598f366db5fd"
+    },
+    "qid": 66,
+    "question": "In which two ways can data be transferred between playbooks and sub-playbooks? (Choose two.)",
+    "options": [
+      "Inputs and outputs",
+      "Through integration context",
+      "Automatically extracted by sub-playbooks",
+      "From context data, if context is shared globally"
+    ],
+    "answer": [
+      "Inputs and outputs",
+      "From context data, if context is shared globally"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR, los datos se pueden transferir entre un playbook y un sub-playbook de dos maneras principales:\n\n1. **Inputs and Outputs**: Los sub-playbooks pueden recibir datos mediante campos de entrada definidos expl\u00edcitamente, y devolver resultados a trav\u00e9s de campos de salida.\n\n2. **Desde el contexto global**, si los datos est\u00e1n disponibles de forma compartida. Cualquier sub-playbook puede acceder al contexto del incidente si la clave es global y no est\u00e1 aislada por tareas espec\u00edficas.\n\nEl 'integration context' se refiere al almacenamiento de datos persistentes por parte de integraciones, no a la comunicaci\u00f3n directa entre playbooks. Y los sub-playbooks no extraen autom\u00e1ticamente los datos sin que est\u00e9n definidos como inputs o accesibles desde el contexto.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68620dd62441598f366db5fe"
+    },
+    "qid": 67,
+    "question": "Which two options may be added when a content pack is being installed? (Choose two.)",
+    "options": [
+      "Lists",
+      "Roles",
+      "Other content packs",
+      "Indicator layouts"
+    ],
+    "answer": [
+      "Other content packs",
+      "Indicator layouts"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Al instalar un content pack desde el Marketplace de Cortex XSOAR, pueden a\u00f1adirse: 1) **otros content packs**, como dependencias necesarias para que el contenido funcione correctamente, y 2) **indicator layouts**, que forman parte del contenido visual que define c\u00f3mo se presentan los indicadores. Aunque los lists pueden estar incluidos, no se consideran una adici\u00f3n destacada durante la instalaci\u00f3n. Los roles no son distribuibles v\u00eda content packs por motivos de seguridad.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620ded2441598f366db5ff"
+    },
+    "qid": 68,
+    "question": "An engineer would like to change an incident\u2019s SLA according to the severity field changes. How can the engineer achieve this task?",
+    "options": [
+      "Use a field trigger script",
+      "Use a field display script",
+      "Create a job that queries for incident severity changes",
+      "Change the SLA manually every time the severity changes"
+    ],
+    "answer": [
+      "Use a field trigger script"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para actualizar autom\u00e1ticamente el SLA de un incidente cuando cambia el campo de severidad, se debe usar un **field trigger script** en Cortex XSOAR. Este tipo de script se ejecuta autom\u00e1ticamente cada vez que un campo espec\u00edfico (como 'severity') cambia de valor. El script puede contener la l\u00f3gica necesaria para recalcular o modificar el SLA. Los display scripts solo afectan c\u00f3mo se muestra la informaci\u00f3n, no modifican datos. Crear un job ser\u00eda innecesariamente complejo, y hacerlo manualmente va contra las mejores pr\u00e1cticas de automatizaci\u00f3n.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620e302441598f366db600"
+    },
+    "qid": 69,
+    "question": "In which three locations can an engineer try to find information, when troubleshooting a failed integration instance error produced by the test button? (Choose three.)",
+    "options": [
+      "The audit log",
+      "The log bundle",
+      "The source code for an integration",
+      "The error message returned directly below the button",
+      "The playground war room"
+    ],
+    "answer": [
+      "The log bundle",
+      "The error message returned directly below the button",
+      "The playground war room"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando una integraci\u00f3n falla al usar el bot\u00f3n 'Test' en Cortex XSOAR, la informaci\u00f3n \u00fatil para solucionar el problema puede encontrarse en:\n\n1. \u2705 **El mensaje de error justo debajo del bot\u00f3n**, que proporciona una respuesta inmediata del sistema, como errores de autenticaci\u00f3n o formato.\n\n2. \u2705 **El log bundle**, que contiene registros detallados de ejecuci\u00f3n, incluyendo trazas de errores y problemas de conectividad o ejecuci\u00f3n profunda.\n\n3. \u2705 **El Playground War Room**, que puede ser usado para ejecutar comandos manualmente y ver resultados en tiempo real, facilitando la validaci\u00f3n del comportamiento del mismo comando que falla.\n\nEl audit log no est\u00e1 dise\u00f1ado para mostrar errores de prueba de instancias, y el c\u00f3digo fuente solo es accesible si se trata de una integraci\u00f3n desarrollada internamente, no para troubleshooting inmediato en producci\u00f3n.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "68620e832441598f366db601"
+    },
+    "qid": 70,
+    "question": "Which three statements are true about the Marketplace? (Choose three.)",
+    "options": [
+      "Allows reverting back to a previous version of a content pack",
+      "Enables users to participate in the community by sharing content",
+      "Publishes content without additional review from the Cortex XSOAR team",
+      "Allows uploading of content in additional languages",
+      "Offers granularity in installation through content packs"
+    ],
+    "answer": [
+      "Allows reverting back to a previous version of a content pack",
+      "Enables users to participate in the community by sharing content",
+      "Offers granularity in installation through content packs"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En el Cortex XSOAR Marketplace:\n\n1. \u2705 **Se puede revertir a una versi\u00f3n anterior de un Content Pack**, lo que resulta \u00fatil en caso de errores o incompatibilidades.\n\n2. \u2705 **Los usuarios pueden contribuir con contenido** a trav\u00e9s del programa de contribuci\u00f3n comunitaria, permitiendo que otros usen sus playbooks, scripts e integraciones.\n\n3. \u2705 **La instalaci\u00f3n es granular**: los Content Packs agrupan scripts, playbooks, layouts, integraciones y m\u00e1s, facilitando una instalaci\u00f3n selectiva.\n\n\u274c El contenido enviado por la comunidad **s\u00ed pasa por revisi\u00f3n del equipo de Cortex XSOAR** antes de ser publicado.\n\n\u274c No existe una funcionalidad nativa para subir contenido multilenguaje desde el Marketplace.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68620ea72441598f366db602"
+    },
+    "qid": 71,
+    "question": "Which three authentication methods are supported when logging into XSOAR? (Choose three.)",
+    "options": [
+      "OTP token",
+      "User name and password",
+      "SAML",
+      "Active Directory authentication",
+      "RADIUS"
+    ],
+    "answer": [
+      "User name and password",
+      "SAML",
+      "Active Directory authentication"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cortex XSOAR admite varios m\u00e9todos de autenticaci\u00f3n para el inicio de sesi\u00f3n de usuarios. Los tres m\u00e9todos soportados oficialmente son:\n\n1. \u2705 **User name and password**: Autenticaci\u00f3n local mediante credenciales gestionadas por XSOAR.\n2. \u2705 **SAML**: Permite integraci\u00f3n con proveedores de identidad como Okta, Azure AD, etc., usando autenticaci\u00f3n basada en SSO.\n3. \u2705 **Active Directory authentication**: A trav\u00e9s de LDAP, se puede autenticar directamente contra un dominio de AD.\n\n\u274c **OTP token** y **RADIUS** no son m\u00e9todos nativos de autenticaci\u00f3n directa soportados por la plataforma XSOAR al momento del inicio de sesi\u00f3n. Pueden implementarse indirectamente a trav\u00e9s del proveedor SAML o mecanismos externos.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68620eef2441598f366db603"
+    },
+    "qid": 72,
+    "question": "Who is permitted to create and submit content to the Marketplace?",
+    "options": [
+      "Only users with a valid Github account",
+      "Any user who has signed up through the dev portal",
+      "Any user who has a live.paloaltonetworks.com account",
+      "All users with the correct XSOAR Role and Permissions"
+    ],
+    "answer": [
+      "All users with the correct XSOAR Role and Permissions"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Seg\u00fan la documentaci\u00f3n oficial de Cortex XSOAR, los usuarios que tienen asignado el permiso **'Contribute to Marketplace'** pueden crear y enviar paquetes de contenido al Marketplace. Este permiso es parte de la configuraci\u00f3n de roles y permisos dentro del sistema XSOAR, lo que significa que no se requiere necesariamente estar registrado en el Developer Portal externo. El acceso adecuado dentro de la plataforma es suficiente para contribuir contenido.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68620f252441598f366db604"
+    },
+    "qid": 73,
+    "question": "Which content type cannot be managed using remote repositories?",
+    "options": [
+      "Lists",
+      "Jobs",
+      "Pre-processing rules",
+      "Exclusion List"
+    ],
+    "answer": [
+      "Exclusion List"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Seg\u00fan la documentaci\u00f3n oficial y la imagen proporcionada, los tipos de contenido que pueden ser gestionados mediante repositorios remotos en Cortex XSOAR incluyen: Automation, Playbooks, Integrations, Layouts, Fields, Preprocess Rules, Lists, Jobs, entre otros. Sin embargo, **'Exclusion List' no aparece como contenido compatible**, lo que confirma que **no puede ser gestionado a trav\u00e9s de repositorios remotos**.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620f3b2441598f366db605"
+    },
+    "qid": 74,
+    "question": "Which task type would be used to verify/check that an integration was enabled?",
+    "options": [
+      "Standard task",
+      "Conditional task",
+      "Section Header task",
+      "Data Collection task"
+    ],
+    "answer": [
+      "Conditional task"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, una **Conditional task** permite verificar si una integraci\u00f3n est\u00e1 habilitada usando la condici\u00f3n 'Run if integration is available'. Esta funcionalidad permite que el flujo del playbook siga una ruta espec\u00edfica solo si la integraci\u00f3n requerida est\u00e1 activa. Las Standard tasks se usan para ejecutar comandos, pero no realizan validaciones previas. Las Section Header y Data Collection tasks son tareas visuales o interactivas, no de verificaci\u00f3n de estado.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68620f842441598f366db606"
+    },
+    "qid": 75,
+    "question": "Which two incident search queries are valid? (Choose two.)",
+    "options": [
+      "created:>=\u201c7 days\u201d",
+      "owner===admin",
+      "role is Analyst",
+      "status:closed -category:job"
+    ],
+    "answer": [
+      "owner===admin",
+      "status:closed -category:job"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La consulta `status:closed -category:job` es v\u00e1lida para buscar incidentes cerrados excluyendo los de categor\u00eda 'job'. La consulta `owner===admin` tambi\u00e9n es v\u00e1lida y busca coincidencias exactas del propietario. En cambio, `created:>=\u201c7 days\u201d` tiene un error en el uso de comillas tipogr\u00e1ficas y carece de 'ago', lo cual la invalida. 'role is Analyst' no es una sintaxis reconocida en las b\u00fasquedas de incidentes en XSOAR.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68620fa82441598f366db607"
+    },
+    "qid": 76,
+    "question": "Which configuration is a valid distributed database (DB) implementation?",
+    "options": [
+      "2 main DBs, 1 application server, 2 node servers",
+      "1 main DB, 1 application server, 3 node servers",
+      "2 application servers, 1 main DB, 1 node server",
+      "1 application server, 2 main DBs, 1 node server"
+    ],
+    "answer": [
+      "1 main DB, 1 application server, 3 node servers"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Una configuraci\u00f3n v\u00e1lida de base de datos distribuida (Distributed DB) en Cortex XSOAR incluye:\n\n- **1 base de datos principal (main DB)**: nodo maestro que gestiona la consistencia.\n- **1 servidor de aplicaci\u00f3n**: encargado de ejecutar la l\u00f3gica de la plataforma.\n- **M\u00faltiples nodos secundarios (node servers)**: ayudan a distribuir la carga y mejorar el rendimiento.\n\nLa opci\u00f3n '1 main DB, 1 application server, 3 node servers' cumple con esta arquitectura. Tener m\u00faltiples 'main DBs' no es v\u00e1lido ya que XSOAR no soporta m\u00faltiples bases de datos principales activas simult\u00e1neamente.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "68620fdd2441598f366db608"
+    },
+    "qid": 77,
+    "question": "An XSOAR Engineer has developed a playbook and would like to contribute it to the XSOAR Marketplace to share with other users. Which two options are available to the Engineer for contributing to the Marketplace? (Choose two.)",
+    "options": [
+      "Open a ticket with the XSOAR support team",
+      "Create a pull request directly on Github",
+      "Contribute through the XSOAR UI",
+      "Send an email to contributions@xsoar.com"
+    ],
+    "answer": [
+      "Create a pull request directly on Github",
+      "Contribute through the XSOAR UI"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Los ingenieros pueden contribuir contenido al Marketplace de XSOAR mediante dos m\u00e9todos v\u00e1lidos: 1) **Enviar un Pull Request directamente al repositorio oficial en GitHub**, siguiendo las pautas de contribuci\u00f3n p\u00fablica, y 2) **Usar la funcionalidad de contribuci\u00f3n desde la UI de XSOAR**, la cual permite exportar contenido y seguir un flujo guiado para compartirlo. Las otras opciones no forman parte del proceso oficial documentado para contribuciones.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "686210022441598f366db609"
+    },
+    "qid": 78,
+    "question": "Where can engineers add the post-processing scripts to incidents?",
+    "options": [
+      "The post-processing tag must be added to the automation",
+      "Post-processing scripts must be added at the end of playbooks",
+      "Post-processing scripts must be added from the Incident Type editor",
+      "Post-processing scripts must be added from the Post-Process Rules editor"
+    ],
+    "answer": [
+      "Post-processing scripts must be added from the Incident Type editor"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **post-processing scripts** se asignan directamente desde el **editor de Incident Types**. Cada tipo de incidente puede tener asociado un script que se ejecutar\u00e1 justo cuando el incidente se cierre. Esto permite automatizar acciones finales como notificaciones, auditor\u00edas o generaci\u00f3n de reportes. No se agregan al final del playbook ni mediante una etiqueta especial en la automatizaci\u00f3n. Tampoco existe un 'Post-Process Rules editor' como entidad separada para configurarlos.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686210372441598f366db60a"
+    },
+    "qid": 79,
+    "question": "Which two input requirements are needed to train a machine learning model? (Choose two.)",
+    "options": [
+      "3000 Incidents",
+      "Incident Field",
+      "Verdict Label",
+      "Incident Type"
+    ],
+    "answer": [
+      "Incident Field",
+      "Incident Type"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Seg\u00fan la documentaci\u00f3n oficial de Cortex XSOAR, los modelos de machine learning se entrenan proporcionando datos a trav\u00e9s de **Incident Types** y **Incident Fields**. El Incident Type permite segmentar los datos por tipo de incidente, mientras que los campos definidos (como subject, body, etc.) se usan como entrada y etiqueta para el modelo. Aunque un campo puede funcionar como 'verdict', no se requiere uno espec\u00edfico llamado as\u00ed. Adem\u00e1s, no hay un m\u00ednimo obligatorio de 3000 incidentes.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862105d2441598f366db60b"
+    },
+    "qid": 80,
+    "question": "Which path will lead to downloadable logs for troubleshooting why an integration has failed to fetch incidents?",
+    "options": [
+      "Marketplace > Download the Fix my XSOAR playbook pack > Run the playbook > Download logs from War Room",
+      "Settings > About > Troubleshooting > Set Log Level to Debug > Download Logs",
+      "Dashboards & Reports > System Health",
+      "Settings > About > System Diagnostics"
+    ],
+    "answer": [
+      "Settings > About > Troubleshooting > Set Log Level to Debug > Download Logs"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para solucionar problemas como fallas en la recolecci\u00f3n de incidentes (fetch incidents) por parte de una integraci\u00f3n en Cortex XSOAR, debes ir a **Settings > About > Troubleshooting**, donde puedes:\n\n1. Establecer el nivel de log a **Debug** para capturar detalles adicionales.\n2. Hacer clic en **Download Logs** para generar y descargar un bundle de logs completo.\n\nEste paquete incluir\u00e1 registros de integraciones, errores del sistema, y cualquier fallo que explique por qu\u00e9 no se est\u00e1n recolectando incidentes correctamente. Las otras opciones no proporcionan acceso directo a los logs requeridos para este tipo de an\u00e1lisis.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6862109c2441598f366db60c"
+    },
+    "qid": 81,
+    "question": "What is the primary function of Timer/SLA fields in Cortex XSOAR?",
+    "options": [
+      "To track SLA breaches per playbook",
+      "To run a script that executes on SLA assignment",
+      "To automatically alert the analyst on SLA breach",
+      "To count the time between one or more tasks"
+    ],
+    "answer": [
+      "To automatically alert the analyst on SLA breach"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La funci\u00f3n principal de los campos **Timer/SLA** en Cortex XSOAR es **alertar autom\u00e1ticamente al analista cuando se ha violado una SLA o est\u00e1 pr\u00f3xima a vencer**. Estos campos permiten configurar umbrales de advertencia y acciones autom\u00e1ticas, como el env\u00edo de notificaciones o la ejecuci\u00f3n de scripts. Aunque tambi\u00e9n pueden medir el tiempo entre eventos, su prop\u00f3sito central es garantizar el cumplimiento de acuerdos de nivel de servicio mediante seguimiento proactivo.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686211502441598f366db60d"
+    },
+    "qid": 82,
+    "question": "On the System Diagnostics page, what is the default minimum size for a Work Plan to be considered big?",
+    "options": [
+      "2MB",
+      "3MB",
+      "1MB",
+      "5MB"
+    ],
+    "answer": [
+      "3MB"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Seg\u00fan la secci\u00f3n de System Diagnostics en Cortex XSOAR, los Work Plans se consideran 'exceptionally big' cuando su tama\u00f1o es superior a **3 MB**. Esto es \u00fatil para identificar incidentes o playbooks que est\u00e1n generando estructuras muy pesadas, lo que puede impactar el rendimiento del sistema.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "686211782441598f366db60e"
+    },
+    "qid": 83,
+    "question": "A large number of incidents were deleted by mistake. Which two architecture components can be used to recover the lost data? (Choose two.)",
+    "options": [
+      "Live backup",
+      "Engine",
+      "Distributed database",
+      "Local backup"
+    ],
+    "answer": [
+      "Live backup",
+      "Local backup"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para recuperar datos perdidos como incidentes eliminados por error en Cortex XSOAR, se pueden usar dos componentes clave:\n\n1. \u2705 **Live backup**: permite restaurar datos recientes que han sido replicados en tiempo real, si est\u00e1 habilitado.\n\n2. \u2705 **Local backup**: son copias de seguridad programadas que pueden restaurarse para recuperar el estado anterior del sistema.\n\n\u274c **Engine**: es solo un componente de ejecuci\u00f3n remota y no almacena datos del sistema.\n\u274c **Distributed database**: mejora la escalabilidad, pero si los datos fueron eliminados sin respaldo, no ofrece recuperaci\u00f3n autom\u00e1tica sin un snapshot o backup asociado.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "6862119e2441598f366db60f"
+    },
+    "qid": 84,
+    "question": "What are two common use cases for conditional tasks? (Choose two.)",
+    "options": [
+      "Sending a specific question to a person or team",
+      "Determining which incident will be executed",
+      "Branching paths in a playbook",
+      "Interacting with users through survey functionality"
+    ],
+    "answer": [
+      "Sending a specific question to a person or team",
+      "Branching paths in a playbook"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Las tareas condicionales en Cortex XSOAR son utilizadas principalmente para:\n\n1. \u2705 **Enviar preguntas espec\u00edficas a una persona o equipo**: se puede usar una condici\u00f3n para determinar a qui\u00e9n se debe dirigir una pregunta o una acci\u00f3n.\n\n2. \u2705 **Controlar el flujo mediante branching (ramificaci\u00f3n)**: dependiendo del resultado de una condici\u00f3n (por ejemplo, el valor de un campo o el resultado de una tarea anterior), el playbook puede seguir diferentes caminos.\n\n\u274c No se usan para determinar qu\u00e9 incidente se ejecutar\u00e1 (eso se hace en ingesti\u00f3n o triggers).\n\n\u274c Las encuestas y formularios se manejan con tareas de tipo 'Data Collection', no condicionales.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "686211c22441598f366db610"
+    },
+    "qid": 85,
+    "question": "Which of the following is a prerequisite to editing out-of-the-box (OOTB) content?",
+    "options": [
+      "Download the content from the Marketplace.",
+      "Go to Settings > About > Troubleshooting and set a flag to custom content.",
+      "Register a user account with support.paloaltonetworks.com .",
+      "Detach the content item you want to edit from the Marketplace."
+    ],
+    "answer": [
+      "Detach the content item you want to edit from the Marketplace."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para editar contenido out-of-the-box (OOTB) en Cortex XSOAR, como playbooks, scripts o layouts instalados desde el Marketplace, es necesario **hacer 'detach'** del contenido. Esto crea una copia editable local que ya no se actualizar\u00e1 autom\u00e1ticamente. No es necesario cambiar configuraciones en Troubleshooting ni registrar cuentas externas. Solo los \u00edtems desvinculados del Marketplace pueden ser modificados directamente.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "686211e62441598f366db611"
+    },
+    "qid": 86,
+    "question": "When developing the playbook, which of the following can be used by a XSOAR Administrator?",
+    "options": [
+      "The Debugger panel to test data with one of last five incidents. This will affect the incident\u2019s original incident data.",
+      "Context data from existing incidents by exporting the YAML data from incidents and importing it to playbook editor.",
+      "Debugger panel and XML data from a similar incident with New Mock Incident. This will not affect the incident\u2019s original incident data.",
+      "The Debugger panel to test data with one of last fifty incidents. This will not affect the incident\u2019s original incident data."
+    ],
+    "answer": [
+      "Debugger panel and XML data from a similar incident with New Mock Incident. This will not affect the incident\u2019s original incident data."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Durante el desarrollo de playbooks, un administrador puede usar el **Debugger panel** con la opci\u00f3n **New Mock Incident** para probar la l\u00f3gica del playbook con datos reales (como XML exportado desde un incidente similar), sin afectar los datos originales del incidente. Esta t\u00e9cnica permite validar condiciones, contexto y rutas del playbook de forma segura y efectiva.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "686212012441598f366db612"
+    },
+    "qid": 87,
+    "question": "An engineer notices that playbooks only start once the user clicks the \u2018investigate\u2019 button and he/she would like the playbook to start automatically. How can this be implemented?",
+    "options": [
+      "Add the playbook to the integration\u2019s settings",
+      "Select \u2018Run playbook automatically\u2019 from the incident type settings",
+      "Add the !startinvestigation automation to the beginning of the playbook",
+      "Select \u2018Run playbook automatically\u2019 from the integration settings"
+    ],
+    "answer": [
+      "Select \u2018Run playbook automatically\u2019 from the incident type settings"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para que un playbook se ejecute autom\u00e1ticamente al momento de la creaci\u00f3n del incidente en Cortex XSOAR, se debe ir a la configuraci\u00f3n del **Incident Type** correspondiente y seleccionar la opci\u00f3n **\u2018Run playbook automatically\u2019**. Esto asegura que el playbook inicie sin intervenci\u00f3n manual. La configuraci\u00f3n en la integraci\u00f3n o el uso del comando `!startinvestigation` no controla este comportamiento de forma autom\u00e1tica.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862127c2441598f366db613"
+    },
+    "qid": 88,
+    "question": "Incidents need to be filtered by all of the following criteria:\n1. Status \u2013 Pending\n2. Exclude Category \u2013 Job\n3. Severity \u2013 High\n4. Owner \u2013 None (No owner assigned)\n5. Type \u2013 Phishing\n6. Email Subject \u2013 \u201cYou have won a million dollars\u201d\nWhat is the correct query syntax for the above incident search filter?",
+    "options": [
+      "status==\"Pending\" && category!=\"job\" && severity==\"High\" && owner==\"None\" && type==\"Phishing\" && emailsubject==\"You have won a million dollars\"",
+      "Status:Pending and -Category:job and Severity:High and Owner:\"\" and Type:Phishing and Email Subject:You have won a million dollars",
+      "status:Pending and -category:job and severity:High and owner:\"\" and type:Phishing and emailsubject:\"You have won a million dollars\"",
+      "status:Pending or -category:job or severity:High or owner:\"\" or type:Phishing or emailsubject:\"You have won a million dollars\""
+    ],
+    "answer": [
+      "status:Pending and -category:job and severity:High and owner:\"\" and type:Phishing and emailsubject:\"You have won a million dollars\""
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La sintaxis correcta para filtrar incidentes en Cortex XSOAR usando m\u00faltiples condiciones es:\n\n- `status:Pending`: filtra por estado 'Pending'.\n- `-category:job`: excluye los incidentes de categor\u00eda 'job'.\n- `severity:High`: severidad 'High'.\n- `owner:\"\"`: sin propietario asignado.\n- `type:Phishing`: tipo de incidente.\n- `emailsubject:\"You have won a million dollars\"`: coincide exactamente con el asunto del correo.\n\nLa opci\u00f3n seleccionada usa correctamente la sintaxis del buscador de XSOAR, con operadores v\u00e1lidos (`:` y `-`) y sin usar expresiones l\u00f3gicas tipo `==` o `&&` que no son reconocidas. Adem\u00e1s, las condiciones est\u00e1n unidas con `and` para asegurar que todas se cumplan.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686212992441598f366db614"
+    },
+    "qid": 89,
+    "question": "An organization has recently acquired another company as its subsidiary. The subsidiary has its infrastructure on AWS cloud as illustrated in the image below:\nThe organization wants to use the mail server location on the subsidiary\u2019s cloud to send emails. Without acquiring additional licenses, which XSOAR component can fulfill the requirement?",
+    "options": [
+      "XSOAR D2 Agents, to send the required emails.",
+      "An XSOAR engine that is downloaded from the XSOAR server and installed within the subsidiary.",
+      "Another XSOAR server that uses the same license as their primary XSOAR server.",
+      "A Linux server connected with an XSOAR server using SSH integration. Commands can be run remotely to access the mail server."
+    ],
+    "answer": [
+      "An XSOAR engine that is downloaded from the XSOAR server and installed within the subsidiary."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La soluci\u00f3n m\u00e1s adecuada sin adquirir licencias adicionales es desplegar un **XSOAR engine** en la infraestructura de la subsidiaria. Este componente puede ejecutarse en entornos remotos (como la nube de AWS) y permite que el servidor XSOAR principal ejecute integraciones localmente en esa red, como el env\u00edo de correos a trav\u00e9s del servidor SMTP del entorno adquirido. No se requiere una licencia extra para el uso del engine. Las otras opciones (D2 agent, otro servidor XSOAR, o scripts por SSH) no son soluciones recomendadas ni oficialmente soportadas para integraciones directas con servicios locales en entornos aislados.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686212d52441598f366db615"
+    },
+    "qid": 90,
+    "question": "Which two methods will allow data to be saved in incident fields within a playbook? (Choose two.)",
+    "options": [
+      "setFields",
+      "Field mapping",
+      "setIncident",
+      "Layout inline editing"
+    ],
+    "answer": [
+      "setIncident",
+      "setFields"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Dentro de un playbook de Cortex XSOAR, los m\u00e9todos v\u00e1lidos para guardar datos directamente en campos del incidente son: 1) **setIncident**, que permite actualizar campos del incidente con valores espec\u00edficos mediante una automatizaci\u00f3n integrada, y 2) **setFields**, que tambi\u00e9n permite actualizar m\u00faltiples campos desde el contexto. En cambio, 'Field mapping' se aplica durante la ingesti\u00f3n del evento, no desde el playbook, y 'Layout inline editing' solo permite cambios manuales en la UI.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686213122441598f366db616"
+    },
+    "qid": 91,
+    "question": "Which feature is available in Cortex XSOAR automations?",
+    "options": [
+      "Ability to be written in C++",
+      "Ability to be assigned multiple docker images",
+      "Automation setting option to run on a scheduled basis",
+      "Password protection"
+    ],
+    "answer": [
+      "Automation setting option to run on a scheduled basis"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cortex XSOAR permite ejecutar automatizaciones de forma programada usando **Jobs**, lo cual habilita la opci\u00f3n de correr scripts en intervalos definidos. Esta es una caracter\u00edstica real y soportada. Aunque se pueden usar argumentos tipo 'Encrypted' para proteger contrase\u00f1as como entradas, eso **no equivale a protecci\u00f3n por contrase\u00f1a de la automatizaci\u00f3n en s\u00ed**. Las otras opciones tampoco aplican: no se permite usar C++, ni se pueden asignar m\u00faltiples im\u00e1genes de Docker a una sola automatizaci\u00f3n.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686213322441598f366db617"
+    },
+    "qid": 92,
+    "question": "What happens if both a classifier and an incident type are configured in an integration instance\u2019s settings?",
+    "options": [
+      "The classifier will be ignored, and incoming incidents will be classified according to the incident type.",
+      "The incident type will be ignored, and incoming incidents will be classified according to the classifier.",
+      "Both the classifier and incident type will classify incoming incidents.",
+      "The administrator will receive a notification that there is both a classifier and incident type set for that integration instance."
+    ],
+    "answer": [
+      "The incident type will be ignored, and incoming incidents will be classified according to the classifier."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando se configuran **tanto un classifier como un incident type** en una instancia de integraci\u00f3n en Cortex XSOAR, el sistema **ignora el incident type** y utiliza \u00fanicamente el **classifier** para determinar el tipo de incidente basado en los datos del evento entrante. Esto se debe a que el classifier tiene la funci\u00f3n de interpretar din\u00e1micamente el contenido del evento y asignar un tipo de incidente de forma inteligente. No hay advertencia o notificaci\u00f3n autom\u00e1tica al administrador, y no se combinan ambos m\u00e9todos de clasificaci\u00f3n.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686213592441598f366db618"
+    },
+    "qid": 93,
+    "question": "An engineer would like to present a trend using widgets to compare to a previous week\u2019s data. Which two methods will allow the engineer to meet the requirement? (Choose two.)",
+    "options": [
+      "Create widget of type Line, check \u2018Display Trend\u2019 and define as 7 days ago",
+      "Create a custom widget using a new incident query",
+      "Create widget of type Number, check \u2018Display Trend\u2019 and define as 7 days ago",
+      "Create a custom widget using a script"
+    ],
+    "answer": [
+      "Create widget of type Number, check \u2018Display Trend\u2019 and define as 7 days ago",
+      "Create a custom widget using a script"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para mostrar tendencias comparativas en Cortex XSOAR, se pueden usar las siguientes dos opciones:\n\n1. \u2705 **Crear un widget de tipo Number con 'Display Trend' activado** y establecer como comparaci\u00f3n '7 days ago'. Esto permite mostrar un valor actual con una flecha o porcentaje de cambio en relaci\u00f3n con una fecha anterior.\n\n2. \u2705 **Crear un widget personalizado usando un script**, que te da control total sobre los datos, l\u00f3gica de comparaci\u00f3n y visualizaci\u00f3n, ideal para an\u00e1lisis m\u00e1s complejos.\n\n\u274c El widget de tipo Line no permite habilitar 'Display Trend' de forma directa, ya que est\u00e1 orientado a mostrar valores a lo largo del tiempo, no comparaci\u00f3n directa con una fecha espec\u00edfica.\n\n\u274c Crear un widget usando solo una nueva query no te permite hacer comparaci\u00f3n con un valor anterior autom\u00e1ticamente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862137e2441598f366db619"
+    },
+    "qid": 94,
+    "question": "Which basic setting can be configured in an automation?",
+    "options": [
+      "Summary",
+      "Compiler",
+      "Schedule",
+      "Run On"
+    ],
+    "answer": [
+      "Run On"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En una automatizaci\u00f3n de Cortex XSOAR, una de las configuraciones b\u00e1sicas que puede establecerse es **'Run On'**, la cual define **d\u00f3nde se ejecutar\u00e1 la automatizaci\u00f3n**, por ejemplo, en el servidor principal o en un engine remoto. \n\n\u274c 'Summary' es un campo informativo, no una configuraci\u00f3n funcional.  \n\u274c 'Compiler' no aplica porque XSOAR usa lenguajes interpretados (como Python o JavaScript).  \n\u274c 'Schedule' no es una propiedad de la automatizaci\u00f3n, sino de los **jobs** que pueden ejecutarla de forma peri\u00f3dica.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "6862139d2441598f366db61a"
+    },
+    "qid": 95,
+    "question": "Which Cortex XSOAR feature assigns newly ingested event attributes to incident fields?",
+    "options": [
+      "Playbooks",
+      "Classification",
+      "Mapping",
+      "Layouts"
+    ],
+    "answer": [
+      "Mapping"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, la funci\u00f3n encargada de **asignar los atributos del evento ingerido a los campos del incidente** es **Mapping**. Este proceso ocurre despu\u00e9s de que el evento ha sido clasificado, y consiste en mapear los datos entrantes (como JSON, XML, etc.) a campos espec\u00edficos del incidente en XSOAR. \n\n- **Classification** determina el tipo de incidente basado en los datos entrantes.\n- **Playbooks** automatizan acciones despu\u00e9s de que el incidente ha sido creado.\n- **Layouts** controlan la presentaci\u00f3n visual del incidente, pero no afectan la asignaci\u00f3n de datos.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686213b72441598f366db61b"
+    },
+    "qid": 96,
+    "question": "An analyst runs the following command in a playbook task:\n!ip ip=1.1.1.1\nWhich extraction mode needs to be enabled on the Advanced tab of the playbook task to synchronously extract indicators from the results of this command?",
+    "options": [
+      "Synchronous",
+      "Extract",
+      "Out of band",
+      "Inline"
+    ],
+    "answer": [
+      "Inline"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para que los indicadores (como la IP 1.1.1.1 en este caso) sean extra\u00eddos de forma **s\u00edncrona** e inmediatamente disponibles dentro del contexto del mismo playbook, se debe habilitar la opci\u00f3n de extracci\u00f3n **Inline** en la pesta\u00f1a Advanced de la tarea del playbook. Esta opci\u00f3n fuerza la extracci\u00f3n del resultado como indicadores directamente al contexto, sin esperar a un proceso separado. \n\n- **Synchronous** no es una opci\u00f3n v\u00e1lida.\n- **Out of band** es para extracci\u00f3n posterior, asincr\u00f3nica.\n- **Extract** no es una opci\u00f3n de modo, sino una acci\u00f3n general.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "686213dd2441598f366db61c"
+    },
+    "qid": 97,
+    "question": "An engineer wants to customize the regex for the default IP indicator type. How can this change be implemented?",
+    "options": [
+      "Create a new indicator type and disable the built-in IP indicator",
+      "Edit the regex of the default IP Indicator",
+      "Add a new server configuration key that will overwrite the default regex of the IP indicator",
+      "Delete the default IP indicator"
+    ],
+    "answer": [
+      "Create a new indicator type and disable the built-in IP indicator"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, no se puede editar directamente la expresi\u00f3n regular del tipo de indicador IP predeterminado, ya que es una entidad protegida del sistema. Para personalizar la expresi\u00f3n regular, se debe:\n\n1. \u2705 **Crear un nuevo tipo de indicador** con el regex personalizado.\n2. \u2705 **Deshabilitar el indicador IP predeterminado** para evitar conflictos en la extracci\u00f3n autom\u00e1tica.\n\n\u274c No se puede editar directamente el tipo IP incorporado.\n\u274c No existe una clave de configuraci\u00f3n del servidor que sobrescriba el regex predeterminado.\n\u274c No se puede eliminar un indicador incorporado del sistema.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686214072441598f366db61d"
+    },
+    "qid": 98,
+    "question": "What are inputs and outputs in reference to a Playbook Development Lifecycle? (Choose three.)",
+    "options": [
+      "Inputs are data pieces that are present in the playbook",
+      "Inputs are data pieces that are present in the task",
+      "Outputs are used as incident trigger for playbook",
+      "Outputs can be derived from the result of a task or command",
+      "Inputs are the data fields parsed by the Classifier"
+    ],
+    "answer": [
+      "Inputs are data pieces that are present in the playbook",
+      "Inputs are data pieces that are present in the task",
+      "Outputs can be derived from the result of a task or command"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En el ciclo de desarrollo de playbooks en Cortex XSOAR:\n\n1. \u2705 **Inputs are data pieces that are present in the playbook**: los inputs definen la informaci\u00f3n que el playbook necesita recibir al inicio o desde tareas anteriores.\n\n2. \u2705 **Inputs are data pieces that are present in the task**: las tareas tambi\u00e9n pueden tener sus propios inputs, que son utilizados dentro de esa tarea espec\u00edfica (como argumentos para comandos).\n\n3. \u2705 **Outputs can be derived from the result of a task or command**: los outputs son los datos generados por una tarea o comando y pueden ser usados en tareas posteriores o exportados por sub-playbooks.\n\n\u274c **Outputs are used as incident trigger for playbook**: los triggers no dependen de outputs, sino de reglas o tipos de incidentes.\n\n\u274c **Inputs are the data fields parsed by the Classifier**: esos son datos de clasificaci\u00f3n, no inputs de playbooks.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686214592441598f366db61e"
+    },
+    "qid": 99,
+    "question": "Which two reasons would lead an engineer to create a custom widget? (Choose two.)",
+    "options": [
+      "To visualize server configuration keys",
+      "To visualize XSOAR list data",
+      "To visualize complex incident data calculations",
+      "To visualize context data",
+      "To visualize a custom query"
+    ],
+    "answer": [
+      "To visualize context data",
+      "To visualize a custom query"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Los widgets personalizados en Cortex XSOAR permiten a los ingenieros: 1) **visualizar datos del contexto**, como resultados de comandos, valores de campos, o salidas de tareas espec\u00edficas, y 2) **ejecutar consultas personalizadas** sobre datos como incidentes, indicadores o listas para mostrarlos de forma flexible. Estas son razones comunes para crear widgets m\u00e1s all\u00e1 de los predeterminados del sistema.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686215ed2441598f366db61f"
+    },
+    "qid": 100,
+    "question": "An administrator has noticed that an incident fetch has failed, causing several internal workflows to be backed up. The administrator would like to receive notifications the next time the incident fetch fails.\nHow can they achieve this?",
+    "options": [
+      "Create a custom playbook that sends an email each time the fetch fails.",
+      "Create a new integration that monitors the incident fetch and sends an email if the fetch fails.",
+      "Schedule a job that runs and monitors incidents in XSOAR that will send an email if there are no new incidents.",
+      "Add a server config to notify when incident fetch fails."
+    ],
+    "answer": [
+      "Add a server config to notify when incident fetch fails."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La forma m\u00e1s eficiente y recomendada de recibir notificaciones cuando falla la recolecci\u00f3n de incidentes (incident fetch) es agregar una **clave de configuraci\u00f3n del servidor (server configuration)** espec\u00edfica en Cortex XSOAR. Esta opci\u00f3n permite al sistema generar autom\u00e1ticamente alertas cuando ocurre un error en el proceso de fetch. \n\nEsto evita tener que crear soluciones personalizadas como integraciones nuevas, jobs adicionales o playbooks, y se aplica de forma global a todas las integraciones que usan fetch.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6862166e2441598f366db620"
+    },
+    "qid": 101,
+    "question": "In which two scenarios would it be appropriate to implement a loop for a sub-playbook? (Choose two.)",
+    "options": [
+      "In repetitive process flows to iterate for each playbook input",
+      "When continuously ingesting incidents from third-party systems",
+      "In repetitive process flows with no more than 10 loops",
+      "In repetitive processes that require sub-playbook re-execution"
+    ],
+    "answer": [
+      "In repetitive process flows to iterate for each playbook input",
+      "In repetitive processes that require sub-playbook re-execution"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Los bucles (loops) en sub-playbooks de Cortex XSOAR son apropiados en los siguientes casos:\n\n1. \u2705 **En flujos repetitivos donde se necesita iterar por cada entrada del playbook** (por ejemplo, m\u00faltiples archivos, direcciones IP, URLs, etc.). Se puede usar un 'For Each' para ejecutar el sub-playbook por cada elemento de la lista.\n\n2. \u2705 **En procesos repetitivos que requieren reejecuci\u00f3n del sub-playbook**, como flujos condicionales que dependen de resultados intermedios (por ejemplo, esperar un resultado de sandbox o m\u00faltiples fases de validaci\u00f3n).\n\n\u274c La ingesti\u00f3n continua de incidentes no se gestiona con sub-playbooks en loop, sino con integraciones y jobs.\n\n\u274c Limitar por n\u00famero de loops (como 10) no es una justificaci\u00f3n funcional para el uso de loops, sino una restricci\u00f3n t\u00e9cnica o de rendimiento.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "686216d52441598f366db621"
+    },
+    "qid": 102,
+    "question": "In which two scenarios would it be appropriate to implement a loop for a sub-playbook? (Choose two.)",
+    "options": [
+      "In repetitive process flows to iterate for each playbook input",
+      "When continuously ingesting incidents from third-party systems",
+      "In repetitive process flows with no more than 10 loops",
+      "In repetitive processes that require sub-playbook re-execution"
+    ],
+    "answer": [
+      "In repetitive process flows to iterate for each playbook input",
+      "In repetitive processes that require sub-playbook re-execution"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Los bucles (loops) en sub-playbooks de Cortex XSOAR son apropiados en los siguientes casos:\n\n1. \u2705 **En flujos repetitivos donde se necesita iterar por cada entrada del playbook** (por ejemplo, m\u00faltiples archivos, direcciones IP, URLs, etc.). Se puede usar un 'For Each' para ejecutar el sub-playbook por cada elemento de la lista.\n\n2. \u2705 **En procesos repetitivos que requieren reejecuci\u00f3n del sub-playbook**, como flujos condicionales que dependen de resultados intermedios (por ejemplo, esperar un resultado de sandbox o m\u00faltiples fases de validaci\u00f3n).\n\n\u274c La ingesti\u00f3n continua de incidentes no se gestiona con sub-playbooks en loop, sino con integraciones y jobs.\n\n\u274c Limitar por n\u00famero de loops (como 10) no es una justificaci\u00f3n funcional para el uso de loops, sino una restricci\u00f3n t\u00e9cnica o de rendimiento.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "686216fa2441598f366db622"
+    },
+    "qid": 103,
+    "question": "What does a third-party cloud application need in order to integrate with Cortex XSOAR?",
+    "options": [
+      "Marketplace access",
+      "Application with API",
+      "Private key/Public key integration",
+      "Multitenant deployment"
+    ],
+    "answer": [
+      "Application with API"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para que una aplicaci\u00f3n en la nube de terceros se integre con Cortex XSOAR, lo principal que necesita es una **API accesible**. XSOAR se conecta a aplicaciones externas mediante integraciones que hacen solicitudes a sus APIs REST o SOAP. Esto permite ejecutar comandos, obtener datos o enviar acciones desde y hacia XSOAR.\n\n\u274c 'Marketplace access' es \u00fatil para publicar contenido, no para integrarse.\n\u274c 'Private/Public key' puede ser un m\u00e9todo de autenticaci\u00f3n, pero no es un requisito general.\n\u274c 'Multitenant deployment' se refiere a la arquitectura de XSOAR, no a los requerimientos de la app externa.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686217142441598f366db623"
+    },
+    "qid": 104,
+    "question": "Which tag must be applied to an Automation Script in order for it to be available when configuring an Indicator Type?",
+    "options": [
+      "reputation-script",
+      "enrich",
+      "reputationScript",
+      "reputation"
+    ],
+    "answer": [
+      "reputation"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para que un script de automatizaci\u00f3n est\u00e9 disponible al configurar un **Indicator Type** en Cortex XSOAR como un **Reputation Script**, debe tener asignada la etiqueta (tag) **'reputation'**. Esta etiqueta le indica al sistema que el script est\u00e1 dise\u00f1ado para proporcionar informaci\u00f3n de reputaci\u00f3n sobre un indicador (como IP, dominio, hash, etc.). Las dem\u00e1s opciones no son reconocidas como etiquetas v\u00e1lidas para este prop\u00f3sito.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862173a2441598f366db624"
+    },
+    "qid": 105,
+    "question": "Which content type can be managed using remote repositories?",
+    "options": [
+      "Exclusion List",
+      "Canvas",
+      "Pre-processing rules",
+      "Jobs"
+    ],
+    "answer": [
+      "Pre-processing rules"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Las **Pre-processing rules** pueden ser gestionadas mediante **Remote Repositories** en Cortex XSOAR. Esto permite a los equipos de seguridad mantener control de versiones, colaborar en desarrollo y mover estas reglas entre entornos (Dev \u2192 QA \u2192 Prod). En cambio, 'Exclusion List' y 'Canvas' no son contenidos gestionables desde repositorios remotos.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "6862179e2441598f366db625"
+    },
+    "qid": 106,
+    "question": "During configuration of the inputs of a sub-playbook in the main playbook, there is an option under the Loop tab called \"For Each Input\". What is this option used to?",
+    "options": [
+      "To loop the sub-playbook over all context values present in the investigation",
+      "To loop the sub-playbook over all incident fields for the given incident",
+      "To loop the sub-playbook over all the fields marked as important",
+      "To loop the sub-playbook over all defined sub-playbook inputs"
+    ],
+    "answer": [
+      "To loop the sub-playbook over all defined sub-playbook inputs"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La opci\u00f3n **\"For Each Input\"** en la pesta\u00f1a **Loop** de una tarea de sub-playbook en Cortex XSOAR permite ejecutar el sub-playbook **una vez por cada valor dentro de una lista definida en los inputs**.\n\nPor ejemplo, si el input del sub-playbook es una lista de direcciones IP, esta opci\u00f3n ejecutar\u00e1 el sub-playbook **una vez por cada IP**. No recorre todos los campos del incidente ni los valores del contexto general, sino que **est\u00e1 limitado a la lista espec\u00edfica definida como input** para esa tarea.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686217c62441598f366db626"
+    },
+    "qid": 107,
+    "question": "Which tag is mandatory for an Indicator reputation Script while configuring an indicator type?",
+    "options": [
+      "reputation-script",
+      "enrich",
+      "reputationScript",
+      "reputation"
+    ],
+    "answer": [
+      "reputation"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para que un script pueda ser asignado como 'Reputation Script' al configurar un Indicator Type en Cortex XSOAR, debe tener el tag **'reputation'**. Este es el \u00fanico tag reconocido por el sistema para este prop\u00f3sito. Usar etiquetas como 'reputation-script', 'reputationScript' o 'enrich' no har\u00e1 que el script est\u00e9 disponible para esa funci\u00f3n.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686217e52441598f366db627"
+    },
+    "qid": 108,
+    "question": "When creating a new tab in the layout, which section cannot be added?",
+    "options": [
+      "Retrieve widget chart based on script",
+      "Related incidents",
+      "War room entries picked by entry query",
+      "Incident team members"
+    ],
+    "answer": [
+      "Retrieve widget chart based on script"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando se crea una nueva pesta\u00f1a (tab) en un layout en Cortex XSOAR, puedes agregar secciones como:\n\n- \u2705 **Related incidents** (Incidentes relacionados)\n- \u2705 **War Room entries** (entradas filtradas por query)\n- \u2705 **Incident team members** (miembros del equipo asignado)\n\n\u274c Sin embargo, **'Retrieve widget chart based on script'** no es una secci\u00f3n disponible para agregar en el layout. Los widgets basados en scripts se usan en dashboards, no directamente como secciones en un layout de incidente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686217fd2441598f366db628"
+    },
+    "qid": 109,
+    "question": "What can be used as integration parameters?",
+    "options": [
+      "URL, API key, port",
+      "URL, certificate, image",
+      "Token, query, playbook",
+      "User-password, csv file, query"
+    ],
+    "answer": [
+      "URL, API key, port"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **integration parameters** son configuraciones necesarias para que una integraci\u00f3n se conecte correctamente con un sistema externo. Los ejemplos comunes incluyen:\n\n\u2705 **URL**: la direcci\u00f3n base del sistema externo.\n\u2705 **API key**: para autenticaci\u00f3n.\n\u2705 **Port**: si se necesita especificar un puerto no est\u00e1ndar.\n\n\u274c 'Certificate', 'image', 'playbook' o 'csv file' no son par\u00e1metros est\u00e1ndar en integraciones, y si bien podr\u00edas subir un certificado, esto se maneja mediante configuraci\u00f3n avanzada, no como par\u00e1metro gen\u00e9rico. 'Query' y 'token' pueden usarse, pero no forman una combinaci\u00f3n com\u00fan o est\u00e1ndar como la primera opci\u00f3n.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "6862181e2441598f366db629"
+    },
+    "qid": 110,
+    "question": "The XSOAR administrator is writing an automation and would like to return an error entry back into XSOAR if a particular command errors out. How can this be achieved?",
+    "options": [
+      "Using the demisto_error() function",
+      "Using a print statement",
+      "Using the demisto.debug() function",
+      "Using the return_error() function"
+    ],
+    "answer": [
+      "Using the return_error() function"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para devolver un error expl\u00edcito a Cortex XSOAR desde una automatizaci\u00f3n (script), se debe usar la funci\u00f3n **`return_error()`**. Esta funci\u00f3n genera una entrada de error visible en el War Room y detiene la ejecuci\u00f3n del script si es necesario. \n\n\u274c `demisto.debug()` se usa para registrar informaci\u00f3n en los logs, pero no detiene la ejecuci\u00f3n ni genera errores visibles.\n\u274c `print` simplemente muestra texto en consola, no lo env\u00eda como error a XSOAR.\n\u274c `demisto_error()` no es una funci\u00f3n v\u00e1lida en el entorno de XSOAR.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "686218a22441598f366db62a"
+    },
+    "qid": 111,
+    "question": "A Cortex XSOAR engineer is building an automation in Python and wants to return the error back in the war room.\nHow can this be achieved?",
+    "options": [
+      "Use the return_error() function.",
+      "Use the demisto.debug() function.",
+      "Use a print statement.",
+      "Use the demisto_error() function."
+    ],
+    "answer": [
+      "Use the return_error() function."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para mostrar un error en el **War Room** de Cortex XSOAR desde una automatizaci\u00f3n escrita en Python, se debe utilizar la funci\u00f3n **`return_error()`**. Esta funci\u00f3n detiene la ejecuci\u00f3n del script y devuelve un mensaje de error visible directamente en el flujo del incidente.\n\n- \u2705 `return_error()` \u2192 correcto y recomendado.\n- \u274c `demisto.debug()` \u2192 solo registra en los logs, no muestra el error en el War Room.\n- \u274c `print` \u2192 muestra texto, pero no lo reporta como error en la plataforma.\n- \u274c `demisto_error()` \u2192 no es una funci\u00f3n v\u00e1lida en XSOAR.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "686218d92441598f366db62b"
+    },
+    "qid": 112,
+    "question": "Which two features does XSOAR offer to help recover from a server failure? (Choose two.)",
+    "options": [
+      "Live backup (disaster recovery)",
+      "Distributed database",
+      "Backup data to XSOAR engines",
+      "Local backup"
+    ],
+    "answer": [
+      "Live backup (disaster recovery)",
+      "Local backup"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cortex XSOAR ofrece las siguientes dos funciones principales para recuperaci\u00f3n ante fallos del servidor:\n\n1. \u2705 **Live backup (disaster recovery)**: permite mantener una r\u00e9plica en tiempo real del sistema en un servidor de respaldo. En caso de falla del servidor principal, se puede activar el servidor de respaldo para minimizar el tiempo de inactividad.\n\n2. \u2705 **Local backup**: XSOAR genera copias de seguridad programadas localmente que pueden restaurarse manualmente si es necesario.\n\n\u274c **Distributed database** mejora el rendimiento y escalabilidad, pero no est\u00e1 dise\u00f1ado como mecanismo de respaldo ante fallos.\n\n\u274c **Backup data to XSOAR engines** no es una funci\u00f3n soportada; los engines no almacenan datos persistentes y no son usados para respaldo.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "686218f52441598f366db62c"
+    },
+    "qid": 113,
+    "question": "Threat Intel search queries can be shared with which of the following? (Select 1)",
+    "options": [
+      "Users defined in the platform (email or username)",
+      "Other organizations via the Marketplace",
+      "Users outside XSOAR via email invite",
+      "Roles defined in the platform"
+    ],
+    "answer": [
+      "Roles defined in the platform"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Las b\u00fasquedas guardadas (saved searches) en el m\u00f3dulo de **Threat Intel** en Cortex XSOAR pueden ser compartidas con **roles definidos en la plataforma**. Esto permite que todos los usuarios con ese rol puedan acceder y ejecutar la b\u00fasqueda. No se pueden compartir directamente con usuarios por email o con otras organizaciones a trav\u00e9s del Marketplace.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "686219162441598f366db62d"
+    },
+    "qid": 114,
+    "question": "Which two causes may be occurring if an integration test is working, but the integration is not fetching incidents? (Choose two.)",
+    "options": [
+      "The 'Fetches Incidents' option may not have been enabled",
+      "There are no new events from the external service",
+      "The first fetch should be manually triggered to start the fetching process",
+      "It can take up to 1-hour before incidents are initially fetched"
+    ],
+    "answer": [
+      "The 'Fetches Incidents' option may not have been enabled",
+      "There are no new events from the external service"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Si una integraci\u00f3n pasa la prueba de conexi\u00f3n pero no est\u00e1 recolectando incidentes, las dos causas m\u00e1s probables son:\n\n1. \u2705 **No se ha habilitado la opci\u00f3n 'Fetches Incidents'**: esta casilla debe estar marcada en la configuraci\u00f3n de la instancia para que el sistema ejecute la funci\u00f3n de fetch autom\u00e1ticamente.\n\n2. \u2705 **No hay eventos nuevos en el sistema externo**: si no hay datos nuevos para importar desde la integraci\u00f3n, no se generar\u00e1n incidentes.\n\n\u274c El primer fetch no necesita activaci\u00f3n manual, se ejecuta autom\u00e1ticamente si est\u00e1 configurado correctamente.\n\n\u274c No hay un retraso obligatorio de 1 hora para el primer fetch; normalmente ocurre en minutos tras activarse.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686219362441598f366db62e"
+    },
+    "qid": 115,
+    "question": "Which three types of information are displayed on the incident Quick View? (Choose three.)",
+    "options": [
+      "Indicators and relationships",
+      "Timeline information",
+      "Evidence Board",
+      "Context data",
+      "Incident severity"
+    ],
+    "answer": [
+      "Indicators and relationships",
+      "Timeline information",
+      "Incident severity"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La **Quick View** de un incidente en Cortex XSOAR muestra un resumen compacto y visual del incidente, incluyendo:\n\n1. \u2705 **Indicators and relationships**: muestra los indicadores extra\u00eddos y c\u00f3mo se relacionan con el incidente.\n2. \u2705 **Timeline information**: incluye los eventos clave en el ciclo de vida del incidente (creaci\u00f3n, cierre, asignaciones, etc.).\n3. \u2705 **Incident severity**: muestra la severidad del incidente de forma destacada.\n\n\u274c **Evidence Board** y **Context data** est\u00e1n disponibles desde la vista completa del incidente, pero **no aparecen en la Quick View**.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686219502441598f366db62f"
+    },
+    "qid": 116,
+    "question": "By default, automation written in which language will be executed in a Docker container?",
+    "options": [
+      "Python",
+      "Go",
+      "JavaScript",
+      "Perl"
+    ],
+    "answer": [
+      "Python"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, las automatizaciones escritas en **Python** se ejecutan por defecto dentro de un **contenedor Docker**. Esto garantiza un entorno controlado con las dependencias necesarias. \n\n\u274c Las automatizaciones en **JavaScript** se ejecutan en un entorno interno llamado the 'engine', sin Docker.\n\n\u274c Lenguajes como **Go** y **Perl** no est\u00e1n soportados oficialmente para scripts de automatizaci\u00f3n en XSOAR.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "686219be2441598f366db630"
+    },
+    "qid": 117,
+    "question": "Which two situations would an engineer consider when configuring classification and mapping for an incident type? (Choose two.)",
+    "options": [
+      "When creating incidents from the XSOAR REST API",
+      "When manually creating an incident from the UI",
+      "When adding a new analyst account to XSOAR",
+      "When fetching many different incident types from a single mailbox"
+    ],
+    "answer": [
+      "When creating incidents from the XSOAR REST API",
+      "When fetching many different incident types from a single mailbox"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La configuraci\u00f3n de clasificaci\u00f3n y mapeo para un tipo de incidente es esencial cuando se crean incidentes autom\u00e1ticamente, ya sea desde la API REST de XSOAR o al recibir m\u00faltiples tipos de incidentes desde una sola fuente, como un buz\u00f3n de correo. Esto asegura que los incidentes se asignen correctamente y sus campos se llenen adecuadamente. La creaci\u00f3n manual de incidentes desde la UI tambi\u00e9n puede usar esta configuraci\u00f3n, pero en general es m\u00e1s cr\u00edtica para automatizaci\u00f3n y ingesti\u00f3n masiva.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686219f62441598f366db631"
+    },
+    "qid": 118,
+    "question": "\u00bfCu\u00e1les son los valores agregados listos para usar que se pueden aplicar a los datos de los widgets?",
+    "options": [
+      "Min, Max, Count, Average, Custom Transformers",
+      "Min, Max, Count, Average, Custom Group By",
+      "Count, Average, Sum, Min, Max",
+      "Count, Sum, Min, Max, Transformers"
+    ],
+    "answer": [
+      "Count, Average, Sum, Min, Max"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los valores agregados que se pueden aplicar directamente a los datos de los widgets para an\u00e1lisis y visualizaci\u00f3n incluyen **Count (conteo), Average (promedio), Sum (suma), Min (m\u00ednimo) y Max (m\u00e1ximo)**. Estas funciones permiten realizar c\u00e1lculos estad\u00edsticos b\u00e1sicos sobre conjuntos de datos en dashboards y reportes. Otras opciones mencionadas mezclan conceptos o incluyen t\u00e9rminos no aplicables como 'Custom Transformers' o 'Custom Group By' que no son funciones agregadas est\u00e1ndar en widgets.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621a3a2441598f366db632"
+    },
+    "qid": 119,
+    "question": "What are the out-of-the-box aggregate values that can be applied on widgets data?",
+    "options": [
+      "Min, Max, Count, Average, Custom Transformers",
+      "Min, Max, Count, Average, Custom Group By",
+      "Count, Average, Sum, Min, Max",
+      "Count, Sum, Min, Max, Transformers"
+    ],
+    "answer": [
+      "Count, Average, Sum, Min, Max"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los valores agregados est\u00e1ndar (out-of-the-box) que se pueden aplicar en los datos de los widgets incluyen **Count (conteo), Average (promedio), Sum (suma), Min (m\u00ednimo) y Max (m\u00e1ximo)**. Estas funciones permiten a los usuarios realizar an\u00e1lisis estad\u00edsticos b\u00e1sicos directamente sobre los datos presentados en dashboards o reportes. Las otras opciones incluyen t\u00e9rminos que no son funciones agregadas est\u00e1ndar o combinan funcionalidades no aplicables a widgets.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621a5f2441598f366db633"
+    },
+    "qid": 120,
+    "question": "How would the context data of an incident present after executing the DeleteContext automation with all=yes argument?",
+    "options": [
+      "All context data, except the incident key, will be deleted.",
+      "All the data, including the incident key, will be deleted.",
+      "No difference, the automation cannot be executed manually.",
+      "All context data, including custom incident fields, will be deleted."
+    ],
+    "answer": [
+      "All context data, except the incident key, will be deleted."
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "Al ejecutar la automatizaci\u00f3n DeleteContext con el argumento all=yes, Cortex XSOAR eliminar\u00e1 **todos los datos del contexto del incidente, excepto la clave principal del incidente (incident key)**. Esto limpia toda la informaci\u00f3n contextual relacionada, incluidos los campos personalizados, sin borrar la identidad b\u00e1sica del incidente dentro del sistema.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621aa92441598f366db634"
+    },
+    "qid": 121,
+    "question": "Which investigation element is best suited for collaboration among users?",
+    "options": [
+      "Work Plan",
+      "Related Incidents",
+      "War Room",
+      "Context Data"
+    ],
+    "answer": [
+      "War Room"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "El **War Room** es el espacio dentro de Cortex XSOAR dise\u00f1ado para la colaboraci\u00f3n en tiempo real entre analistas y usuarios involucrados en una investigaci\u00f3n. Permite compartir mensajes, archivos, comandos y resultados de tareas, facilitando la comunicaci\u00f3n y toma de decisiones conjunta. Aunque el Work Plan organiza tareas, y Related Incidents muestra v\u00ednculos, el War Room es el elemento principal para la colaboraci\u00f3n activa.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68621ac62441598f366db635"
+    },
+    "qid": 122,
+    "question": "At what stage during the incident lifecycle is an incident type assigned?",
+    "options": [
+      "Pre-processing",
+      "Incident creation",
+      "Classification",
+      "Playbook execution"
+    ],
+    "answer": [
+      "Classification"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El **incident type** se asigna durante la etapa de **Classification** en el ciclo de vida del incidente en Cortex XSOAR. En esta fase, el sistema determina el tipo espec\u00edfico del incidente bas\u00e1ndose en las reglas de clasificaci\u00f3n aplicadas al evento o datos entrantes. Esto permite que el incidente sea manejado con los playbooks, layouts y campos adecuados seg\u00fan su categor\u00eda. El tipo no se asigna en creaci\u00f3n o pre-procesamiento, y la ejecuci\u00f3n del playbook ocurre despu\u00e9s de la clasificaci\u00f3n.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621ae32441598f366db636"
+    },
+    "qid": 123,
+    "question": "How long is the trial period for paid content packs?",
+    "options": [
+      "30 days",
+      "14 days",
+      "7 days",
+      "60 days"
+    ],
+    "answer": [
+      "30 days"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, el per\u00edodo de prueba para los content packs pagos es t\u00edpicamente de **30 d\u00edas**. Esto permite a las organizaciones evaluar la funcionalidad y beneficios del contenido antes de adquirir una licencia completa. Este plazo es est\u00e1ndar para la mayor\u00eda de los packs comerciales ofrecidos en el Marketplace.",
+    "domain": "Content Management"
+
+  },
+  {
+    "_id": {
+      "$oid": "68621b082441598f366db637"
+    },
+    "qid": 124,
+    "question": "What is the correct expression to use when filtering only PDF files?",
+    "options": [
+      "Use File.Extension that does not equal (string comparison) PDF",
+      "Use File.Name contains PDF",
+      "Use File.Extension contains (general) PDF",
+      "Use File.Extension equals (string comparison) PDF"
+    ],
+    "answer": [
+      "Use File.Extension equals (string comparison) PDF"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para filtrar \u00fanicamente archivos PDF en Cortex XSOAR, la expresi\u00f3n correcta es usar la propiedad **File.Extension** con una comparaci\u00f3n de igualdad de cadena exacta, es decir: **File.Extension equals PDF**. Esto asegura que solo se seleccionen archivos con extensi\u00f3n .pdf. \n\n- Usar 'contains' puede incluir archivos con extensiones similares o nombres que contengan 'PDF', pero no necesariamente sean archivos PDF.\n- 'File.Name contains PDF' buscar\u00eda en todo el nombre, no espec\u00edficamente en la extensi\u00f3n.\n- 'does not equal' es para excluir PDFs, no para filtrarlos.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68621b1e2441598f366db638"
+    },
+    "qid": 125,
+    "question": "What does Script helper contain?",
+    "options": [
+      "Available commands",
+      "Permission settings",
+      "Automation version history",
+      "Automation timeout configuration"
+    ],
+    "answer": [
+      "Available commands"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El **Script helper** en Cortex XSOAR proporciona una lista de **comandos disponibles** que pueden ser usados dentro de un script o automatizaci\u00f3n. Facilita al desarrollador conocer qu\u00e9 comandos puede ejecutar para interactuar con el sistema o realizar acciones espec\u00edficas. No contiene configuraciones de permisos, historial de versiones ni configuraci\u00f3n de tiempo de espera.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621b562441598f366db639"
+    },
+    "qid": 126,
+    "question": "Which of these would be the most operationally efficient repository for moving XSOAR custom content from a development server to a production environment?",
+    "options": [
+      "A content repository specified in the Marketplace",
+      "Remote git repository specified in the dev-prod configuration parameters",
+      "The development server's default repository",
+      "Cortex XSOAR public content repository"
+    ],
+    "answer": [
+      "Remote git repository specified in the dev-prod configuration parameters"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La forma m\u00e1s eficiente y recomendada para mover contenido personalizado de Cortex XSOAR desde un servidor de desarrollo a uno de producci\u00f3n es usar un **repositorio git remoto especificado en los par\u00e1metros de configuraci\u00f3n dev-prod**. Esto permite controlar versiones, gestionar cambios de forma colaborativa y automatizar despliegues entre entornos.\n\n- El repositorio por defecto del servidor de desarrollo no es ideal para migraciones entre entornos.\n- El Marketplace est\u00e1 orientado a contenido p\u00fablico y oficial, no a contenido personalizado.\n- El repositorio p\u00fablico de Cortex XSOAR contiene contenido est\u00e1ndar y no personalizado del usuario.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621b7f2441598f366db63a"
+    },
+    "qid": 127,
+    "question": "Para evitar superar las cuotas de API para servicios de terceros, los indicadores solo se actualizan despu\u00e9s del per\u00edodo de caducidad de la cach\u00e9 de indicadores. \u00bfCu\u00e1l es el per\u00edodo de caducidad de cach\u00e9 predeterminado para los indicadores en XSOAR (minutos/d\u00edas)?",
+    "options": [
+      "10.080 minutos (7 d\u00edas)",
+      "20.160 minutos (14 d\u00edas)",
+      "21.600 minutos (15 d\u00edas)",
+      "4.320 minutos (3 d\u00edas)"
+    ],
+    "answer": [
+      "10.080 minutos (7 d\u00edas)"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El per\u00edodo predeterminado de caducidad de cach\u00e9 para los indicadores en Cortex XSOAR es de **10.080 minutos (7 d\u00edas)**. Esto significa que los indicadores no se actualizar\u00e1n mediante consultas a servicios de terceros hasta que haya transcurrido este tiempo, ayudando a evitar exceder los l\u00edmites de cuota de API y optimizando el uso de recursos.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621bad2441598f366db63b"
+    },
+    "qid": 128,
+    "question": "To avoid exceeding API quotas for third-party services, indicators are only updated after the indicator cache expiration period. What is the default cache expiration period for indicators in XSOAR (minutes/days)?",
+    "options": [
+      "10,080 minutes (7 days)",
+      "20,160 minutes (14 days)",
+      "21,600 minutes (15 days)",
+      "4,320 minutes (3 days)"
+    ],
+    "answer": [
+      "10,080 minutes (7 days)"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "The default cache expiration period for indicators in Cortex XSOAR is **10,080 minutes (7 days)**. This means that indicators will not be refreshed from third-party services until this time has elapsed, which helps prevent exceeding API quotas and optimizes resource usage.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68621bdc2441598f366db63c"
+    },
+    "qid": 129,
+    "question": "What is the correct incident life cycle on XSOAR?",
+    "options": [
+      "Planning > Incident ingestion > Post-processing > Classification and Mapping > Incident Creation > Playbook runs > Pre-processing",
+      "Planning > Incident Ingestion > Classification and Mapping > Pre-processing > Incident Creation > Playbook runs > Post-processing",
+      "Planning > Incident Ingestion > Pre-processing > Incident Creation > Classification and Mapping > Playbook runs > Post-processing",
+      "Planning > Incident Ingestion > Incident Creation > Classification and Mapping > Pre-processing > Playbook runs > Post-processing"
+    ],
+    "answer": [
+      "Planning > Incident Ingestion > Classification and Mapping > Pre-processing > Incident Creation > Playbook runs > Post-processing"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El ciclo de vida correcto del incidente en Cortex XSOAR inicia con la planificaci\u00f3n, luego la ingesti\u00f3n del incidente, seguida de la clasificaci\u00f3n y mapeo para determinar el tipo y campos del incidente. Despu\u00e9s, se realiza el pre-procesamiento para preparar el incidente antes de la creaci\u00f3n formal. Una vez creado el incidente, se ejecuta el playbook asignado y finalmente se realiza el post-procesamiento para acciones finales y cierre. Esta secuencia asegura que el incidente sea procesado correctamente en todas sus fases.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621c132441598f366db63d"
+    },
+    "qid": 130,
+    "question": "Which two components have their own context data? (Choose two.)",
+    "options": [
+      "Sub-playbook",
+      "Task",
+      "Field",
+      "Incident"
+    ],
+    "answer": [
+      "Sub-playbook",
+      "Incident"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR, tanto el **incidente** como el **sub-playbook** tienen su propio contexto de datos. Esto permite que los sub-playbooks manejen datos de manera independiente dentro del flujo general, sin alterar directamente el contexto del incidente o del playbook principal. Las tareas y campos no tienen contextos independientes; forman parte del contexto del playbook o incidente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621c382441598f366db63e"
+    },
+    "qid": 131,
+    "question": "How is data transferred between playbook tasks?",
+    "options": [
+      "Read/Write from context data",
+      "Over war room results",
+      "Input from the indicator page",
+      "Directly from a previous task"
+    ],
+    "answer": [
+      "Read/Write from context data"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, la transferencia de datos entre tareas de un playbook se realiza mediante la lectura y escritura en el **contexto del incidente** (context data). Cada tarea puede leer datos existentes y escribir nuevos datos en el contexto, que estar\u00e1n disponibles para tareas posteriores. \n\n- No se utiliza directamente el War Room para transferencia de datos entre tareas.\n- Los inputs de la p\u00e1gina de indicadores no forman parte del flujo interno de datos entre tareas.\n- Las tareas no comparten datos directamente entre ellas, sino a trav\u00e9s del contexto.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68621c5d2441598f366db63f"
+    },
+    "qid": 132,
+    "question": "Which command is an example of generic reputation?",
+    "options": [
+      "!ip",
+      "!getReputation",
+      "!reputation",
+      "!enrichIndicator"
+    ],
+    "answer": [
+      "!ip"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR, el comando **!ip** es un ejemplo de comando gen\u00e9rico que se usa para obtener informaci\u00f3n y reputaci\u00f3n sobre indicadores de tipo direcci\u00f3n IP. Este comando integra datos de diferentes fuentes para proporcionar un an\u00e1lisis de reputaci\u00f3n b\u00e1sico.\n\n- Los otros comandos listados no son comandos gen\u00e9ricos est\u00e1ndar para reputaci\u00f3n en XSOAR.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621c8d2441598f366db640"
+    },
+    "qid": 133,
+    "question": "Which of the following are valid methods to contribute custom content? (Choose three.)",
+    "options": [
+      "Submit content directly through feature requests",
+      "Private GitHub repository submission for premium content",
+      "A Github pull request on the public XSOAR Content Repository",
+      "Using the marketplace interface to upload the content",
+      "Using the content submission tool on live.paloaltonetworks.com"
+    ],
+    "answer": [
+      "A Github pull request on the public XSOAR Content Repository",
+      "Using the marketplace interface to upload the content",
+      "Using the content submission tool on live.paloaltonetworks.com"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Las formas v\u00e1lidas para contribuir contenido personalizado a Cortex XSOAR incluyen:\n\n1. \u2705 **Realizar un pull request en el repositorio p\u00fablico de contenido de XSOAR en GitHub** para que el contenido sea revisado y potencialmente incluido.\n\n2. \u2705 **Usar la interfaz del Marketplace** para subir contenido y compartirlo con la comunidad.\n\n3. \u2705 **Utilizar la herramienta de env\u00edo de contenido en live.paloaltonetworks.com**, que es el portal oficial para la gesti\u00f3n y publicaci\u00f3n de contenido.\n\n\u274c Enviar contenido directamente a trav\u00e9s de solicitudes de funciones no es un m\u00e9todo v\u00e1lido.\n\n\u274c Los repositorios privados de GitHub para contenido premium no son el canal oficial para contribuciones p\u00fablicas.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621caf2441598f366db641"
+    },
+    "qid": 134,
+    "question": "What should be used to create a log message when creating an automation in Cortex XSOAR?",
+    "options": [
+      "Debug statement",
+      "Demisto.debug() function",
+      "Print statement",
+      "Demisto.results() function"
+    ],
+    "answer": [
+      "Demisto.debug() function"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para generar mensajes de log durante la creaci\u00f3n de una automatizaci\u00f3n en Cortex XSOAR, se debe usar la funci\u00f3n **demisto.debug()**. Esta funci\u00f3n escribe mensajes en el log de depuraci\u00f3n que pueden ser \u00fatiles para diagnosticar y rastrear el comportamiento del script durante su ejecuci\u00f3n.\n\n- **Print statement** solo muestra salida est\u00e1ndar y no se registra en los logs de XSOAR.\n- **Demisto.results()** se utiliza para enviar resultados al War Room, no para logging.\n- La opci\u00f3n 'Debug statement' es gen\u00e9rica y no corresponde a una funci\u00f3n espec\u00edfica de XSOAR.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "68621ceb2441598f366db642"
+    },
+    "qid": 135,
+    "question": "When uploading content, which two options could the upload include? (Choose two.)",
+    "options": [
+      "Indicators",
+      "Incidents",
+      "Reports",
+      "Fields"
+    ],
+    "answer": [
+      "Indicators",
+      "Incidents"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **Indicadores** forman parte del contenido que puede ser importado o empaquetado para configuraciones. Adem\u00e1s, aunque los **Incidentes** son datos operativos y no contenido est\u00e1tico, pueden ser exportados e importados como parte de procesos de migraci\u00f3n o recuperaci\u00f3n, por lo que en algunos contextos se consideran datos que se 'suben' al sistema.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621d1c2441598f366db643"
+    },
+    "qid": 136,
+    "question": "Inside the Incidents table view, which actions can be performed on the selected incidents? (Choose two.)",
+    "options": [
+      "Run Command, Export, and Close and Delete for all selected incidents regardless of their status",
+      "Assign, Edit, and Mark as Duplicate for all selected incidents regardless of their status",
+      "Run Command for all selected incidents having Active status",
+      "Export incidents as JSON and change incident status"
+    ],
+    "answer": [
+      "Assign, Edit, and Mark as Duplicate for all selected incidents regardless of their status",
+      "Run Command, Export, and Close and Delete for all selected incidents regardless of their status"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En la vista de tabla de incidentes de Cortex XSOAR, las acciones que se pueden realizar sobre los incidentes seleccionados incluyen:\n\n1. \u2705 Asignar, editar y marcar como duplicado sin importar el estado de los incidentes.\n2. \u2705 Ejecutar comandos, exportar, cerrar y eliminar incidentes seleccionados sin restricciones de estado.\n\nEstas acciones permiten una gesti\u00f3n masiva eficiente de incidentes, facilitando la administraci\u00f3n y organizaci\u00f3n del trabajo. Las otras opciones tienen restricciones o combinaciones incorrectas respecto al estado o permisos.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68621d482441598f366db644"
+    },
+    "qid": 137,
+    "question": "An engineer\u2019s organization system is registered in the following manner: <SiteName-SystemID-Username>. The engineer created a new indicator type for detecting systems using regex. The engineer would now like the username to be created as a separate \u2018User\u2019 indicator automatically once a system is found. What is the most efficient way for the engineer to achieve this?",
+    "options": [
+      "Create a custom indicator field named \u2018username\u2019 and link it to the internal system indicator",
+      "Change the reputation command for the internal system indicator type",
+      "Create a new indicator type of the internal username and set a formatting script to extract only the username",
+      "Create a new indicator type of the internal username and have the regex included on any string that has dash at the beginning"
+    ],
+    "answer": [
+      "Change the reputation command for the internal system indicator type"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Modificar el comando de reputaci\u00f3n del tipo de indicador de sistema interno es la forma m\u00e1s eficiente de automatizar la creaci\u00f3n de indicadores relacionados, como el nombre de usuario, durante la evaluaci\u00f3n de la reputaci\u00f3n. Esto permite extraer, transformar y crear nuevos indicadores autom\u00e1ticamente sin crear tipos adicionales o depender de scripts externos.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621d6d2441598f366db645"
+    },
+    "qid": 138,
+    "question": "Which two solutions are available to scale an overloaded XSOAR environment? (Choose two.)",
+    "options": [
+      "Add a distributed database server",
+      "Add an indexing server",
+      "Add a live backup server (disaster recovery)",
+      "Add an engine"
+    ],
+    "answer": [
+      "Add a distributed database server",
+      "Add an engine"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para escalar un entorno XSOAR saturado, las dos soluciones principales son:\n\n1. \u2705 **Agregar un servidor de base de datos distribuida**: mejora la capacidad de almacenamiento y la eficiencia en consultas, ayudando a distribuir la carga.\n\n2. \u2705 **Agregar un engine**: permite distribuir la carga de trabajo ejecutando tareas y automatizaciones en servidores adicionales, aliviando el servidor principal.\n\n\u274c El servidor de indexaci\u00f3n no es una opci\u00f3n t\u00edpica para escalar XSOAR.\n\n\u274c El servidor de live backup es para recuperaci\u00f3n ante desastres, no para escalamiento.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "68621d8d2441598f366db646"
+    },
+    "qid": 139,
+    "question": "An XSOAR engineer has been tasked with exporting all indicators from the production environment in the last 90 days. The final report needs to be in CSV format containing all indicator fields. How can this task be achieved?",
+    "options": [
+      "Run the command !GetIndicatorsByQuery in CLI with its default arguments and export all indicators in the last 90 days.",
+      "SSH into the server and copy the indicator\u2019s database.",
+      "In the Threat Intel page, add query firstSeen:>=\"90 days ago\", select All columns in Table View, and click Export to export as a CSV.",
+      "Run the command !findIndicators in CLI with the query firstSeen:>=\"90 days ago\" and export to CSV."
+    ],
+    "answer": [
+      "In the Threat Intel page, add query firstSeen:>=\"90 days ago\", select All columns in Table View, and click Export to export as a CSV."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La forma m\u00e1s sencilla y efectiva de exportar todos los indicadores de los \u00faltimos 90 d\u00edas con todos los campos es usar la interfaz gr\u00e1fica en la p\u00e1gina de Threat Intel. Se debe aplicar el filtro `firstSeen:>=\"90 days ago\"`, seleccionar todas las columnas en la vista de tabla y utilizar la opci\u00f3n de exportar para obtener el archivo CSV completo. \n\nLos comandos CLI mencionados no garantizan la exportaci\u00f3n con todos los campos ni la facilidad que ofrece la interfaz. Acceder a la base de datos por SSH no es recomendable ni eficiente para esta tarea.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621db12441598f366db647"
+    },
+    "qid": 140,
+    "question": "An engineer deployed two different instances of Active Directory for each organization site. As part of account enrichment use case, the engineer would like to delete a user from one specific site. Which command will accomplish this?",
+    "options": [
+      "run ad-delete-user command with user-dn arg and using-brand=\u201cActive Directory Query v2\u201d",
+      "run ad-delete-user command with user-dn arg and raw-response=true",
+      "run ad-delete-user command with user-dn arg and ignore-output=true",
+      "run ad-delete-user command with user-dn arg and using=\u201cActive Directory Query v2_instance_1\u201d"
+    ],
+    "answer": [
+      "run ad-delete-user command with user-dn arg and using=\u201cActive Directory Query v2_instance_1\u201d"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Cuando hay m\u00faltiples instancias de integraci\u00f3n desplegadas, para ejecutar un comando en una instancia espec\u00edfica en Cortex XSOAR se usa el argumento **using** con el nombre exacto de la instancia. En este caso, para eliminar un usuario de un sitio espec\u00edfico, se debe usar:\n\n`run ad-delete-user` con el argumento `user-dn` y el par\u00e1metro `using=\"Active Directory Query v2_instance_1\"` para apuntar a la instancia correcta.\n\nLos otros par\u00e1metros (`using-brand`, `raw-response`, `ignore-output`) no permiten seleccionar la instancia espec\u00edfica.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "68621dd82441598f366db648"
+    },
+    "qid": 141,
+    "question": "Which action would enable notifications of incident fetch fails?",
+    "options": [
+      "Create a new integration that monitors the incident fetch and sends an email if the fetch fails.",
+      "Schedule a job that runs and monitors incidents in Cortex XSOAR that will send an email if there are no new incidents.",
+      "Add a server config to notify when incident fetch fails.",
+      "Create a custom playbook that sends an email each time the fetch fails."
+    ],
+    "answer": [
+      "Add a server config to notify when incident fetch fails."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La manera m\u00e1s eficiente para recibir notificaciones autom\u00e1ticas cuando falla la recolecci\u00f3n de incidentes (incident fetch) en Cortex XSOAR es a\u00f1adir una configuraci\u00f3n en el archivo de servidor (server config) que active las alertas correspondientes. Esto automatiza el proceso y evita la necesidad de crear integraciones, jobs o playbooks personalizados para esta funci\u00f3n.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68621e082441598f366db649"
+    },
+    "qid": 142,
+    "question": "What is the default configuration for indicator auto-extraction when incidents are created?",
+    "options": [
+      "Inline",
+      "Inband",
+      "None",
+      "Out of band"
+    ],
+    "answer": [
+      "Inline"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, la configuraci\u00f3n predeterminada para la autoextracci\u00f3n de indicadores al crear incidentes es **'Inline'**, lo que significa que la extracci\u00f3n de indicadores se realiza de manera s\u00edncrona dentro del flujo principal del incidente, asegurando que los indicadores est\u00e9n disponibles inmediatamente despu\u00e9s de la creaci\u00f3n del incidente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621e272441598f366db64a"
+    },
+    "qid": 143,
+    "question": "What is the default task type when creating an empty task?",
+    "options": [
+      "Standard (Manual)",
+      "Conditional",
+      "Section header",
+      "Standard (Automated)"
+    ],
+    "answer": [
+      "Standard (Manual)"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, al crear una tarea vac\u00eda (empty task) por defecto se crea como una **tarea est\u00e1ndar manual (Standard (Manual))**. Esto significa que la tarea est\u00e1 destinada a ser ejecutada manualmente por un analista y no contiene comandos automatizados ni condiciones espec\u00edficas. Las otras opciones requieren configuraci\u00f3n adicional y no son el tipo predeterminado.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621e642441598f366db64b"
+    },
+    "qid": 144,
+    "question": "Newly created subplaybooks do not have any inputs, or outputs. What is necessary to make them functional? (Choose two.)",
+    "options": [
+      "Define input key in the subplaybook task. Map context values to pull from parent playbook.",
+      "The output of the previous task automatically becomes the input of the subplaybook.",
+      "Map inputs and outputs to the parent playbook and the subplaybook will use the same values.",
+      "Open the subplaybook and add inputs or outputs in the Playbook triggered task."
+    ],
+    "answer": [
+      "Define input key in the subplaybook task. Map context values to pull from parent playbook.",
+      "Open the subplaybook and add inputs or outputs in the Playbook triggered task."
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para que un sub-playbook funcione correctamente, es necesario:\n\n1. \u2705 Definir claves de entrada (input key) en la tarea del sub-playbook dentro del playbook principal y mapear los valores del contexto para que se extraigan del playbook padre.\n\n2. \u2705 Abrir el sub-playbook y agregar entradas (inputs) o salidas (outputs) en la tarea que lo dispara para definir qu\u00e9 datos recibe y qu\u00e9 datos devuelve.\n\nLas otras opciones no son correctas porque la salida de la tarea previa no se asigna autom\u00e1ticamente como entrada del sub-playbook, y no existe un mapeo autom\u00e1tico de inputs/outputs entre el playbook padre y el sub-playbook sin configuraci\u00f3n expl\u00edcita.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68621e842441598f366db64c"
+    },
+    "qid": 145,
+    "question": "What are two of the actions available on the Version History tab of a content pack in the marketplace? (Choose two.)",
+    "options": [
+      "Download content for offline installation",
+      "Uninstall content pack",
+      "Update to x version",
+      "Revert to x version"
+    ],
+    "answer": [
+      "Update to x version",
+      "Revert to x version"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En la pesta\u00f1a de historial de versiones (Version History) de un content pack en el Marketplace de Cortex XSOAR, los usuarios pueden:\n\n1. \u2705 Actualizar a una versi\u00f3n espec\u00edfica del content pack ('Update to x version').\n2. \u2705 Revertir a una versi\u00f3n anterior del content pack ('Revert to x version') si hay problemas con la versi\u00f3n actual.\n\nLas opciones de descargar para instalaci\u00f3n offline o desinstalar el paquete no est\u00e1n disponibles directamente en esta pesta\u00f1a.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68621eb72441598f366db64d"
+    },
+    "qid": 146,
+    "question": "Which three actions can an engineer take on the troubleshooting page? (Choose three.)",
+    "options": [
+      "Download the debug log bundle",
+      "Put the XSOAR server in maintenance mode",
+      "View and modify server configuration settings",
+      "Export and import custom content",
+      "View a list of server administrators"
+    ],
+    "answer": [
+      "Download the debug log bundle",
+      "View and modify server configuration settings",
+      "Export and import custom content"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En la p\u00e1gina de troubleshooting de Cortex XSOAR, un ingeniero puede:\n\n1. \u2705 Descargar el paquete de logs de depuraci\u00f3n para an\u00e1lisis detallado de problemas.\n2. \u2705 Ver y modificar configuraciones del servidor para ajustar par\u00e1metros t\u00e9cnicos.\n3. \u2705 Exportar e importar contenido personalizado para gestionar versiones y actualizaciones.\n\nLas opciones para poner el servidor en modo mantenimiento o ver la lista de administradores no est\u00e1n disponibles en esta secci\u00f3n.",
+    "domain": "Playbook Debugging and Troubleshooting"
+  },
+  {
+    "_id": {
+      "$oid": "68621ede2441598f366db64e"
+    },
+    "qid": 147,
+    "question": "Which component can be part of a load balancing group?",
+    "options": [
+      "Distributed database",
+      "D2 agent",
+      "Engine",
+      "Load balancing server"
+    ],
+    "answer": [
+      "Engine"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los **Engines** pueden ser agrupados en un grupo de balanceo de carga para distribuir la ejecuci\u00f3n de tareas y automatizaciones, mejorando la escalabilidad y rendimiento del sistema. Los otros componentes no forman parte de grupos de balanceo de carga: la base de datos distribuida es para almacenamiento, el D2 agent es para integraci\u00f3n de dispositivos y no para balanceo, y el Load balancing server no es un componente reconocido.",
+    "domain": "Solution Architecture, Deployment, and Performance"
+  },
+  {
+    "_id": {
+      "$oid": "68621ef92441598f366db64f"
+    },
+    "qid": 148,
+    "question": "An Analyst is tasked to retrieve a list of all malicious hashes over the last 30 days. What is the correct query to use?",
+    "options": [
+      "type:File reputation:Malicious sourcetimestamp:\"30 days ago\"",
+      "type:File verdict:Malicious sourcetimestamp:<=\"30 days ago\"",
+      "type:File reputation:Malicious sourcetimestamp:=\"30 days ago\"",
+      "type:File verdict:Malicious sourcetimestamp:>=\"30 days ago\""
+    ],
+    "answer": [
+      "type:File verdict:Malicious sourcetimestamp:>=\"30 days ago\""
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "La consulta correcta para obtener una lista de todos los hashes maliciosos en los \u00faltimos 30 d\u00edas en Cortex XSOAR debe filtrar por el tipo de indicador 'File', el campo 'verdict' igual a 'Malicious' y que la marca temporal de origen ('sourcetimestamp') sea mayor o igual a 30 d\u00edas atr\u00e1s. Esto asegura que se obtienen \u00fanicamente los archivos maliciosos recientes.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621f162441598f366db650"
+    },
+    "qid": 149,
+    "question": "A SOC manager built a dashboard and would like to share the dashboard with other team members. How would the SOC manager create a dashboard that meets this requirement?",
+    "options": [
+      "Manually share the dashboard through user emails",
+      "Dashboard is shared to all XSOAR users",
+      "Propagate the dashboard based on SAML authentication",
+      "Dashboard is shared to all XSOAR users in a selected role"
+    ],
+    "answer": [
+      "Dashboard is shared to all XSOAR users in a selected role"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los dashboards pueden ser compartidos con usuarios que pertenecen a un rol espec\u00edfico dentro de la plataforma. Esto permite que solo los miembros del equipo o grupo seleccionado tengan acceso al dashboard, facilitando la colaboraci\u00f3n y manteniendo control sobre qui\u00e9n puede visualizar la informaci\u00f3n.\n\nLas otras opciones no son pr\u00e1cticas ni soportadas: el compartir manualmente por email no automatiza el acceso, compartir con todos los usuarios es poco selectivo y la propagaci\u00f3n basada en SAML no aplica para dashboards.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68621f2c2441598f366db651"
+    },
+    "qid": 150,
+    "question": "An automation returned an output called: csvReport. What filter would be used to check if the automation returned results?",
+    "options": [
+      "Contains/Includes",
+      "Equals/Matches",
+      "In/In list",
+      "Is defined/Exist"
+    ],
+    "answer": [
+      "Is defined/Exist"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para verificar si una automatizaci\u00f3n ha devuelto resultados en un campo como 'csvReport', el filtro m\u00e1s adecuado es **'Is defined' o 'Exist'**, ya que verifica la existencia del valor sin importar su contenido espec\u00edfico. Otros filtros como 'Contains' o 'Equals' requieren conocer o buscar valores espec\u00edficos, mientras que 'In/In list' es para comparar elementos dentro de una lista.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621f5c2441598f366db652"
+    },
+    "qid": 151,
+    "question": "Which two values would save the \"test\" context key? (Choose two.)",
+    "options": [
+      "Get csvList.value where csvList.value equals test [as value]",
+      "Get csvList.value where csvList.value equals test {}[from previous tasks]",
+      "Get csvList.value where csvList.value equals test [from previous tasks]",
+      "Get csvList.value where csvList.value equals ${test} [as value]"
+    ],
+    "answer": [
+      "Get csvList.value where csvList.value equals test [from previous tasks]",
+      "Get csvList.value where csvList.value equals ${test} [as value]"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "Las dos expresiones correctas para guardar la clave de contexto 'test' en Cortex XSOAR son:\n\n1. **Get csvList.value where csvList.value equals test [from previous tasks]**: esta expresi\u00f3n indica que el valor se obtiene de tareas previas.\n2. **Get csvList.value where csvList.value equals ${test} [as value]**: esta utiliza la interpolaci\u00f3n de variables para asignar el valor de la variable 'test' directamente en el contexto.\n\nLas otras opciones no representan formas v\u00e1lidas para asignar valores en el contexto en este caso.",
+    "domain": "Playbook Development"
+  },
+  {
+    "_id": {
+      "$oid": "68621f7a2441598f366db653"
+    },
+    "qid": 152,
+    "question": "The default expiration method for non-feed indicators is either to never expire or to expire after a specific period of time. How frequently does XSOAR check for newly expired indicators?",
+    "options": [
+      "Every 24 hours",
+      "Every 5 minutes",
+      "Every 8 hours",
+      "Every 1 hour"
+    ],
+    "answer": [
+      "Every 1 hour"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, la verificaci\u00f3n predeterminada para detectar indicadores expirados se realiza cada **1 hora**. Este intervalo permite un balance entre mantener la base de datos actualizada y minimizar el impacto en el rendimiento del sistema.",
+    "domain": "Administration and Operations"
+  },
+  {
+    "_id": {
+      "$oid": "68621fab2441598f366db654"
+    },
+    "qid": 153,
+    "question": "What can be added to offload integration instance processing from the main server?",
+    "options": [
+      "Database node",
+      "Application server",
+      "Engine",
+      "Development server"
+    ],
+    "answer": [
+      "Engine"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "El **Engine** es el componente en Cortex XSOAR que permite distribuir la ejecuci\u00f3n de integraciones y automatizaciones fuera del servidor principal, descargando la carga de trabajo y mejorando el rendimiento. El nodo de base de datos se encarga del almacenamiento y replicaci\u00f3n de datos, pero no procesa integraciones.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621fbe2441598f366db655"
+    },
+    "qid": 154,
+    "question": "What are recommended for placing a long text incident field value in an incident layout?",
+    "options": [
+      "Section headers",
+      "Display filters",
+      "Cards",
+      "Rows"
+    ],
+    "answer": [
+      "Cards"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Para valores largos de campos de texto en un layout de incidente en Cortex XSOAR, se recomienda utilizar **Cards**. Las tarjetas permiten mostrar contenido extenso de manera m\u00e1s clara y manejable, evitando que la informaci\u00f3n se desborde o dificulte la lectura. Las otras opciones no est\u00e1n dise\u00f1adas para manejar textos largos eficientemente.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "68621fd42441598f366db656"
+    },
+    "qid": 155,
+    "question": "Which two methods are used to add new content to the XSOAR Content Repository? (Choose two.)",
+    "options": [
+      "Create content and add it to the standard content by contributing through the Marketplace",
+      "Use the XSOAR GitHub Contribution Guide to add the contribution to the standard content",
+      "Create a support ticket with the custom content for review by the support team",
+      "Any custom content will be automatically uploaded to the content repository"
+    ],
+    "answer": [
+      "Create content and add it to the standard content by contributing through the Marketplace",
+      "Use the XSOAR GitHub Contribution Guide to add the contribution to the standard content"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "Las dos formas v\u00e1lidas para a\u00f1adir nuevo contenido al repositorio est\u00e1ndar de Cortex XSOAR son:\n\n1. \u2705 Crear contenido y contribuirlo a trav\u00e9s del Marketplace siguiendo los procesos de revisi\u00f3n.\n2. \u2705 Usar la gu\u00eda de contribuciones de GitHub para enviar un pull request al repositorio oficial.\n\nCrear un ticket o la subida autom\u00e1tica de contenido personalizado no son m\u00e9todos reconocidos para agregar contenido est\u00e1ndar al repositorio.",
+    "domain": "Custom Integrations, Scripts, and Automations"
+  },
+  {
+    "_id": {
+      "$oid": "68621fec2441598f366db657"
+    },
+    "qid": 156,
+    "question": "What are possible war room result (entry) types?",
+    "options": [
+      "Context, file, error, image",
+      "Note, indicator, error, image",
+      "Video, file, error, image",
+      "Note, file, error, image"
+    ],
+    "answer": [
+      "Note, file, error, image"
+    ],
+    "image_base64": "",
+    "type": "multiple_choice",
+    "explanation": "En Cortex XSOAR, los tipos posibles de entradas (entries) en el War Room incluyen:\n\n- **Note**: mensajes o anotaciones textuales.\n- **File**: archivos adjuntos.\n- **Error**: mensajes de error generados por comandos o scripts.\n- **Image**: im\u00e1genes mostradas dentro del War Room.\n\nOtros tipos como 'Context' o 'Video' no son tipos est\u00e1ndar de entradas en el War Room.",
+    "domain": "Content Management"
+  },
+  {
+    "_id": {
+      "$oid": "686220142441598f366db658"
+    },
+    "qid": 157,
+    "question": "What is the difference between labels and fields?",
+    "options": [
+      "Fields can be used in playbooks and labels cannot",
+      "Fields are indexed in the database and labels are not",
+      "Labels can be used in queries and fields cannot",
+      "Labels are indexed in the database and fields are not"
+    ],
+    "answer": [
+      "Fields are indexed in the database and labels are not"
+    ],
+    "type": "multiple_choice",
+    "image_base64": "",
+    "explanation": "En Cortex XSOAR, la diferencia clave entre labels y fields es que:\n\n- **Fields** son datos estructurados que se indexan en la base de datos, lo que permite b\u00fasquedas eficientes y filtrado en queries.\n- **Labels** son etiquetas flexibles que pueden ser asignadas a incidentes pero no se indexan en la base de datos, por lo que no son tan eficientes para b\u00fasquedas o filtrados extensos.\n\nAmbos pueden usarse en playbooks y queries, pero el \u00edndice de base de datos es la diferencia fundamental.",
+    "domain": "Content Management"
+  }
+]
