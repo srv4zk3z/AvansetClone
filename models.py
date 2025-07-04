@@ -14,7 +14,7 @@ class Question(BaseModel):
     match_targets: Optional[List[str]] = None  # Solo si type == match
     image_base64: Optional[str] = None
     explanation: Optional[str] = None
-
+    domain: Optional[str] = None  # Dominio de la pregunta
     @model_validator(mode="after")
     def validar_pregunta(self):
         if self.type == "multiple_choice":
