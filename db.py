@@ -28,6 +28,8 @@ async def init_indexes():
 client = AsyncIOMotorClient(MONGO_URI)
 db = client[MONGO_DB]
 collection = db["preguntas"]
+attempts_collection = db["intentos"]         # Para registrar los exámenes
+stats_collection = db["estadisticas_preg"]   # Para llevar stats por pregunta
 
 # Crear índice si no existe
 async def init_indexes():
