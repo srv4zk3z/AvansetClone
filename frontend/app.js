@@ -34,6 +34,37 @@ document.getElementById('startExam').addEventListener('click', async () => {
   renderExam(currentQuestions);
 });
 
+// Comenzar examen basado en errores acumulados
+document.getElementById('startFocusExam').addEventListener('click', async () => {
+  const input = document.getElementById('numPreguntas');
+  let num = parseInt(input.value);
+
+  if (isNaN(num) || num < 1 || num > 300) {
+    alert("Por favor, ingresa un número entre 1 y 300.");
+    return;
+  }
+
+const res = await fetch(`${API_BASE}/exam/focus?limit=${num}`);
+const data = await res.json();
+
+  if (!data.exam || data.exam.length === 0) {
+    document.getElementById('resultContainer').innerHTML = `
+      <div class="alert alert-warning text-center">
+        No se encontraron errores suficientes para generar un examen.
+      </div>
+    `;
+    return;
+  }
+
+  currentQuestions = data.exam;
+  userAnswers = {};
+  currentPage = 0;
+
+  document.getElementById('examSetup').style.display = 'none';
+  renderExam(currentQuestions);
+});
+
+
 // Renderiza todo el examen (por página)
 function renderExam(questions) {
   renderPage(currentPage);
@@ -237,13 +268,18 @@ document.getElementById('submitExam').addEventListener('click', async () => {
 // Mostrar resultados
 function mostrarResultados(data) {
   const resultDiv = document.getElementById('resultContainer');
+  const porcentaje = Math.round((data.correctas / data.total) * 100);
+  const paso = porcentaje >= 72;
+
   resultDiv.innerHTML = `
-    <div class="alert alert-info text-center fs-5">
+    <div class="alert ${paso ? 'alert-success' : 'alert-danger'} text-center fs-5">
       Obtuviste <strong>${data.correctas}</strong> de <strong>${data.total}</strong> respuestas correctas
+      (<strong>${porcentaje}%</strong>)<br/>
+      ${paso ? '🎉 ¡Felicidades, aprobaste el examen PCSAE!' : '❌ No alcanzaste el puntaje mínimo para aprobar el PCSAE.'}
     </div>
   `;
 
-    data.detalle.forEach((r, index) => {
+  data.detalle.forEach((r, index) => {
     const isCorrect = r.status.includes("✅");
 
     const card = document.createElement('div');
@@ -253,32 +289,69 @@ function mostrarResultados(data) {
     body.className = 'card-body';
 
     body.innerHTML = `
-    <h5 class="card-title">${index + 1}. ${r.question}</h5>
+      <h5 class="card-title">${index + 1}. ${r.question}</h5>
       <p><strong>Tu respuesta:</strong> ${r.user_answers.join(', ') || 'Sin respuesta'}</p>
       <p><strong>Respuesta correcta:</strong> ${r.correct_answers.join(', ')}</p>
       <p class="fw-bold">Resultado: ${r.status}</p>
       <p class="line-through text-muted">Explicación: ${r.explanation}</p>
-      
     `;
 
     card.appendChild(body);
     resultDiv.appendChild(card);
   });
 
-// Ocultar examen y scroll arriba
-document.getElementById('examContainer').innerHTML = '';
-document.getElementById('submitExam').style.display = 'none';
-document.getElementById('startExam').style.display = 'none';
-window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Mostrar resumen por dominio si existe
+  if (data.resumen_por_dominio) {
+    const resumenCard = document.createElement('div');
+    resumenCard.className = 'card mt-4 bg-dark text-white border border-light';
 
-// Agregar botón para reiniciar
-const retryBtn = document.createElement('button');
-retryBtn.className = 'btn btn-outline-light mt-3';
-retryBtn.id = 'reloadPage';
-retryBtn.textContent = 'Volver al inicio';
-document.getElementById('resultContainer').appendChild(retryBtn);
+    const resumenBody = document.createElement('div');
+    resumenBody.className = 'card-body';
 
-// Activar evento de recarga
-document.getElementById('reloadPage')?.addEventListener('click', () => location.reload());
+    resumenBody.innerHTML = `
+      <h5 class="card-title mb-3"><i class="bi bi-bar-chart-line text-info me-2"></i>Resumen por dominio</h5>
+      <div class="table-responsive">
+        <table class="table table-sm table-bordered table-dark text-center">
+          <thead>
+            <tr>
+              <th>Dominio</th>
+              <th>Total</th>
+              <th>Correctas</th>
+              <th>Incorrectas</th>
+              <th>% Acierto</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${Object.entries(data.resumen_por_dominio).map(([dom, stats]) => `
+              <tr>
+                <td>${dom}</td>
+                <td>${stats.total}</td>
+                <td class="text-success">${stats.correctas}</td>
+                <td class="text-danger">${stats.incorrectas}</td>
+                <td>${stats.porcentaje}%</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
 
+    resumenCard.appendChild(resumenBody);
+    resultDiv.appendChild(resumenCard);
+  }
+
+  // Ocultar examen y scroll arriba
+  document.getElementById('examContainer').innerHTML = '';
+  document.getElementById('submitExam').style.display = 'none';
+  document.getElementById('startExam').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Agregar botón para reiniciar
+  const retryBtn = document.createElement('button');
+  retryBtn.className = 'btn btn-outline-light mt-3';
+  retryBtn.id = 'reloadPage';
+  retryBtn.textContent = 'Volver al inicio';
+  resultDiv.appendChild(retryBtn);
+
+  document.getElementById('reloadPage')?.addEventListener('click', () => location.reload());
 }
