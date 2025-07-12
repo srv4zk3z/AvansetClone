@@ -15,7 +15,7 @@ collection = db["preguntas"]
 ruta_archivo = "preguntas.json"
 
 # Cargar el JSON y convertir $oid a ObjectId real
-with open(ruta_archivo, "r", encoding="utf-8") as f:
+with open(ruta_archivo, "r", exncoding="utf-8") as f:
     data = json.load(f)
 
     for doc in data:
