@@ -10,12 +10,6 @@ MONGO_PORT = "27017"
 MONGO_DB   = "simulador"
 
 # URI con autenticación
-from motor.motor_asyncio import AsyncIOMotorClient
-from pymongo import ASCENDING
-import urllib.parse
-
-MONGO_USER = urllib.parse.quote_plus("admin")
-MONGO_PASS = urllib.parse.quote_plus("secret")
 MONGO_URI = f"mongodb://{MONGO_USER}:{MONGO_PASS}@localhost:27017/simulador?authSource=admin"
 
 client = AsyncIOMotorClient(MONGO_URI)
