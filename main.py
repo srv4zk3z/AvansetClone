@@ -94,33 +94,39 @@ async def delete_question(qid: int):  # tipo int porque así están tus qids
     return {"msg": f"Pregunta {qid} y sus estadísticas eliminadas correctamente"}
 
 @app.get("/exam")
-async def generar_examen(limit: int = Query(10, ge=1, le=500)):
-    preguntas_cursor = collection.find({})
-    preguntas = []
-    async for doc in preguntas_cursor:
-        tipo = doc.get("type", "multiple_choice")
+async def generar_examen(total: int = Query(95, ge=1, le=500)):
+    pipeline = [{"$sample": {"size": total}}]
+    cursor = collection.aggregate(pipeline)
 
+    preguntas_seleccionadas = []
+    async for doc in cursor:
+        tipo = doc.get("type", "multiple_choice")
         if tipo == "multiple_choice":
-            preguntas.append({
+            preguntas_seleccionadas.append({
                 "qid": doc["qid"],
                 "question": doc["question"],
                 "type": "multiple_choice",
                 "options": doc.get("options", []),
+                "answer": doc.get("answer", []),
+                "domain": doc.get("domain", "Unknown"),
+                "explanation": doc.get("explanation", "No disponible")
             })
         elif tipo == "match":
-            preguntas.append({
+            preguntas_seleccionadas.append({
                 "qid": doc["qid"],
                 "question": doc["question"],
                 "type": "match",
                 "match_items": doc.get("match_items", []),
-                "match_targets": doc.get("match_targets", [])
+                "match_targets": doc.get("match_targets", []),
+                "answer": doc.get("answer", {}),
+                "domain": doc.get("domain", "Unknown"),
+                "explanation": doc.get("explanation", "No disponible")
             })
 
-    if not preguntas:
-        raise HTTPException(status_code=404, detail="No hay preguntas disponibles.")
+    return {"total": len(preguntas_seleccionadas), "exam": preguntas_seleccionadas}
 
-    seleccionadas = random.sample(preguntas, min(limit, len(preguntas)))
-    return {"total": len(seleccionadas), "exam": seleccionadas}
+def calcular_scaled_score(correctas: int, total: int) -> int:
+    return round(300 + (correctas / total) * 700)
 
 @app.post("/exam/submit")
 async def calificar_examen(respuestas: List[RespuestaUsuario]):
@@ -258,6 +264,27 @@ async def progreso():
             "porcentaje": porcentaje
         })
     return {"progreso": progreso}
+
+
+@app.get("/exam/weakest")
+async def exam_por_debilidades(limit: int = Query(10, ge=1, le=900)):
+    stats_cursor = stats_collection.find().sort("times_wrong", -1).limit(limit)
+    qids = [doc["qid"] async for doc in stats_cursor]
+
+    if not qids:
+        raise HTTPException(status_code=404, detail="No hay suficientes estadísticas.")
+
+    preguntas_cursor = collection.find({"qid": {"$in": qids}})
+    preguntas = [doc async for doc in preguntas_cursor]
+
+    for p in preguntas:
+        p.pop("_id", None)
+
+    return {
+        "total": len(preguntas),
+        "based_on": "times_wrong",
+        "exam": preguntas
+    }
 
 
 
