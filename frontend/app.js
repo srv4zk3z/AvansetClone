@@ -158,7 +158,8 @@ function renderPage(page) {
       itemContainer.appendChild(targetCol);
       cardBody.appendChild(itemContainer);
     } else {
-      q.options.forEach(opt => {
+        const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+        shuffledOptions.forEach(opt => {
         const checked = userAnswers[q.qid]?.includes(opt) ? "checked" : "";
         const optId = `q${q.qid}_${opt.replace(/\s+/g, "_")}`;
 
@@ -265,7 +266,19 @@ document.getElementById('submitExam').addEventListener('click', async () => {
   mostrarResultados(data);
 });
 
-// Mostrar resultados
+// escapeHTML para evitar inyecciones o errores con operadores como >= o comillas
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, function (char) {
+    return {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char];
+  });
+}
+
 function mostrarResultados(data) {
   const resultDiv = document.getElementById('resultContainer');
   const porcentaje = Math.round((data.correctas / data.total) * 100);
@@ -289,18 +302,17 @@ function mostrarResultados(data) {
     body.className = 'card-body';
 
     body.innerHTML = `
-      <h5 class="card-title">${index + 1}. ${r.question}</h5>
-      <p><strong>Tu respuesta:</strong> ${r.user_answers.join(', ') || 'Sin respuesta'}</p>
-      <p><strong>Respuesta correcta:</strong> ${r.correct_answers.join(', ')}</p>
-      <p class="fw-bold">Resultado: ${r.status}</p>
-      <p class="line-through text-muted">Explicación: ${r.explanation}</p>
+      <h5 class="card-title">${index + 1}. ${escapeHTML(r.question)}</h5>
+      <p><strong>Tu respuesta:</strong> ${r.user_answers.map(escapeHTML).join(', ') || 'Sin respuesta'}</p>
+      <p><strong>Respuesta correcta:</strong> ${r.correct_answers.map(escapeHTML).join(', ')}</p>
+      <p class="fw-bold">Resultado: ${escapeHTML(r.status)}</p>
+      <p class="line-through text-muted">Explicación: ${escapeHTML(r.explanation)}</p>
     `;
 
     card.appendChild(body);
     resultDiv.appendChild(card);
   });
 
-  // Mostrar resumen por dominio si existe
   if (data.resumen_por_dominio) {
     const resumenCard = document.createElement('div');
     resumenCard.className = 'card mt-4 bg-dark text-white border border-light';
@@ -324,7 +336,7 @@ function mostrarResultados(data) {
           <tbody>
             ${Object.entries(data.resumen_por_dominio).map(([dom, stats]) => `
               <tr>
-                <td>${dom}</td>
+                <td>${escapeHTML(dom)}</td>
                 <td>${stats.total}</td>
                 <td class="text-success">${stats.correctas}</td>
                 <td class="text-danger">${stats.incorrectas}</td>
@@ -340,13 +352,11 @@ function mostrarResultados(data) {
     resultDiv.appendChild(resumenCard);
   }
 
-  // Ocultar examen y scroll arriba
   document.getElementById('examContainer').innerHTML = '';
   document.getElementById('submitExam').style.display = 'none';
   document.getElementById('startExam').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // Agregar botón para reiniciar
   const retryBtn = document.createElement('button');
   retryBtn.className = 'btn btn-outline-light mt-3';
   retryBtn.id = 'reloadPage';
