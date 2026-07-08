@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Administrar Preguntas | SRVAZKEZ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/core/theme.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="sidebar" id="sidebar">
+    <button class="btn btn-sm btn-outline-secondary w-100 mb-3" id="toggleSidebar" title="Expandir / contraer menú">
+      <i class="fas fa-bars"></i>
+    </button>
+    <h4 class="brand">SRVAZKEZ</h4>
+    <ul class="nav flex-column mt-3">
+      <li class="nav-item"><a href="./index.html" class="nav-link" title="Simulador"><i class="fas fa-pencil-alt"></i> <span>Simulador</span></a></li>
+      <li class="nav-item"><a href="./preguntas.html" class="nav-link" title="Preguntas"><i class="fas fa-question-circle"></i> <span>Preguntas</span></a></li>
+      <li class="nav-item"><a href="./preguntasmalas.html" class="nav-link" title="Top errores"><i class="fas fa-exclamation-triangle"></i> <span>Top errores</span></a></li>
+      <li class="nav-item"><a href="./metricas.html" class="nav-link" title="Métricas"><i class="fas fa-chart-line"></i> <span>Métricas</span></a></li>
+      <li class="nav-item"><a href="./admin.html" class="nav-link active" aria-current="page" title="Administrar"><i class="fas fa-gear"></i> <span>Administrar</span></a></li>
+    </ul>
+  </div>
+
+  <div class="main-content" id="mainContent">
+    <div class="page-header">
+      <h1><i class="fas fa-gear text-secondary me-2"></i>Administrar preguntas</h1>
+      <p class="subtitle">Crea, edita o elimina preguntas del banco. Los cambios se reflejan de inmediato en el simulador y el buscador.</p>
+    </div>
+
+    <div id="avisos"></div>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <form id="filtroForm" class="row g-3 align-items-end" onsubmit="return false;">
+          <div class="col-12 col-md-6">
+            <label for="searchInput" class="form-label">Buscar pregunta</label>
+            <input type="search" class="form-control" id="searchInput" placeholder="Texto de la pregunta...">
+          </div>
+          <div class="col-6 col-md-auto">
+            <button type="submit" class="btn btn-outline-secondary"><i class="fas fa-magnifying-glass me-1"></i> Buscar</button>
+          </div>
+          <div class="col-6 col-md-auto ms-md-auto">
+            <button type="button" class="btn btn-primary" id="btnNueva">
+              <i class="fas fa-plus me-1"></i> Nueva pregunta
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="lista" aria-live="polite"></div>
+    <nav id="paginador" class="d-flex justify-content-center align-items-center gap-2 mt-4"></nav>
+  </div>
+
+  <!-- Modal: crear / editar pregunta -->
+  <div class="modal fade" id="modalPregunta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitulo">Nueva pregunta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div id="formError" class="alert alert-danger" style="display:none;"></div>
+
+          <input type="hidden" id="editQid">
+
+          <div class="mb-3">
+            <label for="fQuestion" class="form-label">Pregunta <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="fQuestion" rows="2" placeholder="Escribe el enunciado de la pregunta"></textarea>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-12 col-sm-6">
+              <label for="fType" class="form-label">Tipo de pregunta</label>
+              <select class="form-select" id="fType">
+                <option value="multiple_choice">Opción múltiple</option>
+                <option value="match">Emparejamiento (arrastrar y soltar)</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6">
+              <label for="fDomain" class="form-label">Dominio</label>
+              <input type="text" class="form-control" id="fDomain" list="domainsList" placeholder="Ej. Incident Management">
+              <datalist id="domainsList"></datalist>
+            </div>
+          </div>
+
+          <!-- Sección opción múltiple -->
+          <div id="seccionMC">
+            <label class="form-label">Opciones <span class="text-danger">*</span></label>
+            <p class="text-secondary small mb-2">Marca la casilla de la(s) opción(es) correcta(s). Mínimo 2 opciones y 1 correcta.</p>
+            <div id="opcionesContainer"></div>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-1" id="btnAgregarOpcion">
+              <i class="fas fa-plus me-1"></i> Agregar opción
+            </button>
+          </div>
+
+          <!-- Sección match -->
+          <div id="seccionMatch" style="display:none;">
+            <label class="form-label">Pares a emparejar <span class="text-danger">*</span></label>
+            <p class="text-secondary small mb-2">Cada elemento de la izquierda se empareja con su destino correcto de la derecha. Mínimo 2 pares.</p>
+            <div id="paresContainer"></div>
+            <button type="button" class="btn btn-sm btn-outline-secondary mt-1" id="btnAgregarPar">
+              <i class="fas fa-plus me-1"></i> Agregar par
+            </button>
+          </div>
+
+          <div class="mb-3 mt-3">
+            <label for="fExplanation" class="form-label">Explicación</label>
+            <textarea class="form-control" id="fExplanation" rows="3" placeholder="Por qué es correcta la respuesta"></textarea>
+            <small class="text-secondary">Acepta formato: **negritas**, `código`, 'texto resaltado', listas con - y numeradas 1.</small>
+          </div>
+
+          <div class="mb-2">
+            <label for="fImage" class="form-label">Imagen (opcional)</label>
+            <input type="file" class="form-control" id="fImage" accept="image/png,image/jpeg,image/gif,image/webp">
+            <small class="text-secondary">PNG, JPEG, GIF o WebP, máximo 1.5 MB.</small>
+            <div id="imagenPreviewWrap" class="mt-2" style="display:none;">
+              <img id="imagenPreview" class="img-fluid rounded border" style="max-height:200px;" alt="Vista previa">
+              <button type="button" class="btn btn-sm btn-outline-danger d-block mt-2" id="btnQuitarImagen">
+                <i class="fas fa-trash me-1"></i> Quitar imagen
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btnGuardar">
+            <i class="fas fa-floppy-disk me-1"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: confirmar eliminación -->
+  <div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger"><i class="fas fa-triangle-exclamation me-2"></i>Eliminar pregunta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-1">¿Seguro que quieres eliminar esta pregunta? También se borran sus estadísticas.</p>
+          <p class="text-secondary mb-0" id="eliminarTexto"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">
+            <i class="fas fa-trash me-1"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/core/namespace.js"></script>
+  <script src="js/core/dom.js"></script>
+  <script src="js/core/format.js"></script>
+  <script src="js/core/api.js"></script>
+  <script src="js/components/layout.js"></script>
+  <script src="js/components/feedback.js"></script>
+  <script src="js/components/pagination.js"></script>
+  <script src="js/components/question-card.js"></script>
+  <script src="js/pages/admin.js"></script>
+</body>
+</html>

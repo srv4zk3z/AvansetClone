@@ -169,3 +169,20 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# ============ Específico de este proyecto ============
+
+# Claude Code (configuración local del agente)
+.claude/
+
+# Editores / IDEs
+.vscode/
+.idea/
+*.swp
+
+# Node (si algún día se instalan paquetes para el frontend)
+node_modules/
+
+# Archivos del sistema operativo
+Thumbs.db
+desktop.ini

@@ -1,8 +1,10 @@
 import random
+import re
 from typing import List, Optional
 from datetime import datetime
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from db import collection, init_indexes, attempts_collection, stats_collection
@@ -19,7 +21,7 @@ from models import RespuestaUsuario
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # o restringe a ["http://localhost:5500"] si usas Live Server
@@ -30,6 +32,10 @@ app.add_middleware(
 async def startup():
     await init_indexes()
 
+@app.get("/", include_in_schema=False)
+async def root():
+    return RedirectResponse(url="/static/preguntasmalas.html")
+
 @app.get("/questions")
 async def get_all_questions(
     skip: int = Query(0, ge=0, description="Número de preguntas a omitir"),
@@ -38,7 +44,9 @@ async def get_all_questions(
 ):
     query = {}
     if search:
-        query = {"question": {"$regex": search, "$options": "i"}}
+        # re.escape: busca el texto literal; sin esto, caracteres como ? ( [
+        # rompen el $regex de MongoDB y responden error 500
+        query = {"question": {"$regex": re.escape(search), "$options": "i"}}
 
     total = await collection.count_documents(query)
     cursor = collection.find(query).skip(skip).limit(limit)
@@ -56,7 +64,7 @@ async def get_all_questions(
     }
 
 @app.get("/questions/{qid}")
-async def get_question(qid: str):
+async def get_question(qid: int):
     pregunta = await collection.find_one({"qid": qid})
     if not pregunta:
         raise HTTPException(status_code=404, detail="Pregunta no encontrada")
@@ -94,8 +102,8 @@ async def delete_question(qid: int):  # tipo int porque así están tus qids
     return {"msg": f"Pregunta {qid} y sus estadísticas eliminadas correctamente"}
 
 @app.get("/exam")
-async def generar_examen(total: int = Query(95, ge=1, le=500)):
-    pipeline = [{"$sample": {"size": total}}]
+async def generar_examen(limit: int = Query(95, ge=1, le=500)):
+    pipeline = [{"$sample": {"size": limit}}]
     cursor = collection.aggregate(pipeline)
 
     preguntas_seleccionadas = []
@@ -109,7 +117,8 @@ async def generar_examen(total: int = Query(95, ge=1, le=500)):
                 "options": doc.get("options", []),
                 "answer": doc.get("answer", []),
                 "domain": doc.get("domain", "Unknown"),
-                "explanation": doc.get("explanation", "No disponible")
+                "explanation": doc.get("explanation", "No disponible"),
+                "image_base64": doc.get("image_base64", "")
             })
         elif tipo == "match":
             preguntas_seleccionadas.append({
@@ -120,7 +129,8 @@ async def generar_examen(total: int = Query(95, ge=1, le=500)):
                 "match_targets": doc.get("match_targets", []),
                 "answer": doc.get("answer", {}),
                 "domain": doc.get("domain", "Unknown"),
-                "explanation": doc.get("explanation", "No disponible")
+                "explanation": doc.get("explanation", "No disponible"),
+                "image_base64": doc.get("image_base64", "")
             })
 
     return {"total": len(preguntas_seleccionadas), "exam": preguntas_seleccionadas}
@@ -268,17 +278,24 @@ async def progreso():
 
 @app.get("/exam/weakest")
 async def exam_por_debilidades(limit: int = Query(10, ge=1, le=900)):
-    stats_cursor = stats_collection.find().sort("times_wrong", -1).limit(limit)
+    stats_cursor = (
+        stats_collection.find({"times_wrong": {"$gt": 0}})
+        .sort("times_wrong", -1)
+        .limit(limit)
+    )
     qids = [doc["qid"] async for doc in stats_cursor]
 
     if not qids:
-        raise HTTPException(status_code=404, detail="No hay suficientes estadísticas.")
+        raise HTTPException(status_code=404, detail="Aún no tienes preguntas falladas registradas.")
 
     preguntas_cursor = collection.find({"qid": {"$in": qids}})
-    preguntas = [doc async for doc in preguntas_cursor]
+    preguntas_por_qid = {}
+    async for doc in preguntas_cursor:
+        doc.pop("_id", None)
+        preguntas_por_qid[doc["qid"]] = doc
 
-    for p in preguntas:
-        p.pop("_id", None)
+    # Respetar el orden de más fallada a menos fallada
+    preguntas = [preguntas_por_qid[qid] for qid in qids if qid in preguntas_por_qid]
 
     return {
         "total": len(preguntas),
@@ -290,33 +307,45 @@ async def exam_por_debilidades(limit: int = Query(10, ge=1, le=900)):
 
 @app.get("/exam/focus")
 async def examen_por_errores(limit: int = Query(10, ge=1, le=100)):
-    # Obtener los qid con más errores
-    stats_cursor = stats_collection.find().sort("times_wrong", -1).limit(limit)
+    # Obtener los qid con más errores (solo preguntas falladas al menos una vez)
+    stats_cursor = (
+        stats_collection.find({"times_wrong": {"$gt": 0}})
+        .sort("times_wrong", -1)
+        .limit(limit)
+    )
     qids = [doc["qid"] async for doc in stats_cursor]
 
     if not qids:
-        raise HTTPException(status_code=404, detail="No hay suficientes estadísticas para generar el examen.")
+        raise HTTPException(status_code=404, detail="Aún no tienes preguntas falladas para generar el examen.")
 
     # Obtener preguntas correspondientes
     preguntas_cursor = collection.find({"qid": {"$in": qids}})
-    preguntas = []
+    preguntas_por_qid = {}
     async for doc in preguntas_cursor:
         tipo = doc.get("type", "multiple_choice")
 
         if tipo == "multiple_choice":
-            preguntas.append({
+            preguntas_por_qid[doc["qid"]] = {
                 "qid": doc["qid"],
                 "question": doc["question"],
                 "type": "multiple_choice",
                 "options": doc.get("options", []),
-            })
+                # Cuántas respuestas correctas tiene (sin revelar cuáles):
+                # el frontend lo usa para mostrar radio buttons o checkboxes
+                "num_answers": len(doc.get("answer", [])),
+                "image_base64": doc.get("image_base64", "")
+            }
         elif tipo == "match":
-            preguntas.append({
+            preguntas_por_qid[doc["qid"]] = {
                 "qid": doc["qid"],
                 "question": doc["question"],
                 "type": "match",
                 "match_items": doc.get("match_items", []),
-                "match_targets": doc.get("match_targets", [])
-            })
+                "match_targets": doc.get("match_targets", []),
+                "image_base64": doc.get("image_base64", "")
+            }
+
+    # Respetar el orden de más fallada a menos fallada
+    preguntas = [preguntas_por_qid[qid] for qid in qids if qid in preguntas_por_qid]
 
     return {"based_on_stats": True, "total": len(preguntas), "exam": preguntas}

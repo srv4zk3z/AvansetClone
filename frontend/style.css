@@ -1,0 +1,469 @@
+/* ============================================================
+   Tema "grafito suave" — ni negro puro ni blanco puro.
+   Fondos gris medio-oscuro y texto marfil de bajo brillo
+   para reducir la fatiga visual en sesiones largas de estudio.
+   ============================================================ */
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #24282f;
+  --bs-body-color: #d5dae1;
+  --bs-emphasis-color: #eef1f5;
+  --bs-secondary-color: #9aa3ae;
+  --bs-tertiary-color: #7d8590;
+  --bs-border-color: #3c434d;
+  --bs-secondary-bg: #343a43;
+  --bs-tertiary-bg: #2c313a;
+  --bs-heading-color: #e8ecf1;
+  --bs-link-color: #82b1ff;
+  --bs-link-hover-color: #a5c8ff;
+  --app-sidebar-bg: #1e2228;
+  --app-sidebar-link: #b9c1cb;
+  --app-sidebar-link-hover: #eef1f5;
+  --app-sidebar-link-hover-bg: #2b313a;
+  --app-sidebar-active-bg: #34507c;
+  --app-sidebar-active-text: #ffffff;
+  --app-brand-color: #f0b849;
+  --app-card-bg: #2c313a;
+  --app-card-shadow: rgba(0, 0, 0, 0.18);
+  --app-explanation-bg: rgba(240, 184, 73, 0.08);
+  --app-explanation-text: #cfd5dc;
+  --app-explanation-label: #e6c073;
+  --app-success-soft-bg: rgba(64, 160, 108, 0.14);
+  --app-success-soft-border: rgba(88, 190, 133, 0.55);
+  --app-success-soft-text: #9fdcb8;
+  --app-danger-soft-bg: rgba(217, 112, 95, 0.2);
+  --app-danger-soft-text: #e8a094;
+  --app-domain-bg: #34507c;
+  --app-domain-text: #d9e4f5;
+  --app-timer-shadow: rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="light"] {
+  color-scheme: light;
+  --bs-body-bg: #eef0ec;
+  --bs-body-color: #32363b;
+  --bs-emphasis-color: #202428;
+  --bs-secondary-color: #68717a;
+  --bs-tertiary-color: #7d858c;
+  --bs-border-color: #cfd5d0;
+  --bs-secondary-bg: #e3e7e2;
+  --bs-tertiary-bg: #d9ded8;
+  --bs-heading-color: #252a2e;
+  --bs-link-color: #335f9f;
+  --bs-link-hover-color: #244979;
+  --bs-card-bg: #f7f8f3;
+  --bs-table-bg: #f7f8f3;
+  --bs-table-color: #32363b;
+  --bs-table-border-color: #cfd5d0;
+  --app-sidebar-bg: #dfe4df;
+  --app-sidebar-link: #434b53;
+  --app-sidebar-link-hover: #202428;
+  --app-sidebar-link-hover-bg: #d0d8d1;
+  --app-sidebar-active-bg: #c4d3e4;
+  --app-sidebar-active-text: #173452;
+  --app-brand-color: #8b6115;
+  --app-card-bg: #f7f8f3;
+  --app-card-shadow: rgba(53, 63, 72, 0.08);
+  --app-explanation-bg: rgba(184, 136, 38, 0.1);
+  --app-explanation-text: #3f454a;
+  --app-explanation-label: #7b5819;
+  --app-success-soft-bg: rgba(51, 133, 91, 0.12);
+  --app-success-soft-border: rgba(51, 133, 91, 0.42);
+  --app-success-soft-text: #1f6a45;
+  --app-danger-soft-bg: rgba(181, 81, 70, 0.12);
+  --app-danger-soft-text: #9b3d35;
+  --app-domain-bg: #d5e2ee;
+  --app-domain-text: #274967;
+  --app-timer-shadow: rgba(53, 63, 72, 0.14);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Barra lateral ---------- */
+.sidebar {
+  width: 230px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--app-sidebar-bg);
+  border-right: 1px solid var(--bs-border-color);
+  padding: 1rem 0.75rem;
+  z-index: 1000;
+  transition: width 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.sidebar .brand {
+  color: var(--app-brand-color);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar .nav-link {
+  color: var(--app-sidebar-link);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sidebar .nav-link i {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar .nav-link:hover {
+  color: var(--app-sidebar-link-hover);
+  background-color: var(--app-sidebar-link-hover-bg);
+}
+
+.sidebar .nav-link.active {
+  color: var(--app-sidebar-active-text);
+  background-color: var(--app-sidebar-active-bg);
+}
+
+.theme-toggle-wrap {
+  padding: 0.25rem 0;
+}
+
+.theme-toggle {
+  width: 100%;
+  color: var(--app-sidebar-link);
+  background-color: transparent;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  color: var(--app-sidebar-link-hover);
+  background-color: var(--app-sidebar-link-hover-bg);
+}
+
+.theme-toggle i {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar .brand,
+.sidebar .nav-link span,
+.theme-toggle span {
+  transition: opacity 0.2s;
+}
+
+.sidebar.collapsed .brand,
+.sidebar.collapsed .nav-link span,
+.sidebar.collapsed .theme-toggle span {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  display: none;
+}
+
+.sidebar.collapsed .nav-link,
+.sidebar.collapsed .theme-toggle {
+  justify-content: center;
+}
+
+/* ---------- Contenido principal ---------- */
+.main-content {
+  margin-left: 230px;
+  padding: 2rem;
+  transition: margin-left 0.3s;
+  max-width: 1100px;
+}
+
+.main-content.shifted {
+  margin-left: 70px;
+}
+
+.page-header h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.page-header .subtitle {
+  color: var(--bs-secondary-color);
+  margin-bottom: 1.5rem;
+}
+
+/* En pantallas chicas la barra queda siempre angosta */
+@media (max-width: 767.98px) {
+  .sidebar {
+    width: 70px;
+  }
+  .sidebar .brand,
+  .sidebar .nav-link span,
+  .theme-toggle span {
+    display: none;
+  }
+  .sidebar .nav-link,
+  .theme-toggle {
+    justify-content: center;
+  }
+  .main-content {
+    margin-left: 70px;
+    padding: 1rem;
+  }
+}
+
+/* ---------- Tarjetas ---------- */
+.card {
+  background-color: var(--app-card-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--app-card-shadow);
+}
+
+.card .card-title {
+  line-height: 1.45;
+}
+
+/* ---------- Opciones de pregunta ---------- */
+.option-item {
+  background-color: transparent;
+  border: 1px solid var(--bs-border-color);
+  color: var(--bs-body-color);
+  border-radius: 8px !important;
+  margin-bottom: 0.4rem;
+  padding: 0.55rem 0.8rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.option-item.correct {
+  background-color: var(--app-success-soft-bg);
+  border-color: var(--app-success-soft-border);
+  color: var(--app-success-soft-text);
+}
+
+.option-item .option-mark {
+  flex-shrink: 0;
+  width: 1.1rem;
+  text-align: center;
+  margin-top: 0.1rem;
+}
+
+/* ---------- Bloque de explicación ---------- */
+.explanation-box {
+  background-color: var(--app-explanation-bg);
+  border-left: 3px solid #d9a53f;
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1rem;
+  margin-top: 0.9rem;
+  color: var(--app-explanation-text);
+}
+
+.explanation-box .explanation-label {
+  color: var(--app-explanation-label);
+  font-weight: 600;
+}
+
+.explanation-box strong {
+  color: var(--bs-emphasis-color);
+}
+
+.explanation-box code {
+  background-color: rgba(130, 177, 255, 0.12);
+  color: #a5c8ff;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.md-list {
+  margin: 0.4rem 0;
+  padding-left: 1.5rem;
+}
+
+.md-list li {
+  margin-bottom: 0.3rem;
+}
+
+/* ---------- Resultados del examen ---------- */
+.card-correct {
+  border-left: 4px solid #4caf7d;
+}
+
+.card-incorrect {
+  border-left: 4px solid #d9705f;
+}
+
+/* ---------- Indicador de cuántas respuestas elegir ---------- */
+.select-hint {
+  color: var(--bs-secondary-color);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s;
+}
+
+/* Parpadea cuando el usuario intenta marcar de más */
+.select-hint-alert {
+  color: #e8a094;
+  font-weight: 600;
+}
+
+/* ---------- Cronómetro del examen ---------- */
+.exam-timer {
+  position: sticky;
+  top: 1rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  background-color: var(--app-card-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--bs-emphasis-color);
+  box-shadow: 0 2px 10px var(--app-timer-shadow);
+}
+
+.exam-timer i {
+  color: #82b1ff;
+}
+
+/* Ya pasó la mitad del tiempo */
+.exam-timer.half {
+  border-color: #82b1ff;
+  color: #a5c8ff;
+}
+
+/* Quedan 10 minutos o menos */
+.exam-timer.warning {
+  border-color: #d9a53f;
+  color: #e6c073;
+}
+
+.exam-timer.warning i {
+  color: #e6c073;
+}
+
+/* Quedan 5 minutos o menos */
+.exam-timer.danger {
+  border-color: #d9705f;
+  color: #e8a094;
+  animation: timer-pulse 1.2s ease-in-out infinite;
+}
+
+.exam-timer.danger i {
+  color: #e8a094;
+}
+
+@keyframes timer-pulse {
+  50% { opacity: 0.55; }
+}
+
+/* Las tarjetas del examen acompañan el color del reloj */
+#examContainer .card {
+  transition: border-color 0.6s, box-shadow 0.6s;
+}
+
+#examContainer.time-half .card {
+  border-color: rgba(130, 177, 255, 0.55);
+}
+
+#examContainer.time-warning .card {
+  border-color: rgba(217, 165, 63, 0.65);
+  box-shadow: 0 2px 10px rgba(217, 165, 63, 0.08);
+}
+
+#examContainer.time-danger .card {
+  border-color: rgba(217, 112, 95, 0.75);
+  box-shadow: 0 2px 12px rgba(217, 112, 95, 0.15);
+}
+
+/* ---------- Zonas de arrastre (preguntas match) ---------- */
+.drop-zone {
+  background-color: var(--bs-tertiary-bg);
+  border: 1px dashed var(--bs-border-color);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  min-height: 45px;
+  color: var(--bs-body-color);
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.drop-zone.drag-over {
+  border-color: #82b1ff;
+  background-color: rgba(130, 177, 255, 0.08);
+}
+
+/* ---------- Tarjetas de estadística (Métricas) ---------- */
+.stat-tile .stat-label {
+  color: var(--bs-secondary-color);
+  font-size: 0.82rem;
+  margin-bottom: 0.35rem;
+}
+
+.stat-tile .stat-value {
+  color: var(--bs-emphasis-color);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Imágenes de preguntas ---------- */
+.question-image {
+  max-height: 420px;
+  border: 1px solid var(--bs-border-color);
+  background-color: #fff; /* por si la imagen tiene transparencia */
+  display: block;
+}
+
+/* ---------- Detalles varios ---------- */
+mark {
+  background-color: rgba(240, 184, 73, 0.45);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.badge-domain {
+  background-color: var(--app-domain-bg);
+  color: var(--app-domain-text);
+  font-weight: 500;
+}
+
+.badge-fails {
+  background-color: var(--app-danger-soft-bg);
+  color: var(--app-danger-soft-text);
+  font-weight: 500;
+}
+
+.form-control:focus,
+.btn:focus-visible {
+  border-color: #82b1ff;
+  box-shadow: 0 0 0 0.2rem rgba(130, 177, 255, 0.2);
+}
