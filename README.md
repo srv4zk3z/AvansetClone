@@ -24,9 +24,10 @@ Simulador de exámenes de certificación (pensado originalmente para el **PCSAE*
 | Componente     | Tecnología                                  |
 |----------------|---------------------------------------------|
 | API            | Python + FastAPI + Uvicorn                   |
-| Base de datos  | MongoDB 6 (en Docker)                        |
-| Administrador BD | Mongo Express (en Docker)                  |
-| Frontend       | HTML + Bootstrap 5 + JavaScript (sin build)  |
+| Base de datos  | MongoDB 6                                    |
+| Administrador BD | Mongo Express                             |
+| Frontend       | HTML + Bootstrap 5 + JavaScript vanilla      |
+| Orquestación   | Docker Compose                               |
 
 ## 📁 Estructura del proyecto
 
@@ -36,7 +37,8 @@ AvansetClone/
 ├── db.py                 # Conexión a MongoDB
 ├── models.py             # Modelos de datos (Pydantic)
 ├── requirements.txt      # Dependencias de Python
-├── docker-compose.yml    # MongoDB + Mongo Express
+├── docker-compose.yml    # App + MongoDB + seed + Mongo Express
+├── .env.example          # Variables configurables de Docker Compose
 ├── data/
 │   ├── preguntas.json    # Banco de preguntas
 │   └── bulk_insert.py    # Script para cargar las preguntas a MongoDB
@@ -48,7 +50,12 @@ AvansetClone/
     ├── preguntasmalas.html # Top de errores
     ├── metricas.html     # Métricas de progreso (gráficas)
     ├── admin.html        # Administrador de preguntas (CRUD)
-    ├── app.js / format.js / theme.js / style.css
+    ├── style.css
+    ├── ARCHITECTURE.md   # Estrategia de capas del frontend
+    └── js/
+        ├── core/         # API, DOM, formato, tema, namespace
+        ├── components/   # Componentes reutilizables de UI
+        └── pages/        # Lógica específica por pantalla
 ```
 
 ---
@@ -57,27 +64,29 @@ AvansetClone/
 
 Antes de empezar necesitas tener instalado:
 
-1. **Docker y Docker Compose** — para la base de datos.
+1. **Docker y Docker Compose** — para levantar todo el proyecto.
    👉 [Instalar Docker Desktop](https://docs.docker.com/get-docker/) (Windows/Mac) o [Docker Engine](https://docs.docker.com/engine/install/) (Linux).
-2. **Python 3.10 o superior** — para la API.
-   👉 [Descargar Python](https://www.python.org/downloads/). En Windows, marca la casilla *"Add Python to PATH"* durante la instalación.
-3. **Git** — para clonar el proyecto.
+2. **Git** — para clonar el proyecto.
    👉 [Descargar Git](https://git-scm.com/downloads).
+
+Opcional, solo si quieres correr la API sin Docker:
+
+3. **Python 3.10 o superior**.
+   👉 [Descargar Python](https://www.python.org/downloads/). En Windows, marca la casilla *"Add Python to PATH"* durante la instalación.
 
 Para verificar que todo está instalado, abre una terminal y ejecuta:
 
 ```bash
 docker --version
 docker compose version
-python3 --version   # en Windows: python --version
 git --version
 ```
 
-Si los cuatro comandos responden con una versión, estás listo.
+Si los tres comandos responden con una versión, estás listo.
 
 ---
 
-## 🚀 Instalación paso a paso
+## 🚀 Levantar todo con Docker Compose
 
 ### 1. Clonar el proyecto
 
@@ -86,16 +95,30 @@ git clone <URL-de-este-repositorio>
 cd AvansetClone
 ```
 
-### 2. Levantar la base de datos (Docker)
+### 2. Configurar variables opcionales
+
+El proyecto ya trae defaults. Puedes arrancarlo sin crear `.env`.
+
+Si quieres cambiar puertos, usuarios o contraseñas:
 
 ```bash
-docker compose up -d
+cp .env.example .env
 ```
 
-Esto descarga y arranca dos contenedores:
+Edita `.env` según necesites.
 
-- **MongoDB** en el puerto `27017` (usuario `admin`, contraseña `secret`).
-- **Mongo Express** en el puerto `8081` (interfaz web para ver la base de datos).
+### 3. Levantar todo
+
+```bash
+docker compose up --build
+```
+
+Esto levanta:
+
+- **App FastAPI + frontend** en `http://localhost:8000`.
+- **MongoDB** en `localhost:27017`.
+- **Seed** de preguntas iniciales desde `data/preguntas.json`.
+- **Mongo Express** en `http://localhost:8081`.
 
 Verifica que estén corriendo:
 
@@ -103,65 +126,59 @@ Verifica que estén corriendo:
 docker compose ps
 ```
 
-Ambos servicios deben aparecer con estado `running` / `Up`.
+`app`, `mongo` y `mongo-express` deben aparecer como `running`. `seed` debe aparecer como completado/exited con código `0`.
 
-### 3. Crear el entorno virtual e instalar dependencias
-
-Un **entorno virtual** es una carpeta aislada donde se instalan las librerías de Python solo para este proyecto, sin afectar al resto de tu sistema.
-
-**En Linux / macOS:**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-**En Windows (PowerShell):**
-
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
-
-> 💡 Sabrás que el entorno está activo porque la terminal muestra `(venv)` al inicio de la línea. Cada vez que abras una terminal nueva para trabajar en el proyecto, debes volver a activarlo (solo el comando `activate`; lo demás ya no es necesario).
-
-### 4. Cargar el banco de preguntas
-
-Con la base de datos corriendo y el entorno virtual activo:
-
-```bash
-cd data
-python bulk_insert.py
-cd ..
-```
-
-Deberías ver un mensaje como:
-
-```
-Se insertaron 157 documentos.
-```
-
-> ⚠️ **Ejecuta este paso una sola vez.** Si lo corres de nuevo intentará insertar las mismas preguntas y fallará por IDs duplicados. Si necesitas recargar el banco desde cero, ve a la sección [Solución de problemas](#-solución-de-problemas).
-
-### 5. Arrancar la API
-
-Desde la raíz del proyecto (con el entorno virtual activo):
-
-```bash
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-
-Cuando veas `Application startup complete.`, todo está listo.
-
-### 6. Abrir la aplicación
+### 4. Abrir la aplicación
 
 Abre tu navegador en:
 
 👉 **http://localhost:8000**
 
-Te redirige automáticamente a la interfaz del simulador.
+Te redirige automáticamente al simulador.
+
+Para detener:
+
+```bash
+docker compose down
+```
+
+Los datos de MongoDB se conservan en el volumen `mongo-data`. Si quieres borrar todo y empezar desde cero:
+
+```bash
+docker compose down -v
+```
+
+---
+
+## ⚙️ Variables de configuración
+
+Puedes copiarlas desde `.env.example` a `.env`.
+
+| Variable | Default | Para qué sirve |
+|----------|---------|----------------|
+| `APP_PORT` | `8000` | Puerto donde se publica la aplicación FastAPI/frontend. |
+| `MONGO_PORT` | `27017` | Puerto local de MongoDB. |
+| `MONGO_EXPRESS_PORT` | `8081` | Puerto local de Mongo Express. |
+| `MONGO_DB` | `simulador` | Nombre de la base de datos. |
+| `MONGO_USER` | `admin` | Usuario root de MongoDB. |
+| `MONGO_PASSWORD` | `secret` | Contraseña root de MongoDB. |
+| `MONGO_EXPRESS_USER` | `admin` | Usuario para entrar a Mongo Express. |
+| `MONGO_EXPRESS_PASSWORD` | `pass` | Contraseña para entrar a Mongo Express. |
+
+Ejemplo de `.env`:
+
+```env
+APP_PORT=8000
+MONGO_PORT=27017
+MONGO_EXPRESS_PORT=8081
+MONGO_DB=simulador
+MONGO_USER=admin
+MONGO_PASSWORD=secret
+MONGO_EXPRESS_USER=admin
+MONGO_EXPRESS_PASSWORD=pass
+```
+
+Si cambias `MONGO_USER` o `MONGO_PASSWORD` después de haber creado el volumen de Mongo, borra el volumen con `docker compose down -v` para que Mongo inicialice otra vez con las nuevas credenciales.
 
 ---
 
@@ -174,6 +191,58 @@ Te redirige automáticamente a la interfaz del simulador.
 | http://localhost:8081        | Mongo Express (admin de la base de datos)      |
 
 > 🔑 Mongo Express pide usuario y contraseña al entrar: por defecto son `admin` / `pass`.
+
+---
+
+## 🧑‍💻 Modo desarrollo local sin Docker para la API
+
+Docker Compose es la forma recomendada. Si quieres correr la API directamente en tu máquina:
+
+1. Levanta solo MongoDB:
+
+```bash
+docker compose up -d mongo mongo-express
+```
+
+2. Crea el entorno virtual e instala dependencias:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+En Windows PowerShell:
+
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+3. Carga o actualiza el banco de preguntas:
+
+```bash
+python data/bulk_insert.py
+```
+
+El seed es idempotente: si las preguntas ya existen por `qid`, no las duplica.
+
+4. Arranca la API:
+
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Si tu Mongo local usa otros valores, exporta variables antes de arrancar:
+
+```bash
+export MONGO_HOST=localhost
+export MONGO_PORT=27017
+export MONGO_DB=simulador
+export MONGO_USER=admin
+export MONGO_PASSWORD=secret
+```
 
 ## 🕹️ Cómo se usa
 
@@ -342,12 +411,39 @@ Las explicaciones aceptan un mini-Markdown que la interfaz convierte a formato v
 ## 🔁 Uso diario (después de la primera instalación)
 
 ```bash
-docker compose up -d                                    # 1. base de datos
-source venv/bin/activate                                # 2. entorno virtual (Windows: .\venv\Scripts\Activate.ps1)
-uvicorn main:app --reload --host 0.0.0.0 --port 8000    # 3. API
+docker compose up --build
 ```
 
-Para detener todo: `Ctrl+C` en la terminal de uvicorn y luego `docker compose down` (los datos se conservan; solo se borran si agregas `-v`).
+Para detener todo:
+
+```bash
+docker compose down
+```
+
+Para ver logs:
+
+```bash
+docker compose logs -f app
+```
+
+Para reiniciar limpio, borrando MongoDB y recargando preguntas desde `data/preguntas.json`:
+
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+---
+
+## 🧩 Arquitectura del frontend
+
+El frontend no usa framework ni build step, pero está separado por carpetas:
+
+- `frontend/js/core`: infraestructura base (`api`, `dom`, `format`, `theme`, namespace).
+- `frontend/js/components`: piezas reutilizables de interfaz.
+- `frontend/js/pages`: lógica específica de cada pantalla.
+
+La documentación completa está en [frontend/ARCHITECTURE.md](frontend/ARCHITECTURE.md).
 
 ---
 
@@ -367,19 +463,54 @@ Las pruebas crean preguntas temporales marcadas con `[TEST-...]` y las eliminan 
 ## 🩹 Solución de problemas
 
 **"Connection refused" al cargar preguntas o al abrir la app**
-→ MongoDB no está corriendo. Ejecuta `docker compose up -d` y verifica con `docker compose ps`.
+→ Revisa que los contenedores estén corriendo:
 
-**`E11000 duplicate key error` al ejecutar `bulk_insert.py`**
-→ Las preguntas ya estaban cargadas. No necesitas hacer nada. Si quieres recargar el banco desde cero: entra a Mongo Express (http://localhost:8081), abre la base `simulador`, elimina la colección `preguntas` y vuelve a ejecutar el paso 4.
+```bash
+docker compose ps
+docker compose logs -f app
+```
+
+**El seed no cargó preguntas**
+→ Revisa los logs:
+
+```bash
+docker compose logs seed
+```
+
+Si quieres forzar una recarga completa desde cero:
+
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+**`E11000 duplicate key error` al ejecutar un seed viejo**
+→ El seed actual usa upsert por `qid`, así que no debería duplicar. Si modificaste el script o importaste manualmente, borra el volumen con `docker compose down -v` y vuelve a levantar.
 
 **`uvicorn: command not found`**
-→ El entorno virtual no está activo. Ejecuta `source venv/bin/activate` (o el equivalente de Windows) y vuelve a intentar.
+→ Solo aplica si estás en modo desarrollo local sin Docker. Activa el entorno virtual y vuelve a intentar:
+
+```bash
+source venv/bin/activate
+```
 
 **El puerto 8000 o 27017 ya está en uso**
-→ Otro programa lo ocupa. Para la API puedes usar otro puerto: `uvicorn main:app --reload --port 8001` (y entrar a http://localhost:8001).
+→ Cambia los puertos en `.env`, por ejemplo:
+
+```env
+APP_PORT=8001
+MONGO_PORT=27018
+MONGO_EXPRESS_PORT=8082
+```
+
+Después:
+
+```bash
+docker compose up --build
+```
 
 **La página carga pero no aparecen preguntas**
-→ Casi seguro el paso 4 (cargar preguntas) no se ejecutó. Revisa en Mongo Express que la colección `simulador → preguntas` tenga documentos.
+→ Revisa que `seed` haya terminado bien y que Mongo Express muestre documentos en `simulador → preguntas`.
 
 ---
 
